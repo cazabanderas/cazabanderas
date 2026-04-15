@@ -1,0 +1,130 @@
+{
+  "nav": {
+    "about": "About",
+    "team": "Team",
+    "platforms": "Platforms",
+    "achievements": "Achievements",
+    "writeups": "Write-ups",
+    "joinUs": "Join Us",
+    "teamLogin": "Team Login",
+    "huntWithUs": "Hunt with Us"
+  },
+  "hero": {
+    "label": "Latin American CTF Team",
+    "tagline": "We hunt together, learn together, and conquer challenges as a united front.",
+    "subtitle": "From web exploitation to reverse engineering — every flag has a hunter.",
+    "platforms": "HackTheBox · TryHackMe · HackingClub · Live CTFs",
+    "joinThePack": "Join the Pack",
+    "ourHunts": "Our Hunts",
+    "stats": {
+      "ctfsCompleted": "CTFs Completed",
+      "flagsCaptured": "Flags Captured",
+      "activeMembers": "Active Members",
+      "platforms": "Platforms"
+    }
+  },
+  "about": {
+    "label": "Who We Are",
+    "title": "The Pack Hunts as One",
+    "description": "Cazabanderas — Flag Hunters — is an elite competitive CTF team rooted in Latin America and competing on the world stage. We were forged from a shared passion for cybersecurity, ethical hacking, and the thrill of the hunt.",
+    "description2": "Whether you're a seasoned hunter with years of experience or just starting your journey into ethical hacking, our pack thrives on collaboration, knowledge sharing, and the relentless pursuit of flags. Every skill — from web exploitation to reverse engineering, binary exploitation to cryptography — has its place in our arsenal.",
+    "values": {
+      "ethicalHacking": "Ethical Hacking",
+      "ethicalHackingDesc": "We operate strictly within legal and ethical boundaries, using our skills to learn, compete, and contribute to a safer digital world.",
+      "packMentality": "Pack Mentality",
+      "packMentalityDesc": "No hunter is left behind. We share knowledge, mentor newcomers, and tackle every challenge as a unified front.",
+      "relentlessPursuit": "Relentless Pursuit",
+      "relentlessPursuitDesc": "Every flag is a lesson. We approach each challenge with determination, creativity, and methodical precision.",
+      "latinRoots": "Latin Roots",
+      "latinRootsDesc": "Born in Latin America, competing worldwide. We carry our culture and identity into every competition we enter."
+    }
+  },
+  "arsenal": {
+    "label": "Our Arsenal",
+    "title": "Our Arsenal",
+    "subtitle": "Every category is a weapon. We sharpen them all.",
+    "categories": {
+      "osint": "OSINT",
+      "osintDesc": "Open-source intelligence gathering, social engineering research, and digital footprint analysis.",
+      "mobile": "Mobile",
+      "mobileDesc": "iOS and Android exploitation, reverse engineering mobile apps, and mobile security assessments.",
+      "web": "Web",
+      "webDesc": "SQL injection, XSS, SSRF, IDOR, deserialization, and every vulnerability hiding in web applications.",
+      "gamePwn": "GamePwn",
+      "gamePwnDesc": "Game hacking, memory manipulation, cheat engine exploitation, and game engine vulnerabilities.",
+      "reversing": "Reversing",
+      "reversingDesc": "Static and dynamic analysis, VM deobfuscation, firmware reversing, and anti-debug bypass.",
+      "aiMl": "AI/ML",
+      "aiMlDesc": "Machine learning model attacks, adversarial examples, neural network exploitation.",
+      "crypto": "Crypto",
+      "cryptoDesc": "RSA, ECC, AES, lattice attacks, hash collisions, and custom cipher analysis.",
+      "hardware": "Hardware",
+      "hardwareDesc": "Hardware hacking, side-channel attacks, fault injection, and embedded system exploitation.",
+      "coding": "Coding",
+      "codingDesc": "Algorithm challenges, programming puzzles, and code analysis for CTF competitions.",
+      "forensics": "Forensics",
+      "forensicsDesc": "Memory dumps, disk images, network captures, and artifact recovery from compromised systems.",
+      "blockchain": "Blockchain",
+      "blockchainDesc": "Smart contract exploitation, blockchain security, and cryptocurrency vulnerability analysis."
+    }
+  },
+  "platforms": {
+    "label": "Our Hunting Grounds",
+    "title": "Where We Compete"
+  },
+  "achievements": {
+    "label": "Battle Record",
+    "title": "Flags Captured",
+    "viewFullRecord": "View full record on CTFtime →"
+  },
+  "writeups": {
+    "label": "Knowledge Base",
+    "title": "Write-ups & Walkthroughs",
+    "subtitle": "We share our knowledge. Every solved challenge is a lesson for the whole pack.",
+    "search": "Search by title, tags, or category...",
+    "difficulty": "Difficulty",
+    "category": "Category",
+    "readTime": "Read Time",
+    "sort": "Sort",
+    "resetAll": "Reset All",
+    "noWriteups": "No write-ups found",
+    "tryAdjusting": "Try adjusting your filters or search terms.",
+    "resetAllFilters": "Reset All Filters",
+    "viewAllWriteups": "View All Write-ups"
+  },
+  "join": {
+    "label": "Recruitment",
+    "title": "Join the Hunt",
+    "subtitle": "Are you ready to hunt flags with one of Latin America's most driven CTF teams? We're always looking for passionate, skilled, and collaborative hunters to join our pack.",
+    "whatWeLookFor": "What We Look For",
+    "lookFor": [
+      "Passion for cybersecurity and ethical hacking",
+      "Active participation in CTF competitions",
+      "Willingness to learn and share knowledge",
+      "Proficiency in at least one CTF category",
+      "Collaborative mindset — the pack hunts together",
+      "Basic English or Spanish communication skills"
+    ],
+    "form": {
+      "title": "Application Form",
+      "subtitle": "Operative Request Form-001",
+      "handle": "Your handle / alias",
+      "specialty": "Select your specialty...",
+      "hacktheboxUrl": "https://app.hackthebox.com/users/...",
+      "about": "Tell us about yourself, your experience, and what you bring to the pack...",
+      "discord": "username#0000",
+      "submit": "Submit Application",
+      "preferDirect": "Prefer direct contact?",
+      "joinDiscord": "Join our Discord server"
+    }
+  },
+  "footer": {
+    "about": "About",
+    "team": "Team",
+    "platforms": "Platforms",
+    "achievements": "Achievements",
+    "writeups": "Write-ups",
+    "joinUs": "Join Us",
+    "contact": "contact@cazabanderas.team"
+  }
+}

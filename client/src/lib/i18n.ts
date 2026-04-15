@@ -1,0 +1,227 @@
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+
+const resources = {
+  en: {
+    translation: {
+      nav: {
+        about: 'About',
+        team: 'Team',
+        platforms: 'Platforms',
+        achievements: 'Achievements',
+        writeups: 'Write-ups',
+        joinUs: 'Join Us',
+        teamLogin: 'Team Login',
+        huntWithUs: 'Hunt with Us',
+      },
+      hero: {
+        label: 'Latin American CTF Team',
+        tagline: 'We hunt together, learn together, and conquer challenges as a united front.',
+        subtitle: 'From web exploitation to reverse engineering — every flag has a hunter.',
+        platforms: 'HackTheBox · TryHackMe · HackingClub · Live CTFs',
+        joinThePack: 'Join the Pack',
+        ourHunts: 'Our Hunts',
+        stats: {
+          ctfsCompleted: 'CTFs Completed',
+          flagsCaptured: 'Flags Captured',
+          activeMembers: 'Active Members',
+          platforms: 'Platforms',
+        },
+      },
+      about: {
+        label: 'Who We Are',
+        title: 'The Pack Hunts as One',
+      },
+      platforms: {
+        label: 'Our Hunting Grounds',
+        title: 'Where We Compete',
+      },
+      achievements: {
+        label: 'Battle Record',
+        title: 'Flags Captured',
+        viewFullRecord: 'View full record on CTFtime →',
+      },
+      writeups: {
+        label: 'Knowledge Base',
+        title: 'Write-ups &',
+        subtitle: 'Walkthroughs',
+        description: 'We share our knowledge. Every solved challenge is a lesson for the whole pack.',
+        search: 'Search by title, tags, or category...',
+        difficulty: 'Difficulty',
+        category: 'Category',
+        readTime: 'Read Time',
+        sort: 'Sort',
+        resetAll: 'Reset All',
+        noWriteupsFound: 'No write-ups found',
+        adjustFilters: 'Try adjusting your filters or search terms.',
+        resetAllFilters: 'Reset All Filters',
+        viewAll: 'View All Write-ups',
+        archiveComingSoon: 'Full write-ups archive coming soon!',
+      },
+      join: {
+        label: 'Recruitment',
+        title: 'Join the',
+        subtitle: 'Hunt',
+        description: 'Are you ready to hunt flags with one of Latin America\'s most driven CTF teams? We\'re always looking for passionate, skilled, and collaborative hunters to join our pack.',
+        whatWeLookFor: 'What We Look For',
+        preferDirect: 'Prefer direct contact?',
+        joinDiscord: 'Join our Discord server',
+        discordComingSoon: 'Discord link coming soon!',
+        form: {
+          title: 'Application Form',
+          subtitle: 'Operative Request',
+          handle: 'Your Handle / Alias *',
+          handlePlaceholder: 'e.g. 0xHunter',
+          specialty: 'Primary Specialty',
+          selectSpecialty: 'Select your specialty...',
+          profileUrl: 'HTB / THM Profile URL',
+          profileUrlPlaceholder: 'https://app.hackthebox.com/users/...',
+          about: 'Why do you want to join?',
+          aboutPlaceholder: 'Tell us about yourself, your experience, and what you bring to the pack...',
+          discord: 'Discord Username',
+          discordPlaceholder: 'username#0000',
+          submit: 'Submit Application',
+          reviewTime: 'Applications reviewed within 48–72 hours',
+          errors: {
+            handleRequired: 'Please enter your handle.',
+          },
+          success: {
+            title: 'Application Received',
+            description: 'We\'ll review your application and reach out soon. Welcome to the hunt.',
+            received: 'Application Received',
+            followUp: 'We\'ll review your application and reach out via Discord or email. Welcome to the hunt.',
+          },
+        },
+      },
+      footer: {
+        about: 'About',
+        team: 'Team',
+        platforms: 'Platforms',
+        achievements: 'Achievements',
+        writeups: 'Write-ups',
+        joinUs: 'Join Us',
+        contact: 'contact@cazabanderas.team',
+      },
+    },
+  },
+  es: {
+    translation: {
+      nav: {
+        about: 'Acerca de',
+        team: 'Equipo',
+        platforms: 'Plataformas',
+        achievements: 'Logros',
+        writeups: 'Tutoriales',
+        joinUs: 'Únete a Nosotros',
+        teamLogin: 'Acceso del Equipo',
+        huntWithUs: 'Caza con Nosotros',
+      },
+      hero: {
+        label: 'Equipo CTF Latinoamericano',
+        tagline: 'Cazamos juntos, aprendemos juntos y conquistamos desafíos como un frente unido.',
+        subtitle: 'Desde explotación web hasta ingeniería inversa — cada bandera tiene un cazador.',
+        platforms: 'HackTheBox · TryHackMe · HackingClub · CTFs en Vivo',
+        joinThePack: 'Únete a la Manada',
+        ourHunts: 'Nuestras Cacerías',
+        stats: {
+          ctfsCompleted: 'CTFs Completados',
+          flagsCaptured: 'Banderas Capturadas',
+          activeMembers: 'Miembros Activos',
+          platforms: 'Plataformas',
+        },
+      },
+      about: {
+        label: 'Quiénes Somos',
+        title: 'La Manada Caza Unida',
+      },
+      platforms: {
+        label: 'Nuestros Terrenos de Caza',
+        title: 'Dónde Competimos',
+      },
+      achievements: {
+        label: 'Registro de Batalla',
+        title: 'Banderas Capturadas',
+        viewFullRecord: 'Ver registro completo en CTFtime →',
+      },
+      writeups: {
+        label: 'Base de Conocimientos',
+        title: 'Tutoriales y',
+        subtitle: 'Soluciones',
+        description: 'Compartimos nuestro conocimiento. Cada desafío resuelto es una lección para toda la manada.',
+        search: 'Buscar por título, etiquetas o categoría...',
+        difficulty: 'Dificultad',
+        category: 'Categoría',
+        readTime: 'Tiempo de Lectura',
+        sort: 'Ordenar',
+        resetAll: 'Restablecer Todo',
+        noWriteupsFound: 'No se encontraron tutoriales',
+        adjustFilters: 'Intenta ajustar tus filtros o términos de búsqueda.',
+        resetAllFilters: 'Restablecer Todos los Filtros',
+        viewAll: 'Ver Todos los Tutoriales',
+        archiveComingSoon: '¡El archivo completo de tutoriales próximamente!',
+      },
+      join: {
+        label: 'Reclutamiento',
+        title: 'Únete a la',
+        subtitle: 'Caza',
+        description: '¿Estás listo para cazar banderas con uno de los equipos CTF más dedicados de América Latina? Siempre estamos buscando cazadores apasionados, hábiles y colaborativos para unirse a nuestra manada.',
+        whatWeLookFor: 'Qué Buscamos',
+        preferDirect: '¿Prefieres contacto directo?',
+        joinDiscord: 'Únete a nuestro servidor de Discord',
+        discordComingSoon: '¡El enlace de Discord próximamente!',
+        form: {
+          title: 'Formulario de Solicitud',
+          subtitle: 'Solicitud de Operativo',
+          handle: 'Tu Apodo / Alias *',
+          handlePlaceholder: 'p. ej. 0xHunter',
+          specialty: 'Especialidad Principal',
+          selectSpecialty: 'Selecciona tu especialidad...',
+          profileUrl: 'URL de Perfil HTB / THM',
+          profileUrlPlaceholder: 'https://app.hackthebox.com/users/...',
+          about: '¿Por qué quieres unirte?',
+          aboutPlaceholder: 'Cuéntanos sobre ti, tu experiencia y qué aportas a la manada...',
+          discord: 'Nombre de Usuario de Discord',
+          discordPlaceholder: 'usuario#0000',
+          submit: 'Enviar Solicitud',
+          reviewTime: 'Solicitudes revisadas en 48–72 horas',
+          errors: {
+            handleRequired: 'Por favor ingresa tu apodo.',
+          },
+          success: {
+            title: 'Solicitud Recibida',
+            description: 'Revisaremos tu solicitud y nos pondremos en contacto pronto. Bienvenido a la caza.',
+            received: 'Solicitud Recibida',
+            followUp: 'Revisaremos tu solicitud y nos pondremos en contacto por Discord o correo. Bienvenido a la caza.',
+          },
+        },
+      },
+      footer: {
+        about: 'Acerca de',
+        team: 'Equipo',
+        platforms: 'Plataformas',
+        achievements: 'Logros',
+        writeups: 'Tutoriales',
+        joinUs: 'Únete a Nosotros',
+        contact: 'contact@cazabanderas.team',
+      },
+    },
+  },
+};
+
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    resources,
+    fallbackLng: 'en',
+    interpolation: {
+      escapeValue: false,
+    },
+    detection: {
+      order: ['localStorage', 'navigator'],
+      caches: ['localStorage'],
+    },
+  });
+
+export default i18n;

@@ -7,6 +7,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -19,8 +21,18 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navLinks = [
+    { label: t('nav.about'), href: '#about' },
+    { label: t('nav.team'), href: '#team' },
+    { label: t('nav.platforms'), href: '#platforms' },
+    { label: t('nav.achievements'), href: '#achievements' },
+    { label: t('nav.writeups'), href: '#writeups' },
+    { label: t('nav.joinUs'), href: '#join' },
+    { label: t('nav.teamLogin'), href: '/team-login' },
+  ];
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
@@ -80,18 +92,19 @@ export default function Navbar() {
 
           {/* CTA */}
           <div className="hidden md:flex items-center gap-3">
+            <LanguageSwitcher />
             <a
               href="/team-login"
               className="px-4 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors"
             >
-              Team Login
+              {t('nav.teamLogin')}
             </a>
             <a
               href="#join"
               onClick={(e) => { e.preventDefault(); handleNavClick("#join"); }}
               className="px-4 py-2 border border-[#e63946] text-[#e63946] font-mono text-xs tracking-widest uppercase hover:bg-[#e63946] hover:text-white transition-all duration-200"
             >
-              Hunt With Us
+              {t('nav.huntWithUs')}
             </a>
           </div>
 

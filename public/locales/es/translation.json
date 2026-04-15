@@ -1,0 +1,130 @@
+{
+  "nav": {
+    "about": "Acerca de",
+    "team": "Equipo",
+    "platforms": "Plataformas",
+    "achievements": "Logros",
+    "writeups": "Tutoriales",
+    "joinUs": "Únete a Nosotros",
+    "teamLogin": "Acceso del Equipo",
+    "huntWithUs": "Caza con Nosotros"
+  },
+  "hero": {
+    "label": "Equipo CTF Latinoamericano",
+    "tagline": "Cazamos juntos, aprendemos juntos y conquistamos desafíos como un frente unido.",
+    "subtitle": "Desde explotación web hasta ingeniería inversa — cada bandera tiene un cazador.",
+    "platforms": "HackTheBox · TryHackMe · HackingClub · CTFs en Vivo",
+    "joinThePack": "Únete a la Manada",
+    "ourHunts": "Nuestras Cacerías",
+    "stats": {
+      "ctfsCompleted": "CTFs Completados",
+      "flagsCaptured": "Banderas Capturadas",
+      "activeMembers": "Miembros Activos",
+      "platforms": "Plataformas"
+    }
+  },
+  "about": {
+    "label": "Quiénes Somos",
+    "title": "La Manada Caza Unida",
+    "description": "Cazabanderas — Cazadores de Banderas — es un equipo CTF competitivo de élite con raíces en América Latina y compitiendo en el escenario mundial. Fuimos forjados por una pasión compartida por la ciberseguridad, el hacking ético y la emoción de la caza.",
+    "description2": "Ya seas un cazador experimentado con años de experiencia o apenas comenzando tu viaje en el hacking ético, nuestra manada prospera en la colaboración, el intercambio de conocimientos y la búsqueda implacable de banderas. Cada habilidad — desde explotación web hasta ingeniería inversa, explotación binaria hasta criptografía — tiene su lugar en nuestro arsenal.",
+    "values": {
+      "ethicalHacking": "Hacking Ético",
+      "ethicalHackingDesc": "Operamos estrictamente dentro de límites legales y éticos, usando nuestras habilidades para aprender, competir y contribuir a un mundo digital más seguro.",
+      "packMentality": "Mentalidad de Manada",
+      "packMentalityDesc": "Ningún cazador se queda atrás. Compartimos conocimientos, mentoreamos a los recién llegados y enfrentamos cada desafío como un frente unificado.",
+      "relentlessPursuit": "Búsqueda Implacable",
+      "relentlessPursuitDesc": "Cada bandera es una lección. Abordamos cada desafío con determinación, creatividad y precisión metódica.",
+      "latinRoots": "Raíces Latinas",
+      "latinRootsDesc": "Nacidos en América Latina, compitiendo en todo el mundo. Llevamos nuestra cultura e identidad a cada competencia en la que participamos."
+    }
+  },
+  "arsenal": {
+    "label": "Nuestro Arsenal",
+    "title": "Nuestro Arsenal",
+    "subtitle": "Cada categoría es un arma. Las afilamos todas.",
+    "categories": {
+      "osint": "OSINT",
+      "osintDesc": "Recopilación de inteligencia de código abierto, investigación de ingeniería social y análisis de huella digital.",
+      "mobile": "Móvil",
+      "mobileDesc": "Explotación de iOS y Android, ingeniería inversa de aplicaciones móviles y evaluaciones de seguridad móvil.",
+      "web": "Web",
+      "webDesc": "Inyección SQL, XSS, SSRF, IDOR, deserialización y todas las vulnerabilidades ocultas en aplicaciones web.",
+      "gamePwn": "GamePwn",
+      "gamePwnDesc": "Hacking de juegos, manipulación de memoria, explotación del motor de trucos y vulnerabilidades del motor de juegos.",
+      "reversing": "Ingeniería Inversa",
+      "reversingDesc": "Análisis estático y dinámico, desofuscación de VM, reversión de firmware y bypass anti-debug.",
+      "aiMl": "IA/ML",
+      "aiMlDesc": "Ataques a modelos de aprendizaje automático, ejemplos adversariales, explotación de redes neuronales.",
+      "crypto": "Criptografía",
+      "cryptoDesc": "RSA, ECC, AES, ataques de celosía, colisiones de hash y análisis de cifrado personalizado.",
+      "hardware": "Hardware",
+      "hardwareDesc": "Hacking de hardware, ataques de canal lateral, inyección de fallas y explotación de sistemas integrados.",
+      "coding": "Codificación",
+      "codingDesc": "Desafíos de algoritmos, acertijos de programación y análisis de código para competencias CTF.",
+      "forensics": "Forense",
+      "forensicsDesc": "Volcados de memoria, imágenes de disco, capturas de red y recuperación de artefactos de sistemas comprometidos.",
+      "blockchain": "Blockchain",
+      "blockchainDesc": "Explotación de contratos inteligentes, seguridad blockchain y análisis de vulnerabilidades de criptomonedas."
+    }
+  },
+  "platforms": {
+    "label": "Nuestros Terrenos de Caza",
+    "title": "Dónde Competimos"
+  },
+  "achievements": {
+    "label": "Registro de Batalla",
+    "title": "Banderas Capturadas",
+    "viewFullRecord": "Ver registro completo en CTFtime →"
+  },
+  "writeups": {
+    "label": "Base de Conocimientos",
+    "title": "Tutoriales y Soluciones",
+    "subtitle": "Compartimos nuestro conocimiento. Cada desafío resuelto es una lección para toda la manada.",
+    "search": "Buscar por título, etiquetas o categoría...",
+    "difficulty": "Dificultad",
+    "category": "Categoría",
+    "readTime": "Tiempo de Lectura",
+    "sort": "Ordenar",
+    "resetAll": "Restablecer Todo",
+    "noWriteups": "No se encontraron tutoriales",
+    "tryAdjusting": "Intenta ajustar tus filtros o términos de búsqueda.",
+    "resetAllFilters": "Restablecer Todos los Filtros",
+    "viewAllWriteups": "Ver Todos los Tutoriales"
+  },
+  "join": {
+    "label": "Reclutamiento",
+    "title": "Únete a la Caza",
+    "subtitle": "¿Estás listo para cazar banderas con uno de los equipos CTF más dedicados de América Latina? Siempre estamos buscando cazadores apasionados, hábiles y colaborativos para unirse a nuestra manada.",
+    "whatWeLookFor": "Qué Buscamos",
+    "lookFor": [
+      "Pasión por la ciberseguridad y el hacking ético",
+      "Participación activa en competencias CTF",
+      "Disposición para aprender y compartir conocimientos",
+      "Competencia en al menos una categoría CTF",
+      "Mentalidad colaborativa — la manada caza unida",
+      "Habilidades básicas de comunicación en inglés o español"
+    ],
+    "form": {
+      "title": "Formulario de Solicitud",
+      "subtitle": "Solicitud de Operativo Formulario-001",
+      "handle": "Tu apodo / alias",
+      "specialty": "Selecciona tu especialidad...",
+      "hacktheboxUrl": "https://app.hackthebox.com/users/...",
+      "about": "Cuéntanos sobre ti, tu experiencia y qué aportas a la manada...",
+      "discord": "usuario#0000",
+      "submit": "Enviar Solicitud",
+      "preferDirect": "¿Prefieres contacto directo?",
+      "joinDiscord": "Únete a nuestro servidor de Discord"
+    }
+  },
+  "footer": {
+    "about": "Acerca de",
+    "team": "Equipo",
+    "platforms": "Plataformas",
+    "achievements": "Logros",
+    "writeups": "Tutoriales",
+    "joinUs": "Únete a Nosotros",
+    "contact": "contact@cazabanderas.team"
+  }
+}

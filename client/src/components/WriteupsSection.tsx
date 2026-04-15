@@ -9,6 +9,7 @@ import { useInView } from "framer-motion";
 import { useRef, useState, useMemo } from "react";
 import { ArrowRight, Clock, Tag, ChevronDown, Search, X } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const writeups: Array<{
   title: string;
@@ -175,6 +176,7 @@ function FilterButton({
 }
 
 export default function WriteupsSection() {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -254,15 +256,15 @@ export default function WriteupsSection() {
         >
           <div className="flex items-center gap-3 mb-4">
             <div className="w-6 h-[2px] bg-[#e63946]" />
-            <span className="section-label">Knowledge Base</span>
+            <span className="section-label">{t('writeups.label')}</span>
           </div>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
             <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-none text-white tracking-wider">
-              WRITE-UPS &<br />
-              <span className="text-[#e63946]">WALKTHROUGHS</span>
+              {t('writeups.title')}<br />
+              <span className="text-[#e63946]">{t('writeups.subtitle')}</span>
             </h2>
             <p className="font-body text-sm text-white/40 max-w-xs leading-relaxed">
-              We share our knowledge. Every solved challenge is a lesson for the whole pack.
+              {t('writeups.description')}
             </p>
           </div>
         </motion.div>
@@ -400,7 +402,7 @@ export default function WriteupsSection() {
                 onClick={resetFilters}
                 className="px-3 py-1.5 border border-white/10 text-white/30 font-mono text-[0.65rem] tracking-widest uppercase hover:border-[#e63946]/40 hover:text-[#e63946] transition-all duration-200"
               >
-                Reset All
+                {t('writeups.resetAll')}
               </motion.button>
             )}
 
@@ -436,13 +438,13 @@ export default function WriteupsSection() {
               transition={{ duration: 0.3 }}
               className="flex flex-col items-center justify-center py-16 text-center"
             >
-              <div className="font-mono text-[0.65rem] text-white/30 tracking-widest uppercase mb-2">No write-ups found</div>
-              <p className="font-body text-sm text-white/25 mb-4">Try adjusting your filters or search terms.</p>
+              <div className="font-mono text-[0.65rem] text-white/30 tracking-widest uppercase mb-2">{t('writeups.noWriteupsFound')}</div>
+              <p className="font-body text-sm text-white/25 mb-4">{t('writeups.adjustFilters')}</p>
               <button
                 onClick={resetFilters}
                 className="px-4 py-2 border border-[#e63946]/40 text-[#e63946] font-mono text-[0.65rem] tracking-widest uppercase hover:bg-[#e63946]/5 transition-all duration-200"
               >
-                Reset All Filters
+                {t('writeups.resetAllFilters')}
               </button>
             </motion.div>
           )}
@@ -456,10 +458,10 @@ export default function WriteupsSection() {
           className="mt-10 flex justify-center"
         >
           <button
-            onClick={() => toast("Full write-ups archive coming soon!")}
+            onClick={() => toast(t('writeups.archiveComingSoon'))}
             className="group flex items-center gap-3 px-6 py-3 border border-white/10 text-white/40 font-mono text-xs tracking-widest uppercase hover:border-[#e63946]/40 hover:text-[#e63946] transition-all duration-200"
           >
-            View All Write-ups
+            {t('writeups.viewAll')}
             <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
           </button>
         </motion.div>

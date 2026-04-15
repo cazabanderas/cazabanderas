@@ -9,6 +9,7 @@ import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { CheckCircle, ChevronRight, Send } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const FLAG_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663561350743/fQrwPhmvRnJkdAC8zKsvoi/cazabanderas-flag-YbDzazFjmoW5saUm2YHhyG.webp";
 
@@ -33,6 +34,7 @@ const categories = [
 ];
 
 export default function JoinSection() {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [handle, setHandle] = useState("");
@@ -43,12 +45,12 @@ export default function JoinSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!handle.trim()) {
-      toast.error("Please enter your handle.");
+      toast.error(t('join.form.errors.handleRequired'));
       return;
     }
     setSubmitted(true);
-    toast.success("Application received!", {
-      description: "We'll review your application and reach out soon. Welcome to the hunt.",
+    toast.success(t('join.form.success.title'), {
+      description: t('join.form.success.description'),
     });
   };
 
@@ -68,14 +70,14 @@ export default function JoinSection() {
           >
             <div className="flex items-center gap-3 mb-4">
               <div className="w-6 h-[2px] bg-[#e63946]" />
-              <span className="section-label">Recruitment</span>
+              <span className="section-label">{t('join.label')}</span>
             </div>
             <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-none text-white tracking-wider mb-6">
-              JOIN THE<br />
-              <span className="text-[#e63946]">HUNT</span>
+              {t('join.title')}<br />
+              <span className="text-[#e63946]">{t('join.subtitle')}</span>
             </h2>
             <p className="font-body text-base text-white/55 leading-relaxed mb-8">
-              Are you ready to hunt flags with one of Latin America's most driven CTF teams? We're always looking for passionate, skilled, and collaborative hunters to join our pack.
+              {t('join.description')}
             </p>
 
             {/* Flag image */}
@@ -90,7 +92,7 @@ export default function JoinSection() {
 
             {/* Requirements */}
             <div>
-              <h3 className="font-display text-xl text-white tracking-wider mb-4">WHAT WE LOOK FOR</h3>
+              <h3 className="font-display text-xl text-white tracking-wider mb-4">{t('join.whatWeLookFor')}</h3>
               <ul className="space-y-3">
                 {requirements.map((req) => (
                   <li key={req} className="flex items-start gap-3">
@@ -112,8 +114,8 @@ export default function JoinSection() {
               {/* Form header */}
               <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
                 <div>
-                  <div className="font-mono text-[0.6rem] text-[#e63946]/60 tracking-widest uppercase mb-1">Application Form</div>
-                  <div className="font-display text-2xl text-white tracking-wider">OPERATIVE REQUEST</div>
+                  <div className="font-mono text-[0.6rem] text-[#e63946]/60 tracking-widest uppercase mb-1">{t('join.form.title')}</div>
+                  <div className="font-display text-2xl text-white tracking-wider">{t('join.form.subtitle')}</div>
                 </div>
                 <div className="font-mono text-[0.6rem] text-white/15 tracking-widest">FORM-001</div>
               </div>
@@ -127,21 +129,21 @@ export default function JoinSection() {
                   <div className="w-16 h-16 border-2 border-[#e63946] flex items-center justify-center mx-auto mb-4">
                     <CheckCircle size={28} className="text-[#e63946]" />
                   </div>
-                  <h3 className="font-display text-2xl text-white tracking-wider mb-2">APPLICATION RECEIVED</h3>
-                  <p className="font-body text-sm text-white/45">We'll review your application and reach out via Discord or email. Welcome to the hunt.</p>
+                  <h3 className="font-display text-2xl text-white tracking-wider mb-2">{t('join.form.success.received')}</h3>
+                  <p className="font-body text-sm text-white/45">{t('join.form.success.followUp')}</p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   {/* Handle */}
                   <div>
                     <label className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase block mb-2">
-                      Your Handle / Alias *
+                      {t('join.form.handle')}
                     </label>
                     <input
                       type="text"
                       value={handle}
                       onChange={(e) => setHandle(e.target.value)}
-                      placeholder="e.g. 0xHunter"
+                      placeholder={t('join.form.handlePlaceholder')}
                       className="w-full bg-[#0d0f14] border border-white/10 px-4 py-3 font-mono text-sm text-white placeholder-white/20 focus:outline-none focus:border-[#e63946]/50 transition-colors"
                     />
                   </div>
@@ -149,14 +151,14 @@ export default function JoinSection() {
                   {/* Specialty */}
                   <div>
                     <label className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase block mb-2">
-                      Primary Specialty
+                      {t('join.form.specialty')}
                     </label>
                     <select
                       value={specialty}
                       onChange={(e) => setSpecialty(e.target.value)}
                       className="w-full bg-[#0d0f14] border border-white/10 px-4 py-3 font-mono text-sm text-white/70 focus:outline-none focus:border-[#e63946]/50 transition-colors appearance-none"
                     >
-                      <option value="" className="bg-[#0d0f14]">Select your specialty...</option>
+                      <option value="" className="bg-[#0d0f14]">{t('join.form.selectSpecialty')}</option>
                       {categories.map((cat) => (
                         <option key={cat} value={cat} className="bg-[#0d0f14]">{cat}</option>
                       ))}
@@ -166,11 +168,11 @@ export default function JoinSection() {
                   {/* HTB/THM profile */}
                   <div>
                     <label className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase block mb-2">
-                      HTB / THM Profile URL
+                      {t('join.form.profileUrl')}
                     </label>
                     <input
                       type="url"
-                      placeholder="https://app.hackthebox.com/users/..."
+                      placeholder={t('join.form.profileUrlPlaceholder')}
                       className="w-full bg-[#0d0f14] border border-white/10 px-4 py-3 font-mono text-sm text-white placeholder-white/20 focus:outline-none focus:border-[#e63946]/50 transition-colors"
                     />
                   </div>
@@ -178,13 +180,13 @@ export default function JoinSection() {
                   {/* Message */}
                   <div>
                     <label className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase block mb-2">
-                      Why do you want to join?
+                      {t('join.form.about')}
                     </label>
                     <textarea
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       rows={4}
-                      placeholder="Tell us about yourself, your experience, and what you bring to the pack..."
+                      placeholder={t('join.form.aboutPlaceholder')}
                       className="w-full bg-[#0d0f14] border border-white/10 px-4 py-3 font-mono text-sm text-white placeholder-white/20 focus:outline-none focus:border-[#e63946]/50 transition-colors resize-none"
                     />
                   </div>
@@ -192,11 +194,11 @@ export default function JoinSection() {
                   {/* Discord */}
                   <div>
                     <label className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase block mb-2">
-                      Discord Username
+                      {t('join.form.discord')}
                     </label>
                     <input
                       type="text"
-                      placeholder="username#0000"
+                      placeholder={t('join.form.discordPlaceholder')}
                       className="w-full bg-[#0d0f14] border border-white/10 px-4 py-3 font-mono text-sm text-white placeholder-white/20 focus:outline-none focus:border-[#e63946]/50 transition-colors"
                     />
                   </div>
@@ -205,12 +207,12 @@ export default function JoinSection() {
                     type="submit"
                     className="w-full flex items-center justify-center gap-3 py-4 bg-[#e63946] text-white font-mono text-sm tracking-widest uppercase hover:bg-[#c1121f] transition-all duration-200 glow-crimson group"
                   >
-                    Submit Application
+                    {t('join.form.submit')}
                     <Send size={14} className="group-hover:translate-x-1 transition-transform" />
                   </button>
 
                   <p className="font-mono text-[0.6rem] text-white/20 text-center tracking-widest">
-                    Applications reviewed within 48–72 hours
+                    {t('join.form.reviewTime')}
                   </p>
                 </form>
               )}
@@ -219,11 +221,11 @@ export default function JoinSection() {
             {/* Discord CTA */}
             <div className="mt-5 p-4 border border-white/5 flex items-center justify-between">
               <div>
-                <div className="font-mono text-[0.6rem] text-white/30 tracking-widest uppercase mb-1">Prefer direct contact?</div>
-                <div className="font-body text-sm text-white/55">Join our Discord server</div>
+                <div className="font-mono text-[0.6rem] text-white/30 tracking-widest uppercase mb-1">{t('join.preferDirect')}</div>
+                <div className="font-body text-sm text-white/55">{t('join.joinDiscord')}</div>
               </div>
               <button
-                onClick={() => toast("Discord link coming soon!")}
+                onClick={() => toast(t('join.discordComingSoon'))}
                 className="flex items-center gap-2 px-4 py-2 border border-white/10 text-white/40 font-mono text-xs tracking-widest uppercase hover:border-[#e63946]/40 hover:text-[#e63946] transition-all"
               >
                 Discord <ChevronRight size={12} />

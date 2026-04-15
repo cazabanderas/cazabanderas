@@ -5,15 +5,7 @@
 
 import { Github, Twitter, Globe } from "lucide-react";
 import { toast } from "sonner";
-
-const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Team", href: "#team" },
-  { label: "Platforms", href: "#platforms" },
-  { label: "Achievements", href: "#achievements" },
-  { label: "Write-ups", href: "#writeups" },
-  { label: "Join Us", href: "#join" },
-];
+import { useTranslation } from "react-i18next";
 
 const socials = [
   { icon: Github, label: "GitHub", href: "https://github.com" },
@@ -22,6 +14,15 @@ const socials = [
 ];
 
 export default function Footer() {
+  const { t } = useTranslation();
+  const navLinks = [
+    { label: t('footer.about'), href: '#about' },
+    { label: t('footer.team'), href: '#team' },
+    { label: t('footer.platforms'), href: '#platforms' },
+    { label: t('footer.achievements'), href: '#achievements' },
+    { label: t('footer.writeups'), href: '#writeups' },
+    { label: t('footer.joinUs'), href: '#join' },
+  ];
   const handleNavClick = (href: string) => {
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -104,12 +105,12 @@ export default function Footer() {
             </ul>
 
             <div className="mt-8">
-              <div className="font-mono text-[0.65rem] text-[#e63946]/60 tracking-widest uppercase mb-3">Contact</div>
+              <div className="font-mono text-[0.65rem] text-[#e63946]/60 tracking-widest uppercase mb-3">{t('footer.contact')}</div>
               <button
-                onClick={() => toast("Contact info coming soon!")}
-                className="font-body text-sm text-white/35 hover:text-[#e63946] transition-colors"
+                onClick={() => toast(t('footer.contact') + " coming soon!")}
+                 className="font-body text-sm text-white/35 hover:text-white/70 transition-colors"
               >
-                contact@cazabanderas.team
+                {t('footer.contact')}
               </button>
             </div>
           </div>

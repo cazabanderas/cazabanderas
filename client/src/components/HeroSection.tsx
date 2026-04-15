@@ -6,6 +6,7 @@
 
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const HERO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663561350743/fQrwPhmvRnJkdAC8zKsvoi/cazabanderas-hero-TN4yaWimja3G9s299KtJy2.webp";
 
@@ -20,6 +21,7 @@ const itemVariants = {
 };
 
 export default function HeroSection() {
+  const { t } = useTranslation();
   const handleScroll = () => {
     document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -74,7 +76,7 @@ export default function HeroSection() {
           {/* Label */}
           <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-[#e63946]" />
-            <span className="section-label">Latin American CTF Team</span>
+            <span className="section-label">{t('hero.label')}</span>
           </motion.div>
 
           {/* Main heading */}
@@ -97,8 +99,9 @@ export default function HeroSection() {
             variants={itemVariants}
             className="font-body text-lg text-white/60 max-w-xl leading-relaxed mb-3"
           >
-            We hunt together, learn together, and conquer challenges as a united front.
-            From web exploitation to reverse engineering — every flag has a hunter.
+            {t('hero.tagline')}
+            <br />
+            {t('hero.subtitle')}
           </motion.p>
 
           {/* Mono subtitle */}
@@ -106,7 +109,7 @@ export default function HeroSection() {
             variants={itemVariants}
             className="font-mono text-xs text-[#e63946]/60 tracking-widest uppercase mb-10"
           >
-            HackTheBox · TryHackMe · HackingClub · Live CTFs
+            {t('hero.platforms')}
           </motion.div>
 
           {/* CTAs */}
@@ -116,14 +119,14 @@ export default function HeroSection() {
               onClick={(e) => { e.preventDefault(); document.querySelector("#join")?.scrollIntoView({ behavior: "smooth" }); }}
               className="group flex items-center gap-2 px-6 py-3 bg-[#e63946] text-white font-mono text-sm tracking-widest uppercase hover:bg-[#c1121f] transition-all duration-200 glow-crimson"
             >
-              Join the Pack
+              {t('hero.joinThePack')}
             </a>
             <a
               href="#achievements"
               onClick={(e) => { e.preventDefault(); document.querySelector("#achievements")?.scrollIntoView({ behavior: "smooth" }); }}
               className="flex items-center gap-2 px-6 py-3 border border-white/20 text-white/70 font-mono text-sm tracking-widest uppercase hover:border-white/50 hover:text-white transition-all duration-200"
             >
-              Our Hunts
+              {t('hero.ourHunts')}
             </a>
           </motion.div>
         </motion.div>
@@ -136,10 +139,10 @@ export default function HeroSection() {
           className="mt-16 flex flex-wrap gap-8 md:gap-16 pb-8"
         >
           {[
-            { value: "0", label: "CTFs Completed" },
-            { value: "0+", label: "Flags Captured" },
-            { value: "5", label: "Active Members" },
-            { value: "4", label: "Platforms" },
+            { value: "0", label: t('hero.stats.ctfsCompleted') },
+            { value: "0+", label: t('hero.stats.flagsCaptured') },
+            { value: "5", label: t('hero.stats.activeMembers') },
+            { value: "4", label: t('hero.stats.platforms') },
           ].map((stat) => (
             <div key={stat.label} className="border-left-accent">
               <div className="stat-number text-4xl">{stat.value}</div>

@@ -30,3 +30,21 @@
 - [ ] Email notifications for security alerts
 - [ ] Activity log export as CSV
 - [ ] Team member invitation system with shareable links
+- [x] Set up i18n infrastructure with i18next library
+- [x] Create English translation files
+- [x] Create Latin American Spanish translation files
+- [x] Integrate i18n into Navbar component
+- [x] Add language switcher UI component
+- [x] Integrate i18n into HeroSection component
+- [x] Integrate i18n into WriteupsSection component (header & empty state)
+- [x] Integrate i18n into JoinSection component (critical user-facing)
+- [x] Integrate i18n into Footer component (nav & contact)
+- [x] Test translations across all pages and routes (Hero, Navbar, Write-ups, Join, Footer verified)
+- [ ] Integrate i18n into AboutSection component (future)
+- [ ] Integrate i18n into CategoriesSection (Arsenal) component (future)
+- [ ] Integrate i18n into TeamSection component (future)
+- [ ] Integrate i18n into PlatformsSection component (future)
+- [ ] Integrate i18n into AchievementsSection component (future)
+- [ ] Integrate i18n into TeamLogin page (future)
+- [ ] Integrate i18n into TeamPortal page (future)
+- [ ] Integrate i18n into AdminPanel page (future)

@@ -7,64 +7,85 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Globe, Binary, Lock, Search, FileSearch, Shield, Wifi, Eye } from "lucide-react";
+import { Globe, Binary, Lock, Search, FileSearch, Shield, Wifi, Eye, Smartphone, Code, Zap, Database, Cpu, Blocks } from "lucide-react";
 
 const categories = [
   {
+    icon: Eye,
+    name: "OSINT",
+    desc: "Open-source intelligence gathering, social engineering research, and digital footprint analysis.",
+    count: "6",
+    countLabel: "flags",
+  },
+  {
+    icon: Smartphone,
+    name: "Mobile",
+    desc: "iOS and Android exploitation, reverse engineering mobile apps, and mobile security assessments.",
+    count: "3",
+    countLabel: "flags",
+  },
+  {
     icon: Globe,
-    name: "Web Exploitation",
+    name: "Web",
     desc: "SQL injection, XSS, SSRF, IDOR, deserialization, and every vulnerability hiding in web applications.",
-    count: "60+",
+    count: "4",
     countLabel: "flags",
   },
   {
-    icon: Binary,
-    name: "Binary Exploitation",
-    desc: "Buffer overflows, ROP chains, heap exploitation, format strings, and kernel-level attacks.",
-    count: "40+",
-    countLabel: "flags",
-  },
-  {
-    icon: Lock,
-    name: "Cryptography",
-    desc: "RSA, ECC, AES, lattice attacks, hash collisions, and custom cipher analysis.",
-    count: "35+",
-    countLabel: "flags",
+    icon: Zap,
+    name: "GamePwn",
+    desc: "Game hacking, memory manipulation, cheat engine exploitation, and game engine vulnerabilities.",
+    count: "1",
+    countLabel: "flag",
   },
   {
     icon: Search,
-    name: "Reverse Engineering",
+    name: "Reversing",
     desc: "Static and dynamic analysis, VM deobfuscation, firmware reversing, and anti-debug bypass.",
-    count: "30+",
+    count: "4",
+    countLabel: "flags",
+  },
+  {
+    icon: Cpu,
+    name: "AI/ML",
+    desc: "Machine learning model attacks, adversarial examples, neural network exploitation.",
+    count: "1",
+    countLabel: "flag",
+  },
+  {
+    icon: Lock,
+    name: "Crypto",
+    desc: "RSA, ECC, AES, lattice attacks, hash collisions, and custom cipher analysis.",
+    count: "1",
+    countLabel: "flag",
+  },
+  {
+    icon: Database,
+    name: "Hardware",
+    desc: "Hardware hacking, side-channel attacks, fault injection, and embedded system exploitation.",
+    count: "2",
+    countLabel: "flags",
+  },
+  {
+    icon: Code,
+    name: "Coding",
+    desc: "Algorithm challenges, programming puzzles, and code analysis for CTF competitions.",
+    count: "2",
     countLabel: "flags",
   },
   {
     icon: FileSearch,
     name: "Forensics",
     desc: "Memory dumps, disk images, network captures, and artifact recovery from compromised systems.",
-    count: "25+",
-    countLabel: "flags",
+    count: "1",
+    countLabel: "flag",
   },
   {
-    icon: Eye,
-    name: "OSINT",
-    desc: "Open-source intelligence gathering, social engineering research, and digital footprint analysis.",
-    count: "20+",
-    countLabel: "flags",
-  },
-  {
-    icon: Shield,
-    name: "Malware Analysis",
-    desc: "Static and dynamic malware analysis, unpacking, sandbox evasion, and YARA rule development.",
-    count: "15+",
-    countLabel: "flags",
-  },
-  {
-    icon: Wifi,
-    name: "Network Security",
-    desc: "Protocol analysis, packet crafting, man-in-the-middle, and wireless security assessments.",
-    count: "20+",
-    countLabel: "flags",
+    icon: Blocks,
+    name: "Blockchain",
+    desc: "Smart contract exploitation, blockchain security, and cryptocurrency vulnerability analysis.",
+    count: "1",
+    countLabel: "flag",
   },
 ];
 
@@ -125,7 +146,7 @@ export default function CategoriesSection() {
           </div>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {categories.map((cat, i) => (
             <CategoryCard key={cat.name} cat={cat} index={i} />
           ))}

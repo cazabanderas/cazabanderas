@@ -10,6 +10,7 @@
 
 ## In Progress
 - [x] Add real team statistics to homepage (0 CTFs, 5 members, 400+ flags)
+- [x] Update Arsenal section with real CTF category breakdown
 
 ## Completed Features (Recent)
 - [x] Team Resources section (file upload/download, documentation, access control)

@@ -7,6 +7,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Shield, Users, Target, Globe } from "lucide-react";
 
 const ABOUT_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663561350743/fQrwPhmvRnJkdAC8zKsvoi/cazabanderas-about-MWGHfhXtwcvoBFKYQQoekX.webp";
@@ -60,6 +61,7 @@ function ValueCard({ icon: Icon, title, desc, delay }: { icon: typeof Shield; ti
 }
 
 export default function AboutSection() {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -106,11 +108,10 @@ export default function AboutSection() {
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-6 h-[2px] bg-[#e63946]" />
-                <span className="section-label">Who We Are</span>
+                <span className="section-label">{t('about.label')}</span>
               </div>
               <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-none text-white tracking-wider mb-6">
-                THE PACK<br />
-                <span className="text-[#e63946]">HUNTS AS ONE</span>
+                {t('about.title')}
               </h2>
               <p className="font-body text-base text-white/60 leading-relaxed mb-4">
                 Cazabanderas — <em>Flag Hunters</em> — is an elite competitive CTF team rooted in Latin America and competing on the world stage. We were forged from a shared passion for cybersecurity, ethical hacking, and the thrill of the hunt.

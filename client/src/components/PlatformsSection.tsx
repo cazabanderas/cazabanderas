@@ -7,6 +7,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { ExternalLink } from "lucide-react";
 
 const CTF_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663561350743/fQrwPhmvRnJkdAC8zKsvoi/cazabanderas-ctf-bg-iaN85chb8NkEHHFjbVvx9v.webp";
@@ -102,6 +103,7 @@ function PlatformCard({ platform, index }: { platform: typeof platforms[0]; inde
 }
 
 export default function PlatformsSection() {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -127,11 +129,10 @@ export default function PlatformsSection() {
         >
           <div className="flex items-center gap-3 mb-4">
             <div className="w-6 h-[2px] bg-[#e63946]" />
-            <span className="section-label">Our Hunting Grounds</span>
+            <span className="section-label">{t('platforms.label')}</span>
           </div>
           <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-none text-white tracking-wider">
-            WHERE WE<br />
-            <span className="text-[#e63946]">COMPETE</span>
+            {t('platforms.title')}
           </h2>
         </motion.div>
 

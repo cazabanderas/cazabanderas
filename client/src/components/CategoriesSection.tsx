@@ -7,6 +7,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Globe, Binary, Lock, Search, FileSearch, Shield, Wifi, Eye, Smartphone, Code, Zap, Database, Cpu, Blocks } from "lucide-react";
 
 const categories = [
@@ -118,6 +119,7 @@ function CategoryCard({ cat, index }: { cat: typeof categories[0]; index: number
 }
 
 export default function CategoriesSection() {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -133,15 +135,14 @@ export default function CategoriesSection() {
         >
           <div className="flex items-center gap-3 mb-4">
             <div className="w-6 h-[2px] bg-[#e63946]" />
-            <span className="section-label">Disciplines</span>
+            <span className="section-label">{t('categories.label')}</span>
           </div>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
             <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-none text-white tracking-wider">
-              OUR<br />
-              <span className="text-[#e63946]">ARSENAL</span>
+              {t('categories.title')}
             </h2>
             <p className="font-body text-sm text-white/40 max-w-xs leading-relaxed">
-              Every category is a weapon. We sharpen them all.
+              {t('categories.subtitle')}
             </p>
           </div>
         </motion.div>

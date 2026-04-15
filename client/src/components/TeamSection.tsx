@@ -7,6 +7,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { trpc } from "@/lib/trpc";
 import { Loader2 } from "lucide-react";
 
@@ -62,6 +63,7 @@ const FALLBACK_MEMBERS = [
 ];
 
 export default function TeamSection() {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
@@ -117,15 +119,15 @@ export default function TeamSection() {
           <div className="inline-block mb-4">
             <div className="flex items-center gap-2 text-[#e63946] font-mono text-xs tracking-[0.2em] uppercase">
               <div className="w-8 h-px bg-[#e63946]" />
-              MEET THE HUNTERS
+              {t('team.label')}
               <div className="w-8 h-px bg-[#e63946]" />
             </div>
           </div>
           <h2 className="font-display text-5xl md:text-6xl font-bold text-white mb-4 tracking-wider">
-            OUR PACK
+            {t('team.title')}
           </h2>
           <p className="text-white/60 max-w-2xl mx-auto text-lg">
-            Specialists united in the hunt. Each member brings unique skills and relentless determination to every challenge.
+            {t('team.subtitle')}
           </p>
         </motion.div>
 

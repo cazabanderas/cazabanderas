@@ -7,6 +7,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Trophy, Medal, Star, Award } from "lucide-react";
 
 const achievements: Array<{
@@ -65,6 +66,7 @@ function AchievementCard({ item, index }: { item: typeof achievements[0]; index:
 }
 
 export default function AchievementsSection() {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -84,12 +86,11 @@ export default function AchievementsSection() {
         >
           <div className="flex items-center gap-3 mb-4">
             <div className="w-6 h-[2px] bg-[#e63946]" />
-            <span className="section-label">Battle Record</span>
+            <span className="section-label">{t('achievements.label')}</span>
           </div>
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
             <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-none text-white tracking-wider">
-              FLAGS<br />
-              <span className="text-[#e63946]">CAPTURED</span>
+              {t('achievements.title')}
             </h2>
 
             {/* Stats row */}
@@ -124,7 +125,7 @@ export default function AchievementsSection() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 font-mono text-xs text-white/30 hover:text-[#e63946] tracking-widest uppercase transition-colors"
           >
-            View full record on CTFtime →
+            {t('achievements.viewFullRecord')}
           </a>
         </motion.div>
       </div>

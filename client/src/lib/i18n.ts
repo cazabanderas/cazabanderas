@@ -33,6 +33,16 @@ const resources = {
         label: 'Who We Are',
         title: 'The Pack Hunts as One',
       },
+      categories: {
+        label: 'Disciplines',
+        title: 'Our Arsenal',
+        subtitle: 'Every category is a weapon. We sharpen them all.',
+      },
+      team: {
+        label: 'The Hunt',
+        title: 'Our Pack',
+        subtitle: 'Specialists united in the hunt. Each member brings unique skills and relentless determination to every challenge.',
+      },
       platforms: {
         label: 'Our Hunting Grounds',
         title: 'Where We Compete',
@@ -134,6 +144,16 @@ const resources = {
       about: {
         label: 'Quiénes Somos',
         title: 'La Manada Caza Unida',
+      },
+      categories: {
+        label: 'Disciplinas',
+        title: 'Nuestro Arsenal',
+        subtitle: 'Cada categoría es un arma. Las afilamos todas.',
+      },
+      team: {
+        label: 'La Caza',
+        title: 'Nuestra Manada',
+        subtitle: 'Especialistas unidos en la caza. Cada miembro aporta habilidades únicas y determinación implacable a cada desafío.',
       },
       platforms: {
         label: 'Nuestros Terrenos de Caza',

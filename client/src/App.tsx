@@ -7,6 +7,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import TeamPortal from "./pages/TeamPortal";
 import TeamLogin from "./pages/TeamLogin";
+import AdminPanel from "./pages/AdminPanel";
 
 // NOTE: About Theme
 // - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
@@ -20,6 +21,7 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/team-login"} component={TeamLogin} />
       <Route path={"/team-portal"} component={TeamPortal} />
+      <Route path={"/admin"} component={AdminPanel} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

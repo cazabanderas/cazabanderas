@@ -65,8 +65,16 @@ export default function TeamPortal() {
             <h1 className="font-display text-white text-xl tracking-widest">TEAM PORTAL</h1>
             <p className="font-mono text-[0.6rem] text-[#e63946]/70 tracking-[0.2em] uppercase">Operative Access</p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <span className="text-white/60 text-sm">{teamMember.displayName}</span>
+            {teamMember.specialty?.includes("Owner") && (
+              <a
+                href="/admin"
+                className="px-3 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors"
+              >
+                Admin
+              </a>
+            )}
             <button
               onClick={handleLogout}
               className="flex items-center gap-2 px-4 py-2 border border-[#e63946] text-[#e63946] font-mono text-xs tracking-widest uppercase hover:bg-[#e63946] hover:text-white transition-all duration-200"

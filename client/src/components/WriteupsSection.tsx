@@ -1,12 +1,13 @@
 /*
  * CAZABANDERAS Write-ups Section
- * Design: Blog-card grid with category tags, difficulty indicators, dark editorial style
+ * Design: Blog-card grid with interactive filters and sorting
+ * Features: Filter by difficulty & category, sort by date/title
  */
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { ArrowRight, Clock, Tag } from "lucide-react";
+import { useRef, useState, useMemo } from "react";
+import { ArrowRight, Clock, Tag, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 
 const writeups = [
@@ -19,7 +20,7 @@ const writeups = [
     readTime: "12 min",
     excerpt: "A deep dive into JWT algorithm confusion attacks — how RS256 can be downgraded to HS256 to forge arbitrary tokens.",
     tags: ["JWT", "Auth Bypass", "Web"],
-    date: "Mar 2024",
+    date: "2024-03-15",
   },
   {
     title: "Reversing a Custom VM Obfuscation Layer",
@@ -30,7 +31,7 @@ const writeups = [
     readTime: "18 min",
     excerpt: "Walkthrough of a challenge featuring a custom virtual machine with a proprietary instruction set. We decompile the VM and recover the flag.",
     tags: ["VM", "x86", "Ghidra"],
-    date: "Feb 2024",
+    date: "2024-02-20",
   },
   {
     title: "Lattice-Based Cryptography: Breaking LWE",
@@ -41,7 +42,7 @@ const writeups = [
     readTime: "22 min",
     excerpt: "Exploiting a weak parameter selection in a Learning With Errors implementation to recover the private key.",
     tags: ["LWE", "Lattice", "SageMath"],
-    date: "Jan 2024",
+    date: "2024-01-10",
   },
   {
     title: "Heap Exploitation: House of Orange",
@@ -52,7 +53,7 @@ const writeups = [
     readTime: "25 min",
     excerpt: "Step-by-step exploitation of a heap overflow using the House of Orange technique to achieve arbitrary code execution.",
     tags: ["Heap", "ROP", "glibc"],
-    date: "Dec 2023",
+    date: "2023-12-05",
   },
   {
     title: "OSINT: Tracing a Digital Footprint",
@@ -63,7 +64,7 @@ const writeups = [
     readTime: "10 min",
     excerpt: "Using open-source intelligence tools to reconstruct an attacker's identity from scattered digital breadcrumbs.",
     tags: ["OSINT", "Maltego", "Recon"],
-    date: "Nov 2023",
+    date: "2023-11-18",
   },
   {
     title: "Unpacking a Multi-Stage Dropper",
@@ -74,7 +75,40 @@ const writeups = [
     readTime: "16 min",
     excerpt: "Analyzing a real-world multi-stage malware dropper — from initial deobfuscation through payload extraction.",
     tags: ["Malware", "YARA", "PE"],
-    date: "Oct 2023",
+    date: "2023-10-22",
+  },
+  {
+    title: "SQL Injection: From Error-Based to Blind Exploitation",
+    category: "Web Exploitation",
+    difficulty: "Medium",
+    platform: "TryHackMe",
+    author: "0xViper",
+    readTime: "14 min",
+    excerpt: "Master the art of SQL injection from basic error-based techniques to advanced blind exploitation methods.",
+    tags: ["SQL", "Web", "Database"],
+    date: "2024-04-01",
+  },
+  {
+    title: "Kernel Exploitation: Privilege Escalation via CVE-2024-1086",
+    category: "Binary Exploitation",
+    difficulty: "Expert",
+    platform: "HackTheBox",
+    author: "BinShadow",
+    readTime: "28 min",
+    excerpt: "Deep dive into kernel-level exploitation and privilege escalation techniques using real-world CVEs.",
+    tags: ["Kernel", "Exploit", "Linux"],
+    date: "2024-03-28",
+  },
+  {
+    title: "Steganography: Hiding Data in Plain Sight",
+    category: "Cryptography",
+    difficulty: "Medium",
+    platform: "HackingClub",
+    author: "CryptoWolf",
+    readTime: "11 min",
+    excerpt: "Techniques for embedding and extracting hidden information from images, audio, and other media.",
+    tags: ["Steganography", "LSB", "Steganalysis"],
+    date: "2024-02-14",
   },
 ];
 
@@ -83,6 +117,24 @@ const difficultyColors: Record<string, string> = {
   Hard: "#e63946",
   Expert: "#9b2335",
 };
+
+const difficulties = ["All", "Medium", "Hard", "Expert"];
+const categories = [
+  "All",
+  "Web Exploitation",
+  "Binary Exploitation",
+  "Reverse Engineering",
+  "Cryptography",
+  "OSINT & Forensics",
+  "Malware Analysis",
+];
+
+const sortOptions = [
+  { label: "Newest First", value: "newest" },
+  { label: "Oldest First", value: "oldest" },
+  { label: "Title A-Z", value: "title-asc" },
+  { label: "Title Z-A", value: "title-desc" },
+];
 
 function WritupCard({ item, index }: { item: typeof writeups[0]; index: number }) {
   const ref = useRef(null);
@@ -146,16 +198,76 @@ function WritupCard({ item, index }: { item: typeof writeups[0]; index: number }
               <span className="font-mono text-[0.6rem]">{item.readTime}</span>
             </div>
           </div>
-          <span className="font-mono text-[0.6rem] text-white/20">{item.date}</span>
+          <span className="font-mono text-[0.6rem] text-white/20">
+            {new Date(item.date).toLocaleDateString("en-US", { year: "numeric", month: "short" })}
+          </span>
         </div>
       </div>
     </motion.div>
   );
 }
 
+function FilterButton({
+  label,
+  isActive,
+  onClick,
+}: {
+  label: string;
+  isActive: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`px-3 py-1.5 font-mono text-[0.65rem] tracking-widest uppercase transition-all duration-200 border ${
+        isActive
+          ? "border-[#e63946] text-[#e63946] bg-[#e63946]/5"
+          : "border-white/10 text-white/40 hover:border-white/20 hover:text-white/60"
+      }`}
+    >
+      {label}
+    </button>
+  );
+}
+
 export default function WriteupsSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  const [selectedDifficulty, setSelectedDifficulty] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [sortBy, setSortBy] = useState("newest");
+  const [showSortMenu, setShowSortMenu] = useState(false);
+
+  // Filter and sort writeups
+  const filteredWriteups = useMemo(() => {
+    let filtered = writeups.filter((item) => {
+      const diffMatch = selectedDifficulty === "All" || item.difficulty === selectedDifficulty;
+      const catMatch = selectedCategory === "All" || item.category === selectedCategory;
+      return diffMatch && catMatch;
+    });
+
+    // Sort
+    if (sortBy === "newest") {
+      filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    } else if (sortBy === "oldest") {
+      filtered.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    } else if (sortBy === "title-asc") {
+      filtered.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortBy === "title-desc") {
+      filtered.sort((a, b) => b.title.localeCompare(a.title));
+    }
+
+    return filtered;
+  }, [selectedDifficulty, selectedCategory, sortBy]);
+
+  const resetFilters = () => {
+    setSelectedDifficulty("All");
+    setSelectedCategory("All");
+    setSortBy("newest");
+  };
+
+  const hasActiveFilters = selectedDifficulty !== "All" || selectedCategory !== "All";
 
   return (
     <section id="writeups" className="relative py-24 bg-[#111318]">
@@ -166,7 +278,7 @@ export default function WriteupsSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="mb-14"
+          className="mb-12"
         >
           <div className="flex items-center gap-3 mb-4">
             <div className="w-6 h-[2px] bg-[#e63946]" />
@@ -183,12 +295,140 @@ export default function WriteupsSection() {
           </div>
         </motion.div>
 
+        {/* Filters & Sort */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="mb-8 space-y-4"
+        >
+          {/* Difficulty filter */}
+          <div>
+            <div className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase mb-2">Difficulty</div>
+            <div className="flex flex-wrap gap-2">
+              {difficulties.map((diff) => (
+                <FilterButton
+                  key={diff}
+                  label={diff}
+                  isActive={selectedDifficulty === diff}
+                  onClick={() => setSelectedDifficulty(diff)}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Category filter */}
+          <div>
+            <div className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase mb-2">Category</div>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((cat) => (
+                <FilterButton
+                  key={cat}
+                  label={cat}
+                  isActive={selectedCategory === cat}
+                  onClick={() => setSelectedCategory(cat)}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Sort & Reset */}
+          <div className="flex flex-wrap items-center gap-3 pt-2">
+            {/* Sort dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setShowSortMenu(!showSortMenu)}
+                className="flex items-center gap-2 px-3 py-1.5 border border-white/10 text-white/40 font-mono text-[0.65rem] tracking-widest uppercase hover:border-white/20 hover:text-white/60 transition-all duration-200"
+              >
+                Sort: {sortOptions.find((opt) => opt.value === sortBy)?.label}
+                <ChevronDown size={12} className={`transition-transform ${showSortMenu ? "rotate-180" : ""}`} />
+              </button>
+
+              <AnimatePresence>
+                {showSortMenu && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute top-full mt-2 left-0 z-50 bg-[#0d0f14] border border-white/10 shadow-lg"
+                  >
+                    {sortOptions.map((opt) => (
+                      <button
+                        key={opt.value}
+                        onClick={() => {
+                          setSortBy(opt.value);
+                          setShowSortMenu(false);
+                        }}
+                        className={`w-full text-left px-4 py-2 font-mono text-[0.65rem] tracking-widest uppercase transition-colors ${
+                          sortBy === opt.value
+                            ? "bg-[#e63946]/10 text-[#e63946]"
+                            : "text-white/40 hover:bg-white/5 hover:text-white/60"
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Reset button */}
+            {hasActiveFilters && (
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={resetFilters}
+                className="px-3 py-1.5 border border-white/10 text-white/30 font-mono text-[0.65rem] tracking-widest uppercase hover:border-[#e63946]/40 hover:text-[#e63946] transition-all duration-200"
+              >
+                Reset Filters
+              </motion.button>
+            )}
+
+            {/* Result count */}
+            <div className="ml-auto font-mono text-[0.65rem] text-white/25 tracking-widest">
+              {filteredWriteups.length} {filteredWriteups.length === 1 ? "RESULT" : "RESULTS"}
+            </div>
+          </div>
+        </motion.div>
+
         {/* Cards grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {writeups.map((item, i) => (
-            <WritupCard key={item.title} item={item} index={i} />
-          ))}
-        </div>
+        <AnimatePresence mode="wait">
+          {filteredWriteups.length > 0 ? (
+            <motion.div
+              key="writeups-grid"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
+            >
+              {filteredWriteups.map((item, i) => (
+                <WritupCard key={item.title} item={item} index={i} />
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="no-results"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.3 }}
+              className="flex flex-col items-center justify-center py-16 text-center"
+            >
+              <div className="font-mono text-[0.65rem] text-white/30 tracking-widest uppercase mb-2">No write-ups found</div>
+              <p className="font-body text-sm text-white/25 mb-4">Try adjusting your filters or reset to see all write-ups.</p>
+              <button
+                onClick={resetFilters}
+                className="px-4 py-2 border border-[#e63946]/40 text-[#e63946] font-mono text-[0.65rem] tracking-widest uppercase hover:bg-[#e63946]/5 transition-all duration-200"
+              >
+                Reset Filters
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* View all */}
         <motion.div

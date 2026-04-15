@@ -132,3 +132,42 @@ export const teamResources = mysqlTable("teamResources", {
 
 export type TeamResource = typeof teamResources.$inferSelect;
 export type InsertTeamResource = typeof teamResources.$inferInsert;
+
+/**
+ * Hunters Profile table - stores public team member profiles for the "Meet the hunters" section
+ * Separate from teamMembers to allow different visibility and display settings
+ */
+export const huntersProfiles = mysqlTable("huntersProfiles", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Reference to team member */
+  teamMemberId: int("teamMemberId").notNull(),
+  /** Display name (can differ from login name) */
+  displayName: varchar("displayName", { length: 255 }).notNull(),
+  /** Hunter's title/role (e.g., "Web Exploitation Specialist", "Reverse Engineer") */
+  title: varchar("title", { length: 255 }),
+  /** Short bio or catchphrase */
+  bio: text("bio"),
+  /** Primary specialty */
+  specialty: varchar("specialty", { length: 100 }),
+  /** Profile image URL (avatar) */
+  avatarUrl: text("avatarUrl"),
+  /** HTB profile URL */
+  htbProfile: text("htbProfile"),
+  /** TryHackMe profile URL */
+  thmProfile: text("thmProfile"),
+  /** GitHub profile URL */
+  githubProfile: text("githubProfile"),
+  /** Twitter/X profile URL */
+  twitterProfile: text("twitterProfile"),
+  /** Number of flags captured */
+  flagsCount: int("flagsCount").default(0).notNull(),
+  /** Ranking/position in team */
+  ranking: int("ranking"),
+  /** Whether this profile is visible on the public website */
+  isVisible: int("isVisible").default(1).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type HuntersProfile = typeof huntersProfiles.$inferSelect;
+export type InsertHuntersProfile = typeof huntersProfiles.$inferInsert;

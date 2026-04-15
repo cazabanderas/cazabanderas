@@ -7,10 +7,13 @@ import {
   getDb,
   authenticateTeamMember,
   logActivity,
-  getActivityLog
+  getActivityLog,
+  getAllHuntersProfiles,
+  upsertHuntersProfile,
+  deleteHuntersProfile
 } from "../db";
 import { TRPCError } from "@trpc/server";
-import { teamMembers, teamCredentials } from "../../drizzle/schema";
+import { teamMembers, teamCredentials, huntersProfiles } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
 
 export const adminRouter = router({
@@ -276,6 +279,79 @@ export const adminRouter = router({
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Failed to delete team member",
+        });
+      }
+    }),
+
+  /**
+   * Get all hunters profiles for admin
+   */
+  listHuntersProfiles: publicProcedure.query(async () => {
+    try {
+      const profiles = await getAllHuntersProfiles();
+      return profiles;
+    } catch (error) {
+      console.error("[Admin] Failed to list hunters profiles:", error);
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to fetch hunters profiles",
+      });
+    }
+  }),
+
+  /**
+   * Create or update a hunters profile
+   */
+  upsertHuntersProfile: publicProcedure
+    .input(
+      z.object({
+        id: z.number().optional(),
+        teamMemberId: z.number(),
+        displayName: z.string().min(1, "Display name is required"),
+        title: z.string().optional(),
+        bio: z.string().optional(),
+        specialty: z.string().optional(),
+        avatarUrl: z.string().optional(),
+        htbProfile: z.string().optional(),
+        thmProfile: z.string().optional(),
+        githubProfile: z.string().optional(),
+        twitterProfile: z.string().optional(),
+        flagsCount: z.number().default(0),
+        ranking: z.number().optional(),
+        isVisible: z.number().default(1),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        const result = await upsertHuntersProfile(input);
+        return {
+          success: true,
+          message: input.id ? "Hunter profile updated" : "Hunter profile created",
+          profile: result,
+        };
+      } catch (error) {
+        console.error("[Admin] Failed to upsert hunters profile:", error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to save hunters profile",
+        });
+      }
+    }),
+
+  /**
+   * Delete a hunters profile
+   */
+  deleteHuntersProfile: publicProcedure
+    .input(z.object({ profileId: z.number() }))
+    .mutation(async ({ input }) => {
+      try {
+        await deleteHuntersProfile(input.profileId);
+        return { success: true, message: "Hunter profile deleted" };
+      } catch (error) {
+        console.error("[Admin] Failed to delete hunters profile:", error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to delete hunters profile",
         });
       }
     }),

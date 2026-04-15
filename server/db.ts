@@ -1,6 +1,6 @@
 import { eq, desc, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, teamMembers, teamCredentials, activityLog, teamResources, InsertTeamResource } from "../drizzle/schema";
+import { InsertUser, users, teamMembers, teamCredentials, activityLog, teamResources, InsertTeamResource, huntersProfiles } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import bcrypt from 'bcryptjs';
 
@@ -383,6 +383,103 @@ export async function deleteTeamResource(resourceId: number) {
     await db.delete(teamResources).where(eq(teamResources.id, resourceId));
   } catch (error) {
     console.error("[Database] Failed to delete team resource:", error);
+    throw error;
+  }
+}
+
+/**
+ * Get all hunters profiles for the public website
+ */
+export async function getHuntersProfiles() {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get hunters profiles: database not available");
+    return [];
+  }
+
+  try {
+    const { huntersProfiles } = await import("../drizzle/schema");
+    const results = await db
+      .select()
+      .from(huntersProfiles)
+      .where(eq(huntersProfiles.isVisible, 1))
+      .orderBy(huntersProfiles.ranking);
+    return results;
+  } catch (error) {
+    console.error("[Database] Failed to get hunters profiles:", error);
+    return [];
+  }
+}
+
+/**
+ * Get all hunters profiles for admin (including hidden ones)
+ */
+export async function getAllHuntersProfiles() {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get hunters profiles: database not available");
+    return [];
+  }
+
+  try {
+    const { huntersProfiles } = await import("../drizzle/schema");
+    const results = await db
+      .select()
+      .from(huntersProfiles)
+      .orderBy(huntersProfiles.ranking);
+    return results;
+  } catch (error) {
+    console.error("[Database] Failed to get hunters profiles:", error);
+    return [];
+  }
+}
+
+/**
+ * Create or update a hunters profile
+ */
+export async function upsertHuntersProfile(profile: any) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot upsert hunters profile: database not available");
+    return null;
+  }
+
+  try {
+    const { huntersProfiles } = await import("../drizzle/schema");
+    
+    if (profile.id) {
+      // Update existing
+      await db
+        .update(huntersProfiles)
+        .set(profile)
+        .where(eq(huntersProfiles.id, profile.id));
+      return profile;
+    } else {
+      // Create new
+      const result = await db.insert(huntersProfiles).values(profile);
+      return { ...profile, id: result[0] };
+    }
+  } catch (error) {
+    console.error("[Database] Failed to upsert hunters profile:", error);
+    throw error;
+  }
+}
+
+/**
+ * Delete a hunters profile
+ */
+export async function deleteHuntersProfile(profileId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot delete hunters profile: database not available");
+    return;
+  }
+
+  try {
+    const { huntersProfiles } = await import("../drizzle/schema");
+    await db.delete(huntersProfiles).where(eq(huntersProfiles.id, profileId));
+  } catch (error) {
+    console.error("[Database] Failed to delete hunters profile:", error);
     throw error;
   }
 }

@@ -16,6 +16,7 @@
 - [x] Team Resources section (file upload/download, documentation, access control)
 
 ## Planned Features
+- [x] Team hunters profile management in admin panel (add/edit/remove hunter profiles)
 - [ ] Challenge Tracker for active CTF competitions
 - [ ] Team Chat for real-time collaboration
 - [ ] Leaderboard with member rankings and achievements

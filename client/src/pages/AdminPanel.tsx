@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Loader2, Plus, Trash2, Edit2, Eye, EyeOff, LogOut } from "lucide-react";
 import ActivityLog from "@/components/ActivityLog";
+import HuntersProfileManager from "@/components/HuntersProfileManager";
 
 interface TeamMember {
   id: number;
@@ -30,7 +31,7 @@ export default function AdminPanel() {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [activeTab, setActiveTab] = useState<"members" | "activity">("members");
+  const [activeTab, setActiveTab] = useState<"members" | "activity" | "hunters">("members");
 
   const { data: members, isLoading, refetch } = trpc.admin.listMembers.useQuery();
   const addMemberMutation = trpc.admin.addMember.useMutation();
@@ -160,6 +161,16 @@ export default function AdminPanel() {
               }`}
             >
               Activity Log
+            </button>
+            <button
+              onClick={() => setActiveTab("hunters")}
+              className={`px-6 py-3 font-mono text-sm tracking-widest uppercase transition-all ${
+                activeTab === "hunters"
+                  ? "text-[#e63946] border-b-2 border-[#e63946]"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              Hunters Profiles
             </button>
           </div>
 
@@ -331,6 +342,17 @@ export default function AdminPanel() {
           {/* Activity Log Tab */}
           {activeTab === "activity" && (
             <ActivityLog />
+          )}
+
+          {/* Hunters Profiles Tab */}
+          {activeTab === "hunters" && (
+            <div>
+              <div className="mb-8">
+                <h2 className="font-display text-3xl text-white mb-2 tracking-wider">HUNTERS PROFILES</h2>
+                <p className="text-white/60">Manage team member profiles for the public website</p>
+              </div>
+              <HuntersProfileManager />
+            </div>
           )}
         </div>
       </main>

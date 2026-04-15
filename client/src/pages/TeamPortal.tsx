@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { Loader2, LogOut } from "lucide-react";
+import TeamResources from "@/components/TeamResources";
 
 interface TeamMember {
   id: number;
@@ -102,20 +103,13 @@ export default function TeamPortal() {
             </p>
           </div>
 
-          {/* Placeholder Sections */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Team Resources */}
-            <div className="border border-[#e63946]/30 p-6 hover:border-[#e63946]/60 transition-colors">
-              <h3 className="font-display text-xl text-white mb-3 tracking-wider">TEAM RESOURCES</h3>
-              <p className="text-white/60 text-sm mb-4">
-                Access shared tools, documentation, and challenge repositories.
-              </p>
-              <button className="text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors">
-                Coming Soon →
-              </button>
-            </div>
+          {/* Team Resources Section */}
+          <TeamResources />
 
-            {/* Challenge Tracker */}
+          {/* Other Sections */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+
+            {/* Challenge Tracker - Coming Soon */}
             <div className="border border-[#e63946]/30 p-6 hover:border-[#e63946]/60 transition-colors">
               <h3 className="font-display text-xl text-white mb-3 tracking-wider">CHALLENGE TRACKER</h3>
               <p className="text-white/60 text-sm mb-4">

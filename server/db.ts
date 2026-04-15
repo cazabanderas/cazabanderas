@@ -1,6 +1,6 @@
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, teamMembers, teamCredentials, activityLog } from "../drizzle/schema";
+import { InsertUser, users, teamMembers, teamCredentials, activityLog, teamResources, InsertTeamResource } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import bcrypt from 'bcryptjs';
 
@@ -296,5 +296,93 @@ export async function getActivityLog({
   } catch (error) {
     console.error("[Activity Log] Failed to fetch activity log:", error);
     return [];
+  }
+}
+
+
+/**
+ * Get all team resources with optional filtering
+ */
+export async function getTeamResources(filters?: {
+  category?: string;
+  uploadedBy?: number;
+}) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get team resources: database not available");
+    return [];
+  }
+
+  try {
+    let query: any = db.select().from(teamResources);
+
+    if (filters?.category) {
+      query = query.where(eq(teamResources.category, filters.category));
+    }
+    if (filters?.uploadedBy) {
+      query = query.where(eq(teamResources.uploadedBy, filters.uploadedBy));
+    }
+
+    return await query.orderBy(desc(teamResources.createdAt));
+  } catch (error) {
+    console.error("[Database] Failed to get team resources:", error);
+    return [];
+  }
+}
+
+/**
+ * Create a new team resource
+ */
+export async function createTeamResource(resource: InsertTeamResource) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot create team resource: database not available");
+    return null;
+  }
+
+  try {
+    const result = await db.insert(teamResources).values(resource);
+    return result;
+  } catch (error) {
+    console.error("[Database] Failed to create team resource:", error);
+    throw error;
+  }
+}
+
+/**
+ * Increment download count for a resource
+ */
+export async function incrementDownloadCount(resourceId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot increment download count: database not available");
+    return;
+  }
+
+  try {
+    await db
+      .update(teamResources)
+      .set({ downloadCount: sql`${teamResources.downloadCount} + 1` })
+      .where(eq(teamResources.id, resourceId));
+  } catch (error) {
+    console.error("[Database] Failed to increment download count:", error);
+  }
+}
+
+/**
+ * Delete a team resource
+ */
+export async function deleteTeamResource(resourceId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot delete team resource: database not available");
+    return;
+  }
+
+  try {
+    await db.delete(teamResources).where(eq(teamResources.id, resourceId));
+  } catch (error) {
+    console.error("[Database] Failed to delete team resource:", error);
+    throw error;
   }
 }

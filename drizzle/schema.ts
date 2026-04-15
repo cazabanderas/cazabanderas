@@ -95,3 +95,40 @@ export const activityLog = mysqlTable("activityLog", {
 
 export type ActivityLog = typeof activityLog.$inferSelect;
 export type InsertActivityLog = typeof activityLog.$inferInsert;
+
+/**
+ * Team Resources table - stores shared files, documentation, and tools
+ * Accessible only to team members with download tracking
+ */
+export const teamResources = mysqlTable("teamResources", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Resource title */
+  title: varchar("title", { length: 255 }).notNull(),
+  /** Detailed description */
+  description: text("description"),
+  /** Category: Documentation, Tools, Guides, Scripts, Exploits, etc. */
+  category: varchar("category", { length: 100 }).notNull(),
+  /** S3 file URL */
+  fileUrl: text("fileUrl").notNull(),
+  /** S3 file key for deletion */
+  fileKey: text("fileKey").notNull(),
+  /** Original file name */
+  fileName: varchar("fileName", { length: 255 }).notNull(),
+  /** File size in bytes */
+  fileSize: int("fileSize"),
+  /** MIME type */
+  mimeType: varchar("mimeType", { length: 100 }),
+  /** Team member who uploaded */
+  uploadedBy: int("uploadedBy").notNull(),
+  /** Download count */
+  downloadCount: int("downloadCount").default(0).notNull(),
+  /** 0 = team only, 1 = public */
+  isPublic: int("isPublic").default(0).notNull(),
+  /** Comma-separated tags for filtering */
+  tags: varchar("tags", { length: 500 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type TeamResource = typeof teamResources.$inferSelect;
+export type InsertTeamResource = typeof teamResources.$inferInsert;

@@ -18,6 +18,8 @@
 ## Planned Features
 - [x] Team hunters profile management in admin panel (add/edit/remove hunter profiles)
 - [x] Connect hunters profiles to public 'Meet the hunters' section
+- [ ] Add home page link to Team Login page
+- [ ] Add navigation (home/team dashboard) to Admin Panel header
 - [ ] Challenge Tracker for active CTF competitions
 - [ ] Team Chat for real-time collaboration
 - [ ] Leaderboard with member rankings and achievements

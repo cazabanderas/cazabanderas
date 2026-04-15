@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
-import { Loader2, Plus, Trash2, Edit2, Eye, EyeOff, LogOut } from "lucide-react";
+import { Loader2, Plus, Trash2, Edit2, Eye, EyeOff, LogOut, Home, LayoutDashboard } from "lucide-react";
 import ActivityLog from "@/components/ActivityLog";
 import HuntersProfileManager from "@/components/HuntersProfileManager";
 
@@ -138,7 +138,44 @@ export default function AdminPanel() {
       </header>
 
       {/* Main Content */}
-      <main className="pt-24 pb-16">
+      {/* Admin Header with Navigation */}
+      <div className="fixed top-0 left-0 right-0 border-b border-white/10 bg-[#0d0f14]/95 backdrop-blur-sm z-50">
+        <div className="container max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+          <h1 className="font-display text-2xl text-white tracking-wider">ADMIN PANEL</h1>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setLocation("/team-portal")}
+              className="flex items-center gap-2 px-4 py-2 text-white/60 hover:text-white hover:bg-white/5 transition-colors rounded font-mono text-xs"
+              title="Team Dashboard"
+            >
+              <LayoutDashboard size={16} />
+              Team Dashboard
+            </button>
+            <button
+              onClick={() => setLocation("/")}
+              className="flex items-center gap-2 px-4 py-2 text-white/60 hover:text-white hover:bg-white/5 transition-colors rounded font-mono text-xs"
+              title="Home Page"
+            >
+              <Home size={16} />
+              Home
+            </button>
+            <button
+              onClick={() => {
+                localStorage.removeItem("teamMemberLoggedIn");
+                localStorage.removeItem("teamMember");
+                setLocation("/");
+              }}
+              className="flex items-center gap-2 px-4 py-2 text-white/60 hover:text-[#e63946] hover:bg-[#e63946]/10 transition-colors rounded font-mono text-xs"
+              title="Logout"
+            >
+              <LogOut size={16} />
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <main className="pt-32 pb-16">
         <div className="container max-w-6xl">
           {/* Tab Navigation */}
           <div className="mb-8 flex gap-4 border-b border-[#e63946]/30">

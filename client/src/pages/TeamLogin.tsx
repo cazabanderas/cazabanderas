@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
-import { Loader2 } from "lucide-react";
+import { Loader2, Home } from "lucide-react";
 
 /**
  * Team Login - Custom authentication for team members
- * Username/password login system
+ * Username/password login system with navigation to home
  */
 export default function TeamLogin() {
   const [, setLocation] = useLocation();
@@ -40,79 +40,94 @@ export default function TeamLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0d0f14] text-white flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
-        {/* Header */}
-        <div className="mb-12 text-center">
-          <h1 className="font-display text-4xl text-white mb-2 tracking-wider">
-            TEAM PORTAL
-          </h1>
-          <p className="text-white/60 font-mono text-xs tracking-widest uppercase">
-            Operative Access
-          </p>
-        </div>
+    <div className="min-h-screen bg-[#0d0f14] text-white flex flex-col">
+      {/* Header with Home Link */}
+      <div className="border-b border-white/10 px-6 py-4 flex items-center justify-between">
+        <h2 className="font-display text-lg text-white tracking-wider">CAZABANDERAS</h2>
+        <button
+          onClick={() => setLocation("/")}
+          className="flex items-center gap-2 px-4 py-2 text-white/60 hover:text-white hover:bg-white/5 transition-colors rounded font-mono text-xs"
+        >
+          <Home size={16} />
+          Home
+        </button>
+      </div>
 
-        {/* Login Form */}
-        <form onSubmit={handleLogin} className="space-y-6">
-          {/* Username Input */}
-          <div>
-            <label className="block font-mono text-xs text-[#e63946] tracking-widest uppercase mb-2">
-              Username
-            </label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
-              disabled={isLoading}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors disabled:opacity-50"
-            />
+      {/* Login Form Container */}
+      <div className="flex-1 flex items-center justify-center px-4">
+        <div className="w-full max-w-md">
+          {/* Header */}
+          <div className="mb-12 text-center">
+            <h1 className="font-display text-4xl text-white mb-2 tracking-wider">
+              TEAM PORTAL
+            </h1>
+            <p className="text-white/60 font-mono text-xs tracking-widest uppercase">
+              Operative Access
+            </p>
           </div>
 
-          {/* Password Input */}
-          <div>
-            <label className="block font-mono text-xs text-[#e63946] tracking-widest uppercase mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              disabled={isLoading}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors disabled:opacity-50"
-            />
-          </div>
-
-          {/* Error Message */}
-          {error && (
-            <div className="p-3 bg-[#e63946]/10 border border-[#e63946]/30 text-[#e63946] text-sm font-mono">
-              {error}
+          {/* Login Form */}
+          <form onSubmit={handleLogin} className="space-y-6">
+            {/* Username Input */}
+            <div>
+              <label className="block font-mono text-xs text-[#e63946] tracking-widest uppercase mb-2">
+                Username
+              </label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter your username"
+                disabled={isLoading}
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors disabled:opacity-50"
+              />
             </div>
-          )}
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={isLoading || !username || !password}
-            className="w-full px-6 py-3 bg-[#e63946] text-white font-mono text-sm tracking-widest uppercase hover:bg-[#c1121f] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2"
-          >
-            {isLoading ? (
-              <>
-                <Loader2 size={16} className="animate-spin" />
-                Authenticating...
-              </>
-            ) : (
-              "Sign In"
+            {/* Password Input */}
+            <div>
+              <label className="block font-mono text-xs text-[#e63946] tracking-widest uppercase mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                disabled={isLoading}
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors disabled:opacity-50"
+              />
+            </div>
+
+            {/* Error Message */}
+            {error && (
+              <div className="p-3 bg-[#e63946]/10 border border-[#e63946]/30 text-[#e63946] text-sm font-mono">
+                {error}
+              </div>
             )}
-          </button>
-        </form>
 
-        {/* Footer Info */}
-        <div className="mt-12 pt-8 border-t border-white/10 text-center">
-          <p className="text-white/40 text-xs font-mono">
-            Contact team leadership for credentials
-          </p>
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isLoading || !username || !password}
+              className="w-full px-6 py-3 bg-[#e63946] text-white font-mono text-sm tracking-widest uppercase hover:bg-[#c1121f] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" />
+                  Authenticating...
+                </>
+              ) : (
+                "Sign In"
+              )}
+            </button>
+          </form>
+
+          {/* Footer Info */}
+          <div className="mt-12 pt-8 border-t border-white/10 text-center">
+            <p className="text-white/40 text-xs font-mono">
+              Contact team leadership for credentials
+            </p>
+          </div>
         </div>
       </div>
     </div>

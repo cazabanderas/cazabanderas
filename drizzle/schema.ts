@@ -49,3 +49,24 @@ export const teamMembers = mysqlTable("teamMembers", {
 
 export type TeamMember = typeof teamMembers.$inferSelect;
 export type InsertTeamMember = typeof teamMembers.$inferInsert;
+
+/**
+ * Team credentials table - stores custom login credentials for team members
+ * Username and password hash for custom authentication (no OAuth)
+ */
+export const teamCredentials = mysqlTable("teamCredentials", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Unique username for login */
+  username: varchar("username", { length: 255 }).notNull().unique(),
+  /** Hashed password (bcrypt) */
+  passwordHash: text("passwordHash").notNull(),
+  /** Reference to team member */
+  teamMemberId: int("teamMemberId").notNull(),
+  /** Whether this credential is active */
+  isActive: int("isActive").default(1).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type TeamCredential = typeof teamCredentials.$inferSelect;
+export type InsertTeamCredential = typeof teamCredentials.$inferInsert;

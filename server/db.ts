@@ -1,7 +1,8 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, teamMembers } from "../drizzle/schema";
+import { InsertUser, users, teamMembers, teamCredentials } from "../drizzle/schema";
 import { ENV } from './_core/env';
+import bcrypt from 'bcryptjs';
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -134,5 +135,86 @@ export async function getAllTeamMembers() {
   } catch (error) {
     console.error("[Database] Failed to get team members:", error);
     return [];
+  }
+}
+
+/**
+ * Authenticate team member with username and password
+ * Returns team member info if credentials are valid
+ */
+export async function authenticateTeamMember(username: string, password: string) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot authenticate: database not available");
+    return null;
+  }
+
+  try {
+    const credential = await db
+      .select()
+      .from(teamCredentials)
+      .where(eq(teamCredentials.username, username))
+      .limit(1);
+
+    if (credential.length === 0 || credential[0].isActive !== 1) {
+      return null;
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, credential[0].passwordHash);
+    if (!isPasswordValid) {
+      return null;
+    }
+
+    const member = await db
+      .select()
+      .from(teamMembers)
+      .where(eq(teamMembers.id, credential[0].teamMemberId))
+      .limit(1);
+
+    if (member.length === 0 || member[0].isApproved !== 1) {
+      return null;
+    }
+
+    return member[0];
+  } catch (error) {
+    console.error("[Database] Failed to authenticate team member:", error);
+    return null;
+  }
+}
+
+/**
+ * Hash a password for storage
+ */
+export async function hashPassword(password: string): Promise<string> {
+  const salt = await bcrypt.genSalt(10);
+  return bcrypt.hash(password, salt);
+}
+
+/**
+ * Create team credentials for a team member
+ */
+export async function createTeamCredentials(
+  teamMemberId: number,
+  username: string,
+  password: string
+) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot create credentials: database not available");
+    return null;
+  }
+
+  try {
+    const passwordHash = await hashPassword(password);
+    await db.insert(teamCredentials).values({
+      teamMemberId,
+      username,
+      passwordHash,
+      isActive: 1,
+    });
+    return { username, teamMemberId };
+  } catch (error) {
+    console.error("[Database] Failed to create team credentials:", error);
+    return null;
   }
 }

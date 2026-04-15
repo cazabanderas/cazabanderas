@@ -1,24 +1,44 @@
-import { useAuth } from "@/_core/hooks/useAuth";
-import { trpc } from "@/lib/trpc";
-import { getLoginUrl } from "@/const";
+import { useEffect, useState } from "react";
+import { useLocation } from "wouter";
 import { Loader2, LogOut } from "lucide-react";
-import { Button } from "@/components/ui/button";
+
+interface TeamMember {
+  id: number;
+  displayName: string;
+  specialty?: string;
+  openId: string;
+}
 
 /**
  * Team Portal - Restricted access for official Cazabanderas team members only
  * Shows team-only content and resources
  */
 export default function TeamPortal() {
-  const { user, loading: authLoading, logout } = useAuth();
-  const { data: teamCheckData, isLoading: checkLoading } = trpc.auth.checkTeamMember.useQuery();
-  const logoutMutation = trpc.auth.logout.useMutation();
+  const [, setLocation] = useLocation();
+  const [teamMember, setTeamMember] = useState<TeamMember | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const isLoading = authLoading || checkLoading;
-  const isTeamMember = teamCheckData?.isTeamMember ?? false;
+  useEffect(() => {
+    const stored = localStorage.getItem("teamMember");
+    const isLoggedIn = localStorage.getItem("teamMemberLoggedIn");
 
-  const handleLogout = async () => {
-    await logoutMutation.mutateAsync();
-    logout();
+    if (stored && isLoggedIn) {
+      try {
+        const member = JSON.parse(stored);
+        setTeamMember(member);
+      } catch (err) {
+        setLocation("/team-login");
+      }
+    } else {
+      setLocation("/team-login");
+    }
+    setIsLoading(false);
+  }, [setLocation]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("teamMember");
+    localStorage.removeItem("teamMemberLoggedIn");
+    setLocation("/team-login");
   };
 
   if (isLoading) {
@@ -26,51 +46,14 @@ export default function TeamPortal() {
       <div className="min-h-screen flex items-center justify-center bg-[#0d0f14]">
         <div className="text-center">
           <Loader2 className="w-12 h-12 animate-spin text-[#e63946] mx-auto mb-4" />
-          <p className="text-white/60">Verifying team membership...</p>
+          <p className="text-white/60">Loading...</p>
         </div>
       </div>
     );
   }
 
-  if (!user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0d0f14]">
-        <div className="text-center max-w-md">
-          <h1 className="font-display text-4xl text-white mb-4">TEAM PORTAL</h1>
-          <p className="text-white/60 mb-8">
-            This portal is restricted to official Cazabanderas team members only.
-          </p>
-          <a
-            href={getLoginUrl()}
-            className="inline-block px-8 py-3 bg-[#e63946] text-white font-mono text-sm tracking-widest uppercase hover:bg-[#c1121f] transition-all duration-200"
-          >
-            Sign In with Manus
-          </a>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isTeamMember) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0d0f14]">
-        <div className="text-center max-w-md">
-          <h1 className="font-display text-4xl text-white mb-4">ACCESS DENIED</h1>
-          <p className="text-white/60 mb-4">
-            You are signed in as <span className="text-[#e63946]">{user.email}</span>
-          </p>
-          <p className="text-white/60 mb-8">
-            This portal is restricted to official Cazabanderas team members only. If you believe this is an error, contact the team leadership.
-          </p>
-          <button
-            onClick={handleLogout}
-            className="inline-block px-8 py-3 border border-[#e63946] text-[#e63946] font-mono text-sm tracking-widest uppercase hover:bg-[#e63946] hover:text-white transition-all duration-200"
-          >
-            Sign Out
-          </button>
-        </div>
-      </div>
-    );
+  if (!teamMember) {
+    return null;
   }
 
   return (
@@ -83,7 +66,7 @@ export default function TeamPortal() {
             <p className="font-mono text-[0.6rem] text-[#e63946]/70 tracking-[0.2em] uppercase">Operative Access</p>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-white/60 text-sm">{user.email}</span>
+            <span className="text-white/60 text-sm">{teamMember.displayName}</span>
             <button
               onClick={handleLogout}
               className="flex items-center gap-2 px-4 py-2 border border-[#e63946] text-[#e63946] font-mono text-xs tracking-widest uppercase hover:bg-[#e63946] hover:text-white transition-all duration-200"

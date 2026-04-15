@@ -15,7 +15,7 @@ const navLinks = [
   { label: "Achievements", href: "#achievements" },
   { label: "Write-ups", href: "#writeups" },
   { label: "Join Us", href: "#join" },
-  { label: "Team Portal", href: "/team-portal" },
+  { label: "Team Login", href: "/team-login" },
 ];
 
 export default function Navbar() {
@@ -81,10 +81,10 @@ export default function Navbar() {
           {/* CTA */}
           <div className="hidden md:flex items-center gap-3">
             <a
-              href="/team-portal"
+              href="/team-login"
               className="px-4 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors"
             >
-              Team Portal
+              Team Login
             </a>
             <a
               href="#join"

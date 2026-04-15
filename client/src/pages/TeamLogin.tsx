@@ -1,0 +1,120 @@
+import { useState } from "react";
+import { trpc } from "@/lib/trpc";
+import { useLocation } from "wouter";
+import { Loader2 } from "lucide-react";
+
+/**
+ * Team Login - Custom authentication for team members
+ * Username/password login system
+ */
+export default function TeamLogin() {
+  const [, setLocation] = useLocation();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const loginMutation = trpc.teamAuth.login.useMutation();
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
+
+    try {
+      const result = await loginMutation.mutateAsync({ username, password });
+      
+      if (result.success) {
+        // Store team member info in localStorage
+        localStorage.setItem("teamMember", JSON.stringify(result.member));
+        localStorage.setItem("teamMemberLoggedIn", "true");
+        
+        // Redirect to team portal
+        setLocation("/team-portal");
+      }
+    } catch (err: any) {
+      setError(err.message || "Login failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#0d0f14] text-white flex items-center justify-center px-4">
+      <div className="w-full max-w-md">
+        {/* Header */}
+        <div className="mb-12 text-center">
+          <h1 className="font-display text-4xl text-white mb-2 tracking-wider">
+            TEAM PORTAL
+          </h1>
+          <p className="text-white/60 font-mono text-xs tracking-widest uppercase">
+            Operative Access
+          </p>
+        </div>
+
+        {/* Login Form */}
+        <form onSubmit={handleLogin} className="space-y-6">
+          {/* Username Input */}
+          <div>
+            <label className="block font-mono text-xs text-[#e63946] tracking-widest uppercase mb-2">
+              Username
+            </label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter your username"
+              disabled={isLoading}
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors disabled:opacity-50"
+            />
+          </div>
+
+          {/* Password Input */}
+          <div>
+            <label className="block font-mono text-xs text-[#e63946] tracking-widest uppercase mb-2">
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              disabled={isLoading}
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors disabled:opacity-50"
+            />
+          </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="p-3 bg-[#e63946]/10 border border-[#e63946]/30 text-[#e63946] text-sm font-mono">
+              {error}
+            </div>
+          )}
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={isLoading || !username || !password}
+            className="w-full px-6 py-3 bg-[#e63946] text-white font-mono text-sm tracking-widest uppercase hover:bg-[#c1121f] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2"
+          >
+            {isLoading ? (
+              <>
+                <Loader2 size={16} className="animate-spin" />
+                Authenticating...
+              </>
+            ) : (
+              "Sign In"
+            )}
+          </button>
+        </form>
+
+        {/* Footer Info */}
+        <div className="mt-12 pt-8 border-t border-white/10 text-center">
+          <p className="text-white/40 text-xs font-mono">
+            Contact team leadership for credentials
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}

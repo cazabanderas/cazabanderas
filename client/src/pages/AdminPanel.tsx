@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Loader2, Plus, Trash2, Edit2, Eye, EyeOff, LogOut } from "lucide-react";
+import ActivityLog from "@/components/ActivityLog";
 
 interface TeamMember {
   id: number;
@@ -29,6 +30,7 @@ export default function AdminPanel() {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [activeTab, setActiveTab] = useState<"members" | "activity">("members");
 
   const { data: members, isLoading, refetch } = trpc.admin.listMembers.useQuery();
   const addMemberMutation = trpc.admin.addMember.useMutation();
@@ -137,7 +139,32 @@ export default function AdminPanel() {
       {/* Main Content */}
       <main className="pt-24 pb-16">
         <div className="container max-w-6xl">
+          {/* Tab Navigation */}
+          <div className="mb-8 flex gap-4 border-b border-[#e63946]/30">
+            <button
+              onClick={() => setActiveTab("members")}
+              className={`px-6 py-3 font-mono text-sm tracking-widest uppercase transition-all ${
+                activeTab === "members"
+                  ? "text-[#e63946] border-b-2 border-[#e63946]"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              Team Members
+            </button>
+            <button
+              onClick={() => setActiveTab("activity")}
+              className={`px-6 py-3 font-mono text-sm tracking-widest uppercase transition-all ${
+                activeTab === "activity"
+                  ? "text-[#e63946] border-b-2 border-[#e63946]"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              Activity Log
+            </button>
+          </div>
+
           {/* Add Member Button */}
+          {activeTab === "members" && (
           <div className="mb-8 flex items-center justify-between">
             <div>
               <h2 className="font-display text-3xl text-white mb-2 tracking-wider">TEAM MEMBERS</h2>
@@ -151,9 +178,10 @@ export default function AdminPanel() {
               Add Member
             </button>
           </div>
+          )}
 
           {/* Add Member Form */}
-          {showAddForm && (
+          {activeTab === "members" && showAddForm && (
             <div className="mb-8 border border-[#e63946]/30 p-6 bg-white/5">
               <h3 className="font-display text-xl text-white mb-6 tracking-wider">NEW OPERATIVE</h3>
               <form onSubmit={handleAddMember} className="space-y-4">
@@ -240,6 +268,7 @@ export default function AdminPanel() {
           )}
 
           {/* Members List */}
+          {activeTab === "members" && (
           <div className="space-y-4">
             {members && members.length > 0 ? (
               members.map((member) => (
@@ -297,6 +326,12 @@ export default function AdminPanel() {
               </div>
             )}
           </div>
+          )}
+
+          {/* Activity Log Tab */}
+          {activeTab === "activity" && (
+            <ActivityLog />
+          )}
         </div>
       </main>
     </div>

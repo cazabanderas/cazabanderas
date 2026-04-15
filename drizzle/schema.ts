@@ -70,3 +70,28 @@ export const teamCredentials = mysqlTable("teamCredentials", {
 
 export type TeamCredential = typeof teamCredentials.$inferSelect;
 export type InsertTeamCredential = typeof teamCredentials.$inferInsert;
+/**
+ * Activity log table - tracks all security-relevant events
+ * Login attempts, credential changes, member deletions, etc.
+ */
+export const activityLog = mysqlTable("activityLog", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Reference to team member performing or affected by the action */
+  teamMemberId: int("teamMemberId").notNull(),
+  /** Action type: login, login_failed, credential_created, credential_reset, credential_deactivated, member_deleted, member_added */
+  action: varchar("action", { length: 50 }).notNull(),
+  /** Detailed description of the action */
+  details: text("details"),
+  /** IP address of the request (if applicable) */
+  ipAddress: varchar("ipAddress", { length: 45 }),
+  /** User agent / browser info */
+  userAgent: text("userAgent"),
+  /** 1 = success, 0 = failure */
+  success: int("success").default(1).notNull(),
+  /** When the action occurred */
+  timestamp: timestamp("timestamp").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ActivityLog = typeof activityLog.$inferSelect;
+export type InsertActivityLog = typeof activityLog.$inferInsert;

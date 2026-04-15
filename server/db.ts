@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, teamMembers, teamCredentials } from "../drizzle/schema";
+import { InsertUser, users, teamMembers, teamCredentials, activityLog } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import bcrypt from 'bcryptjs';
 
@@ -216,5 +216,85 @@ export async function createTeamCredentials(
   } catch (error) {
     console.error("[Database] Failed to create team credentials:", error);
     return null;
+  }
+}
+
+/**
+ * Log an activity/event for security auditing
+ */
+export async function logActivity({
+  teamMemberId,
+  action,
+  details,
+  ipAddress,
+  userAgent,
+  success = 1,
+}: {
+  teamMemberId: number;
+  action: string;
+  details?: string;
+  ipAddress?: string;
+  userAgent?: string;
+  success?: number;
+}): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Activity Log] Cannot log activity: database not available");
+    return;
+  }
+
+  try {
+    await db.insert(activityLog).values({
+      teamMemberId,
+      action,
+      details: details || null,
+      ipAddress: ipAddress || null,
+      userAgent: userAgent || null,
+      success,
+    });
+  } catch (error) {
+    console.error("[Activity Log] Failed to log activity:", error);
+  }
+}
+
+/**
+ * Get activity log entries with optional filtering
+ */
+export async function getActivityLog({
+  teamMemberId,
+  action,
+  limit = 100,
+  offset = 0,
+}: {
+  teamMemberId?: number;
+  action?: string;
+  limit?: number;
+  offset?: number;
+} = {}) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Activity Log] Cannot fetch activity log: database not available");
+    return [];
+  }
+
+  try {
+    let query: any = db.select().from(activityLog);
+
+    if (teamMemberId !== undefined) {
+      query = query.where(eq(activityLog.teamMemberId, teamMemberId));
+    }
+    if (action !== undefined) {
+      query = query.where(eq(activityLog.action, action));
+    }
+
+    const results = await query
+      .orderBy(desc(activityLog.timestamp))
+      .limit(limit)
+      .offset(offset);
+
+    return results;
+  } catch (error) {
+    console.error("[Activity Log] Failed to fetch activity log:", error);
+    return [];
   }
 }

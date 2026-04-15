@@ -5,7 +5,9 @@ import {
   createTeamCredentials, 
   hashPassword,
   getDb,
-  authenticateTeamMember
+  authenticateTeamMember,
+  logActivity,
+  getActivityLog
 } from "../db";
 import { TRPCError } from "@trpc/server";
 import { teamMembers, teamCredentials } from "../../drizzle/schema";
@@ -274,6 +276,37 @@ export const adminRouter = router({
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Failed to delete team member",
+        });
+      }
+    }),
+
+  /**
+   * Get activity log with optional filtering
+   */
+  getActivityLog: publicProcedure
+    .input(
+      z.object({
+        teamMemberId: z.number().optional(),
+        action: z.string().optional(),
+        limit: z.number().default(50),
+        offset: z.number().default(0),
+      })
+    )
+    .query(async ({ input }) => {
+      try {
+        const logs = await getActivityLog({
+          teamMemberId: input.teamMemberId,
+          action: input.action,
+          limit: input.limit,
+          offset: input.offset,
+        });
+
+        return logs;
+      } catch (error) {
+        console.error("[Admin] Failed to fetch activity log:", error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to fetch activity log",
         });
       }
     }),

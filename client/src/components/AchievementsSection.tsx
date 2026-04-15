@@ -67,10 +67,10 @@ const achievements = [
 ];
 
 const stats = [
-  { value: "50+", label: "CTFs Entered" },
-  { value: "200+", label: "Flags Captured" },
-  { value: "3", label: "First Places" },
-  { value: "12+", label: "Top 100 Finishes" },
+  { value: "0", label: "CTFs Completed" },
+  { value: "400+", label: "Flags Captured" },
+  { value: "5", label: "Active Members" },
+  { value: "4", label: "Platforms" },
 ];
 
 function AchievementCard({ item, index }: { item: typeof achievements[0]; index: number }) {

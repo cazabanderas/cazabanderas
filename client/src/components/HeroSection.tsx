@@ -136,9 +136,9 @@ export default function HeroSection() {
           className="mt-16 flex flex-wrap gap-8 md:gap-16 pb-8"
         >
           {[
-            { value: "50+", label: "CTFs Competed" },
-            { value: "200+", label: "Flags Captured" },
-            { value: "15+", label: "Active Members" },
+            { value: "0", label: "CTFs Completed" },
+            { value: "400+", label: "Flags Captured" },
+            { value: "5", label: "Active Members" },
             { value: "4", label: "Platforms" },
           ].map((stat) => (
             <div key={stat.label} className="border-left-accent">

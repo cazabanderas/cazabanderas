@@ -9,6 +9,9 @@
 - [x] Activity logging system with security tracking
 
 ## In Progress
+- [x] Add real team statistics to homepage (0 CTFs, 5 members, 400+ flags)
+
+## Completed Features (Recent)
 - [x] Team Resources section (file upload/download, documentation, access control)
 
 ## Planned Features

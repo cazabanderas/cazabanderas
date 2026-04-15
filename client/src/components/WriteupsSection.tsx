@@ -1,13 +1,13 @@
 /*
  * CAZABANDERAS Write-ups Section
- * Design: Blog-card grid with interactive filters and sorting
- * Features: Filter by difficulty & category, sort by date/title
+ * Design: Blog-card grid with interactive filters, sorting, search, and read-time estimation
+ * Features: Filter by difficulty, category, read-time; sort by date/title; real-time search
  */
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState, useMemo } from "react";
-import { ArrowRight, Clock, Tag, ChevronDown } from "lucide-react";
+import { ArrowRight, Clock, Tag, ChevronDown, Search, X } from "lucide-react";
 import { toast } from "sonner";
 
 const writeups = [
@@ -17,7 +17,7 @@ const writeups = [
     difficulty: "Hard",
     platform: "HackTheBox",
     author: "0xViper",
-    readTime: "12 min",
+    readTime: 12,
     excerpt: "A deep dive into JWT algorithm confusion attacks — how RS256 can be downgraded to HS256 to forge arbitrary tokens.",
     tags: ["JWT", "Auth Bypass", "Web"],
     date: "2024-03-15",
@@ -28,7 +28,7 @@ const writeups = [
     difficulty: "Hard",
     platform: "CTF Finals",
     author: "Phantasm",
-    readTime: "18 min",
+    readTime: 18,
     excerpt: "Walkthrough of a challenge featuring a custom virtual machine with a proprietary instruction set. We decompile the VM and recover the flag.",
     tags: ["VM", "x86", "Ghidra"],
     date: "2024-02-20",
@@ -39,7 +39,7 @@ const writeups = [
     difficulty: "Expert",
     platform: "HackingClub",
     author: "CryptoWolf",
-    readTime: "22 min",
+    readTime: 22,
     excerpt: "Exploiting a weak parameter selection in a Learning With Errors implementation to recover the private key.",
     tags: ["LWE", "Lattice", "SageMath"],
     date: "2024-01-10",
@@ -50,7 +50,7 @@ const writeups = [
     difficulty: "Expert",
     platform: "picoCTF",
     author: "BinShadow",
-    readTime: "25 min",
+    readTime: 25,
     excerpt: "Step-by-step exploitation of a heap overflow using the House of Orange technique to achieve arbitrary code execution.",
     tags: ["Heap", "ROP", "glibc"],
     date: "2023-12-05",
@@ -61,7 +61,7 @@ const writeups = [
     difficulty: "Medium",
     platform: "TryHackMe",
     author: "NetHunter",
-    readTime: "10 min",
+    readTime: 10,
     excerpt: "Using open-source intelligence tools to reconstruct an attacker's identity from scattered digital breadcrumbs.",
     tags: ["OSINT", "Maltego", "Recon"],
     date: "2023-11-18",
@@ -72,7 +72,7 @@ const writeups = [
     difficulty: "Hard",
     platform: "HackTheBox",
     author: "MalDev",
-    readTime: "16 min",
+    readTime: 16,
     excerpt: "Analyzing a real-world multi-stage malware dropper — from initial deobfuscation through payload extraction.",
     tags: ["Malware", "YARA", "PE"],
     date: "2023-10-22",
@@ -83,7 +83,7 @@ const writeups = [
     difficulty: "Medium",
     platform: "TryHackMe",
     author: "0xViper",
-    readTime: "14 min",
+    readTime: 14,
     excerpt: "Master the art of SQL injection from basic error-based techniques to advanced blind exploitation methods.",
     tags: ["SQL", "Web", "Database"],
     date: "2024-04-01",
@@ -94,7 +94,7 @@ const writeups = [
     difficulty: "Expert",
     platform: "HackTheBox",
     author: "BinShadow",
-    readTime: "28 min",
+    readTime: 28,
     excerpt: "Deep dive into kernel-level exploitation and privilege escalation techniques using real-world CVEs.",
     tags: ["Kernel", "Exploit", "Linux"],
     date: "2024-03-28",
@@ -105,7 +105,7 @@ const writeups = [
     difficulty: "Medium",
     platform: "HackingClub",
     author: "CryptoWolf",
-    readTime: "11 min",
+    readTime: 11,
     excerpt: "Techniques for embedding and extracting hidden information from images, audio, and other media.",
     tags: ["Steganography", "LSB", "Steganalysis"],
     date: "2024-02-14",
@@ -136,9 +136,23 @@ const sortOptions = [
   { label: "Title Z-A", value: "title-desc" },
 ];
 
+const readTimeCategories = [
+  { label: "All", value: "all" },
+  { label: "Quick Reads (≤10 min)", value: "quick" },
+  { label: "Deep Dives (20+ min)", value: "deep" },
+];
+
+// Helper function to categorize read time
+function getReadTimeCategory(minutes: number): "quick" | "deep" | "medium" {
+  if (minutes <= 10) return "quick";
+  if (minutes >= 20) return "deep";
+  return "medium";
+}
+
 function WritupCard({ item, index }: { item: typeof writeups[0]; index: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
+  const readTimeCategory = getReadTimeCategory(item.readTime);
 
   const handleClick = () => {
     toast("Write-up coming soon!", {
@@ -195,8 +209,20 @@ function WritupCard({ item, index }: { item: typeof writeups[0]; index: number }
             <span className="text-white/15">·</span>
             <div className="flex items-center gap-1 text-white/25">
               <Clock size={9} />
-              <span className="font-mono text-[0.6rem]">{item.readTime}</span>
+              <span className="font-mono text-[0.6rem]">{item.readTime} min</span>
             </div>
+            {readTimeCategory === "quick" && (
+              <>
+                <span className="text-white/15">·</span>
+                <span className="font-mono text-[0.6rem] text-[#f4a261]">QUICK READ</span>
+              </>
+            )}
+            {readTimeCategory === "deep" && (
+              <>
+                <span className="text-white/15">·</span>
+                <span className="font-mono text-[0.6rem] text-[#e63946]">DEEP DIVE</span>
+              </>
+            )}
           </div>
           <span className="font-mono text-[0.6rem] text-white/20">
             {new Date(item.date).toLocaleDateString("en-US", { year: "numeric", month: "short" })}
@@ -236,15 +262,35 @@ export default function WriteupsSection() {
 
   const [selectedDifficulty, setSelectedDifficulty] = useState("All");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedReadTime, setSelectedReadTime] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
   const [showSortMenu, setShowSortMenu] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Filter and sort writeups
   const filteredWriteups = useMemo(() => {
     let filtered = writeups.filter((item) => {
       const diffMatch = selectedDifficulty === "All" || item.difficulty === selectedDifficulty;
       const catMatch = selectedCategory === "All" || item.category === selectedCategory;
-      return diffMatch && catMatch;
+      
+      // Read time filter
+      let readTimeMatch = true;
+      if (selectedReadTime === "quick") {
+        readTimeMatch = item.readTime <= 10;
+      } else if (selectedReadTime === "deep") {
+        readTimeMatch = item.readTime >= 20;
+      }
+
+      // Search filter
+      const searchLower = searchQuery.toLowerCase();
+      const searchMatch =
+        searchQuery === "" ||
+        item.title.toLowerCase().includes(searchLower) ||
+        item.excerpt.toLowerCase().includes(searchLower) ||
+        item.tags.some((tag) => tag.toLowerCase().includes(searchLower)) ||
+        item.category.toLowerCase().includes(searchLower);
+
+      return diffMatch && catMatch && readTimeMatch && searchMatch;
     });
 
     // Sort
@@ -259,15 +305,21 @@ export default function WriteupsSection() {
     }
 
     return filtered;
-  }, [selectedDifficulty, selectedCategory, sortBy]);
+  }, [selectedDifficulty, selectedCategory, selectedReadTime, sortBy, searchQuery]);
 
   const resetFilters = () => {
     setSelectedDifficulty("All");
     setSelectedCategory("All");
+    setSelectedReadTime("all");
     setSortBy("newest");
+    setSearchQuery("");
   };
 
-  const hasActiveFilters = selectedDifficulty !== "All" || selectedCategory !== "All";
+  const hasActiveFilters =
+    selectedDifficulty !== "All" ||
+    selectedCategory !== "All" ||
+    selectedReadTime !== "all" ||
+    searchQuery !== "";
 
   return (
     <section id="writeups" className="relative py-24 bg-[#111318]">
@@ -292,6 +344,33 @@ export default function WriteupsSection() {
             <p className="font-body text-sm text-white/40 max-w-xs leading-relaxed">
               We share our knowledge. Every solved challenge is a lesson for the whole pack.
             </p>
+          </div>
+        </motion.div>
+
+        {/* Search bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.05 }}
+          className="mb-8"
+        >
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/25" size={16} />
+            <input
+              type="text"
+              placeholder="Search by title, tags, or category..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-[#0d0f14] border border-white/10 pl-10 pr-4 py-3 font-body text-sm text-white placeholder-white/25 focus:outline-none focus:border-[#e63946]/50 transition-colors"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+              >
+                <X size={16} />
+              </button>
+            )}
           </div>
         </motion.div>
 
@@ -327,6 +406,21 @@ export default function WriteupsSection() {
                   label={cat}
                   isActive={selectedCategory === cat}
                   onClick={() => setSelectedCategory(cat)}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Read time filter */}
+          <div>
+            <div className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase mb-2">Read Time</div>
+            <div className="flex flex-wrap gap-2">
+              {readTimeCategories.map((rt) => (
+                <FilterButton
+                  key={rt.value}
+                  label={rt.label}
+                  isActive={selectedReadTime === rt.value}
+                  onClick={() => setSelectedReadTime(rt.value)}
                 />
               ))}
             </div>
@@ -383,7 +477,7 @@ export default function WriteupsSection() {
                 onClick={resetFilters}
                 className="px-3 py-1.5 border border-white/10 text-white/30 font-mono text-[0.65rem] tracking-widest uppercase hover:border-[#e63946]/40 hover:text-[#e63946] transition-all duration-200"
               >
-                Reset Filters
+                Reset All
               </motion.button>
             )}
 
@@ -419,12 +513,12 @@ export default function WriteupsSection() {
               className="flex flex-col items-center justify-center py-16 text-center"
             >
               <div className="font-mono text-[0.65rem] text-white/30 tracking-widest uppercase mb-2">No write-ups found</div>
-              <p className="font-body text-sm text-white/25 mb-4">Try adjusting your filters or reset to see all write-ups.</p>
+              <p className="font-body text-sm text-white/25 mb-4">Try adjusting your filters or search terms.</p>
               <button
                 onClick={resetFilters}
                 className="px-4 py-2 border border-[#e63946]/40 text-[#e63946] font-mono text-[0.65rem] tracking-widest uppercase hover:bg-[#e63946]/5 transition-all duration-200"
               >
-                Reset Filters
+                Reset All Filters
               </button>
             </motion.div>
           )}

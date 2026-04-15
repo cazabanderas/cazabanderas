@@ -62,6 +62,15 @@ export default function HeroSection() {
           initial="hidden"
           animate="visible"
         >
+          {/* Logo */}
+          <motion.div variants={itemVariants} className="mb-8">
+            <img
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663561350743/fQrwPhmvRnJkdAC8zKsvoi/ChatGPTImageApr10,2026,03_19_03PM(2)_231788b9.png"
+              alt="Cazabanderas Logo"
+              className="h-16 w-auto"
+            />
+          </motion.div>
+
           {/* Label */}
           <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-[#e63946]" />

@@ -52,11 +52,11 @@ export default function Navbar() {
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
             className="flex items-center gap-3 group"
           >
-            <div className="relative">
-              <div className="w-8 h-8 border-2 border-[#e63946] flex items-center justify-center group-hover:bg-[#e63946]/10 transition-colors">
-                <span className="text-[#e63946] font-mono text-xs font-bold">CB</span>
-              </div>
-            </div>
+            <img
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663561350743/fQrwPhmvRnJkdAC8zKsvoi/ChatGPTImageApr10,2026,03_19_03PM(2)_231788b9.png"
+              alt="Cazabanderas Logo"
+              className="h-10 w-auto group-hover:opacity-80 transition-opacity"
+            />
             <div>
               <div className="font-display text-white text-xl leading-none tracking-widest">CAZABANDERAS</div>
               <div className="font-mono text-[0.6rem] text-[#e63946]/70 tracking-[0.2em] uppercase">Flag Hunters</div>

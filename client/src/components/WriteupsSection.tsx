@@ -21,6 +21,7 @@ const writeups = [
     excerpt: "A deep dive into JWT algorithm confusion attacks — how RS256 can be downgraded to HS256 to forge arbitrary tokens.",
     tags: ["JWT", "Auth Bypass", "Web"],
     date: "2024-03-15",
+    views: 1240,
   },
   {
     title: "Reversing a Custom VM Obfuscation Layer",
@@ -32,6 +33,7 @@ const writeups = [
     excerpt: "Walkthrough of a challenge featuring a custom virtual machine with a proprietary instruction set. We decompile the VM and recover the flag.",
     tags: ["VM", "x86", "Ghidra"],
     date: "2024-02-20",
+    views: 892,
   },
   {
     title: "Lattice-Based Cryptography: Breaking LWE",
@@ -43,6 +45,7 @@ const writeups = [
     excerpt: "Exploiting a weak parameter selection in a Learning With Errors implementation to recover the private key.",
     tags: ["LWE", "Lattice", "SageMath"],
     date: "2024-01-10",
+    views: 567,
   },
   {
     title: "Heap Exploitation: House of Orange",
@@ -54,6 +57,7 @@ const writeups = [
     excerpt: "Step-by-step exploitation of a heap overflow using the House of Orange technique to achieve arbitrary code execution.",
     tags: ["Heap", "ROP", "glibc"],
     date: "2023-12-05",
+    views: 2156,
   },
   {
     title: "OSINT: Tracing a Digital Footprint",
@@ -65,6 +69,7 @@ const writeups = [
     excerpt: "Using open-source intelligence tools to reconstruct an attacker's identity from scattered digital breadcrumbs.",
     tags: ["OSINT", "Maltego", "Recon"],
     date: "2023-11-18",
+    views: 634,
   },
   {
     title: "Unpacking a Multi-Stage Dropper",
@@ -76,6 +81,7 @@ const writeups = [
     excerpt: "Analyzing a real-world multi-stage malware dropper — from initial deobfuscation through payload extraction.",
     tags: ["Malware", "YARA", "PE"],
     date: "2023-10-22",
+    views: 1089,
   },
   {
     title: "SQL Injection: From Error-Based to Blind Exploitation",
@@ -87,6 +93,7 @@ const writeups = [
     excerpt: "Master the art of SQL injection from basic error-based techniques to advanced blind exploitation methods.",
     tags: ["SQL", "Web", "Database"],
     date: "2024-04-01",
+    views: 1876,
   },
   {
     title: "Kernel Exploitation: Privilege Escalation via CVE-2024-1086",
@@ -98,6 +105,7 @@ const writeups = [
     excerpt: "Deep dive into kernel-level exploitation and privilege escalation techniques using real-world CVEs.",
     tags: ["Kernel", "Exploit", "Linux"],
     date: "2024-03-28",
+    views: 1654,
   },
   {
     title: "Steganography: Hiding Data in Plain Sight",
@@ -109,6 +117,7 @@ const writeups = [
     excerpt: "Techniques for embedding and extracting hidden information from images, audio, and other media.",
     tags: ["Steganography", "LSB", "Steganalysis"],
     date: "2024-02-14",
+    views: 745,
   },
 ];
 
@@ -130,6 +139,7 @@ const categories = [
 ];
 
 const sortOptions = [
+  { label: "Trending", value: "trending" },
   { label: "Newest First", value: "newest" },
   { label: "Oldest First", value: "oldest" },
   { label: "Title A-Z", value: "title-asc" },
@@ -224,9 +234,15 @@ function WritupCard({ item, index }: { item: typeof writeups[0]; index: number }
               </>
             )}
           </div>
-          <span className="font-mono text-[0.6rem] text-white/20">
-            {new Date(item.date).toLocaleDateString("en-US", { year: "numeric", month: "short" })}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[0.6rem] text-white/20">
+              {item.views} views
+            </span>
+            <span className="text-white/15">·</span>
+            <span className="font-mono text-[0.6rem] text-white/20">
+              {new Date(item.date).toLocaleDateString("en-US", { year: "numeric", month: "short" })}
+            </span>
+          </div>
         </div>
       </div>
     </motion.div>
@@ -294,7 +310,9 @@ export default function WriteupsSection() {
     });
 
     // Sort
-    if (sortBy === "newest") {
+    if (sortBy === "trending") {
+      filtered.sort((a, b) => b.views - a.views);
+    } else if (sortBy === "newest") {
       filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     } else if (sortBy === "oldest") {
       filtered.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());

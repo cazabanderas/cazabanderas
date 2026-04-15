@@ -9,66 +9,19 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Trophy, Medal, Star, Award } from "lucide-react";
 
-const achievements = [
-  {
-    event: "HackTheBox Business CTF 2024",
-    placement: "Top 50",
-    category: "Global",
-    date: "2024",
-    icon: Trophy,
-    highlight: true,
-    description: "Competed against thousands of teams worldwide in HTB's premier business-focused CTF.",
-  },
-  {
-    event: "TryHackMe Advent of Cyber",
-    placement: "Top 200",
-    category: "Global",
-    date: "2023",
-    icon: Medal,
-    highlight: false,
-    description: "Completed all 24 daily challenges, placing in the top tier of global participants.",
-  },
-  {
-    event: "HackingClub Season Championship",
-    placement: "1st Place",
-    category: "Regional",
-    date: "2024",
-    icon: Trophy,
-    highlight: true,
-    description: "Dominated the regional season championship, capturing the most flags in the final round.",
-  },
-  {
-    event: "picoCTF 2024",
-    placement: "Top 100",
-    category: "Global",
-    date: "2024",
-    icon: Award,
-    highlight: false,
-    description: "Solved challenges across all categories in Carnegie Mellon's prestigious annual CTF.",
-  },
-  {
-    event: "CTFtime Rating",
-    placement: "Top 500",
-    category: "Latin America",
-    date: "2024",
-    icon: Star,
-    highlight: false,
-    description: "Consistently ranked among the top teams in Latin America on the global CTFtime leaderboard.",
-  },
-  {
-    event: "NahamCon CTF 2024",
-    placement: "Top 150",
-    category: "Global",
-    date: "2024",
-    icon: Medal,
-    highlight: false,
-    description: "Strong performance across web, crypto, and forensics categories in this community-favorite event.",
-  },
-];
+const achievements: Array<{
+  event: string;
+  placement: string;
+  category: string;
+  date: string;
+  icon: React.ComponentType<any>;
+  highlight: boolean;
+  description: string;
+}> = [];
 
 const stats = [
   { value: "0", label: "CTFs Completed" },
-  { value: "400+", label: "Flags Captured" },
+  { value: "0+", label: "Flags Captured" },
   { value: "5", label: "Active Members" },
   { value: "4", label: "Platforms" },
 ];

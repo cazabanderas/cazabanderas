@@ -19,7 +19,7 @@ const platforms = [
     description: "Elite penetration testing labs and competitive CTF events. Our primary hunting ground for advanced challenges.",
     color: "#9fef00",
     categories: ["Active Machines", "Challenges", "Pro Labs", "CTF Events"],
-    rank: "Pro Hacker",
+    rank: "Top 200",
   },
   {
     name: "TryHackMe",
@@ -28,7 +28,7 @@ const platforms = [
     description: "Guided learning paths and beginner-to-advanced rooms. Where our new hunters sharpen their skills.",
     color: "#88cc14",
     categories: ["Learning Paths", "CTF Rooms", "Competitions", "Red Teaming"],
-    rank: "Top 5%",
+    rank: "Top 100%",
   },
   {
     name: "HackingClub",

@@ -137,7 +137,7 @@ export default function HeroSection() {
         >
           {[
             { value: "0", label: "CTFs Completed" },
-            { value: "400+", label: "Flags Captured" },
+            { value: "0+", label: "Flags Captured" },
             { value: "5", label: "Active Members" },
             { value: "4", label: "Platforms" },
           ].map((stat) => (

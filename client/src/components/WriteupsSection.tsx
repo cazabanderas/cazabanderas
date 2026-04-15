@@ -10,116 +10,18 @@ import { useRef, useState, useMemo } from "react";
 import { ArrowRight, Clock, Tag, ChevronDown, Search, X } from "lucide-react";
 import { toast } from "sonner";
 
-const writeups = [
-  {
-    title: "Breaking JWT Authentication with Algorithm Confusion",
-    category: "Web Exploitation",
-    difficulty: "Hard",
-    platform: "HackTheBox",
-    author: "0xViper",
-    readTime: 12,
-    excerpt: "A deep dive into JWT algorithm confusion attacks — how RS256 can be downgraded to HS256 to forge arbitrary tokens.",
-    tags: ["JWT", "Auth Bypass", "Web"],
-    date: "2024-03-15",
-    views: 1240,
-  },
-  {
-    title: "Reversing a Custom VM Obfuscation Layer",
-    category: "Reverse Engineering",
-    difficulty: "Hard",
-    platform: "CTF Finals",
-    author: "Phantasm",
-    readTime: 18,
-    excerpt: "Walkthrough of a challenge featuring a custom virtual machine with a proprietary instruction set. We decompile the VM and recover the flag.",
-    tags: ["VM", "x86", "Ghidra"],
-    date: "2024-02-20",
-    views: 892,
-  },
-  {
-    title: "Lattice-Based Cryptography: Breaking LWE",
-    category: "Cryptography",
-    difficulty: "Expert",
-    platform: "HackingClub",
-    author: "CryptoWolf",
-    readTime: 22,
-    excerpt: "Exploiting a weak parameter selection in a Learning With Errors implementation to recover the private key.",
-    tags: ["LWE", "Lattice", "SageMath"],
-    date: "2024-01-10",
-    views: 567,
-  },
-  {
-    title: "Heap Exploitation: House of Orange",
-    category: "Binary Exploitation",
-    difficulty: "Expert",
-    platform: "picoCTF",
-    author: "BinShadow",
-    readTime: 25,
-    excerpt: "Step-by-step exploitation of a heap overflow using the House of Orange technique to achieve arbitrary code execution.",
-    tags: ["Heap", "ROP", "glibc"],
-    date: "2023-12-05",
-    views: 2156,
-  },
-  {
-    title: "OSINT: Tracing a Digital Footprint",
-    category: "OSINT & Forensics",
-    difficulty: "Medium",
-    platform: "TryHackMe",
-    author: "NetHunter",
-    readTime: 10,
-    excerpt: "Using open-source intelligence tools to reconstruct an attacker's identity from scattered digital breadcrumbs.",
-    tags: ["OSINT", "Maltego", "Recon"],
-    date: "2023-11-18",
-    views: 634,
-  },
-  {
-    title: "Unpacking a Multi-Stage Dropper",
-    category: "Malware Analysis",
-    difficulty: "Hard",
-    platform: "HackTheBox",
-    author: "MalDev",
-    readTime: 16,
-    excerpt: "Analyzing a real-world multi-stage malware dropper — from initial deobfuscation through payload extraction.",
-    tags: ["Malware", "YARA", "PE"],
-    date: "2023-10-22",
-    views: 1089,
-  },
-  {
-    title: "SQL Injection: From Error-Based to Blind Exploitation",
-    category: "Web Exploitation",
-    difficulty: "Medium",
-    platform: "TryHackMe",
-    author: "0xViper",
-    readTime: 14,
-    excerpt: "Master the art of SQL injection from basic error-based techniques to advanced blind exploitation methods.",
-    tags: ["SQL", "Web", "Database"],
-    date: "2024-04-01",
-    views: 1876,
-  },
-  {
-    title: "Kernel Exploitation: Privilege Escalation via CVE-2024-1086",
-    category: "Binary Exploitation",
-    difficulty: "Expert",
-    platform: "HackTheBox",
-    author: "BinShadow",
-    readTime: 28,
-    excerpt: "Deep dive into kernel-level exploitation and privilege escalation techniques using real-world CVEs.",
-    tags: ["Kernel", "Exploit", "Linux"],
-    date: "2024-03-28",
-    views: 1654,
-  },
-  {
-    title: "Steganography: Hiding Data in Plain Sight",
-    category: "Cryptography",
-    difficulty: "Medium",
-    platform: "HackingClub",
-    author: "CryptoWolf",
-    readTime: 11,
-    excerpt: "Techniques for embedding and extracting hidden information from images, audio, and other media.",
-    tags: ["Steganography", "LSB", "Steganalysis"],
-    date: "2024-02-14",
-    views: 745,
-  },
-];
+const writeups: Array<{
+  title: string;
+  category: string;
+  difficulty: string;
+  platform: string;
+  author: string;
+  readTime: number;
+  excerpt: string;
+  tags: string[];
+  date: string;
+  views: number;
+}> = [];
 
 const difficultyColors: Record<string, string> = {
   Medium: "#f4a261",
@@ -365,87 +267,90 @@ export default function WriteupsSection() {
           </div>
         </motion.div>
 
-        {/* Search bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.05 }}
-          className="mb-8"
-        >
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/25" size={16} />
-            <input
-              type="text"
-              placeholder="Search by title, tags, or category..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#0d0f14] border border-white/10 pl-10 pr-4 py-3 font-body text-sm text-white placeholder-white/25 focus:outline-none focus:border-[#e63946]/50 transition-colors"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
-              >
-                <X size={16} />
-              </button>
-            )}
-          </div>
-        </motion.div>
-
-        {/* Filters & Sort */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-8 space-y-4"
-        >
-          {/* Difficulty filter */}
-          <div>
-            <div className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase mb-2">Difficulty</div>
-            <div className="flex flex-wrap gap-2">
-              {difficulties.map((diff) => (
-                <FilterButton
-                  key={diff}
-                  label={diff}
-                  isActive={selectedDifficulty === diff}
-                  onClick={() => setSelectedDifficulty(diff)}
-                />
-              ))}
+        {/* Search bar - only show if writeups exist */}
+        {writeups.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.05 }}
+            className="mb-8"
+          >
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/25" size={16} />
+              <input
+                type="text"
+                placeholder="Search by title, tags, or category..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-[#0d0f14] border border-white/10 pl-10 pr-4 py-3 font-body text-sm text-white placeholder-white/25 focus:outline-none focus:border-[#e63946]/50 transition-colors"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+                >
+                  <X size={16} />
+                </button>
+              )}
             </div>
-          </div>
+          </motion.div>
+        )}
 
-          {/* Category filter */}
-          <div>
-            <div className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase mb-2">Category</div>
-            <div className="flex flex-wrap gap-2">
-              {categories.map((cat) => (
-                <FilterButton
-                  key={cat}
-                  label={cat}
-                  isActive={selectedCategory === cat}
-                  onClick={() => setSelectedCategory(cat)}
-                />
-              ))}
+        {/* Filters & Sort - only show if writeups exist */}
+        {writeups.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mb-8 space-y-4"
+          >
+            {/* Difficulty filter */}
+            <div>
+              <div className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase mb-2">Difficulty</div>
+              <div className="flex flex-wrap gap-2">
+                {difficulties.map((diff) => (
+                  <FilterButton
+                    key={diff}
+                    label={diff}
+                    isActive={selectedDifficulty === diff}
+                    onClick={() => setSelectedDifficulty(diff)}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Read time filter */}
-          <div>
-            <div className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase mb-2">Read Time</div>
-            <div className="flex flex-wrap gap-2">
-              {readTimeCategories.map((rt) => (
-                <FilterButton
-                  key={rt.value}
-                  label={rt.label}
-                  isActive={selectedReadTime === rt.value}
-                  onClick={() => setSelectedReadTime(rt.value)}
-                />
-              ))}
+            {/* Category filter */}
+            <div>
+              <div className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase mb-2">Category</div>
+              <div className="flex flex-wrap gap-2">
+                {categories.map((cat) => (
+                  <FilterButton
+                    key={cat}
+                    label={cat}
+                    isActive={selectedCategory === cat}
+                    onClick={() => setSelectedCategory(cat)}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Sort & Reset */}
-          <div className="flex flex-wrap items-center gap-3 pt-2">
+            {/* Read time filter */}
+            <div>
+              <div className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase mb-2">Read Time</div>
+              <div className="flex flex-wrap gap-2">
+                {readTimeCategories.map((rt) => (
+                  <FilterButton
+                    key={rt.value}
+                    label={rt.label}
+                    isActive={selectedReadTime === rt.value}
+                    onClick={() => setSelectedReadTime(rt.value)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Sort & Reset */}
+            <div className="flex flex-wrap items-center gap-3 pt-2">
             {/* Sort dropdown */}
             <div className="relative">
               <button
@@ -503,8 +408,9 @@ export default function WriteupsSection() {
             <div className="ml-auto font-mono text-[0.65rem] text-white/25 tracking-widest">
               {filteredWriteups.length} {filteredWriteups.length === 1 ? "RESULT" : "RESULTS"}
             </div>
-          </div>
-        </motion.div>
+            </div>
+          </motion.div>
+        )}
 
         {/* Cards grid */}
         <AnimatePresence mode="wait">

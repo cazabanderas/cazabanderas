@@ -18,8 +18,11 @@
 ## Planned Features
 - [x] Team hunters profile management in admin panel (add/edit/remove hunter profiles)
 - [x] Connect hunters profiles to public 'Meet the hunters' section
-- [ ] Add home page link to Team Login page
-- [ ] Add navigation (home/team dashboard) to Admin Panel header
+- [x] Add home page link to Team Login page
+- [x] Add navigation (home/team dashboard) to Admin Panel header
+- [x] Update platforms section with accurate rankings (HTB: Top 200, THM: Top 100%)
+- [x] Clear dummy achievements and set flags captured to 0+
+- [x] Remove all dummy write-ups
 - [ ] Challenge Tracker for active CTF competitions
 - [ ] Team Chat for real-time collaboration
 - [ ] Leaderboard with member rankings and achievements

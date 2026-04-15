@@ -15,6 +15,7 @@ const navLinks = [
   { label: "Achievements", href: "#achievements" },
   { label: "Write-ups", href: "#writeups" },
   { label: "Join Us", href: "#join" },
+  { label: "Team Portal", href: "/team-portal" },
 ];
 
 export default function Navbar() {
@@ -78,13 +79,21 @@ export default function Navbar() {
           </nav>
 
           {/* CTA */}
-          <a
-            href="#join"
-            onClick={(e) => { e.preventDefault(); handleNavClick("#join"); }}
-            className="hidden md:flex items-center gap-2 px-4 py-2 border border-[#e63946] text-[#e63946] font-mono text-xs tracking-widest uppercase hover:bg-[#e63946] hover:text-white transition-all duration-200"
-          >
-            Hunt With Us
-          </a>
+          <div className="hidden md:flex items-center gap-3">
+            <a
+              href="/team-portal"
+              className="px-4 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors"
+            >
+              Team Portal
+            </a>
+            <a
+              href="#join"
+              onClick={(e) => { e.preventDefault(); handleNavClick("#join"); }}
+              className="px-4 py-2 border border-[#e63946] text-[#e63946] font-mono text-xs tracking-widest uppercase hover:bg-[#e63946] hover:text-white transition-all duration-200"
+            >
+              Hunt With Us
+            </a>
+          </div>
 
           {/* Mobile toggle */}
           <button

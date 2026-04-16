@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Loader2, LogOut } from "lucide-react";
 import TeamResources from "@/components/TeamResources";
 import WriteUpsManager from "@/components/WriteUpsManager";
+import { useAuth } from "@/_core/hooks/useAuth";
 
 interface TeamMember {
   id: number;
@@ -19,6 +20,7 @@ export default function TeamPortal() {
   const [, setLocation] = useLocation();
   const [teamMember, setTeamMember] = useState<TeamMember | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { user } = useAuth();
 
   useEffect(() => {
     const stored = localStorage.getItem("teamMember");
@@ -109,6 +111,24 @@ export default function TeamPortal() {
 
           {/* Write-ups Management Section */}
           <div className="mt-16 border-t border-white/10 pt-16">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-8 h-[2px] bg-[#e63946]" />
+                  <span className="font-mono text-xs text-[#e63946]/70 tracking-widest uppercase">Knowledge Base</span>
+                </div>
+                <h3 className="font-display text-3xl text-white tracking-wider">WRITE-UPS & TUTORIALS</h3>
+              </div>
+              <button
+                onClick={() => setLocation("/write-ups")}
+                className="px-6 py-3 bg-[#e63946] hover:bg-[#e63946]/90 text-white font-mono text-xs tracking-widest uppercase transition-colors"
+              >
+                Go to Write-ups →
+              </button>
+            </div>
+            <p className="text-white/60 text-lg mb-8">
+              Manage your CTF write-ups and tutorials on a dedicated page with advanced filtering and search.
+            </p>
             <WriteUpsManager teamMemberId={teamMember.id} />
           </div>
 

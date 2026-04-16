@@ -67,7 +67,7 @@
 - [x] Build improved write-up editor with markdown support
 - [x] Add write-ups page navigation and route
 - [x] Test dedicated write-ups page functionality
-- [ ] Add visible navigation link from Team Portal to dedicated /write-ups page
-- [ ] End-to-end test: create, edit, delete write-ups on dedicated page
-- [ ] Test public/private toggle and verify homepage integration
-- [ ] Test search and filter functionality on write-ups page
+- [x] Add visible navigation link from Team Portal to dedicated /write-ups page
+- [x] End-to-end test: create, edit, delete write-ups on dedicated page
+- [x] Test public/private toggle and verify homepage integration
+- [x] Test search and filter functionality on write-ups page

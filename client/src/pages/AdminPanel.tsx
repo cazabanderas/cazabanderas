@@ -4,6 +4,7 @@ import { trpc } from "@/lib/trpc";
 import { Loader2, Plus, Trash2, Edit2, Eye, EyeOff, LogOut, Home, LayoutDashboard } from "lucide-react";
 import ActivityLog from "@/components/ActivityLog";
 import HuntersProfileManager from "@/components/HuntersProfileManager";
+import { SkeletonTable, SkeletonCard } from "@/components/Skeleton";
 
 interface TeamMember {
   id: number;
@@ -41,7 +42,7 @@ export default function AdminPanel() {
   const deleteMemberMutation = trpc.admin.deleteMember.useMutation();
 
   // Platforms state and mutations
-  const { data: platforms, refetch: refetchPlatforms } = trpc.admin.listPlatforms.useQuery();
+  const { data: platforms, isLoading: platformsLoading, refetch: refetchPlatforms } = trpc.admin.listPlatforms.useQuery();
   const addPlatformMutation = trpc.admin.upsertPlatformData.useMutation();
   const deletePlatformMutation = trpc.admin.deletePlatformData.useMutation();
   const [platformForm, setPlatformForm] = useState({
@@ -53,7 +54,7 @@ export default function AdminPanel() {
   });
 
   // Achievements state and mutations
-  const { data: achievements, refetch: refetchAchievements } = trpc.admin.listAchievements.useQuery();
+  const { data: achievements, isLoading: achievementsLoading, refetch: refetchAchievements } = trpc.admin.listAchievements.useQuery();
   const addAchievementMutation = trpc.admin.upsertAchievementData.useMutation();
   const deleteAchievementMutation = trpc.admin.deleteAchievementData.useMutation();
   const [achievementForm, setAchievementForm] = useState({
@@ -399,7 +400,13 @@ export default function AdminPanel() {
           {/* Members List */}
           {activeTab === "members" && (
           <div className="space-y-4">
-            {members && members.length > 0 ? (
+            {isLoading ? (
+              <div className="space-y-4">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <SkeletonCard key={i} />
+                ))}
+              </div>
+            ) : members && members.length > 0 ? (
               members.map((member) => (
                 <div
                   key={member.id}
@@ -580,7 +587,13 @@ export default function AdminPanel() {
                 </div>
               )}
 
-              {platforms && platforms.length > 0 ? (
+              {platformsLoading ? (
+                <div className="space-y-4">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <SkeletonCard key={i} />
+                  ))}
+                </div>
+              ) : platforms && platforms.length > 0 ? (
                 <div className="space-y-4">
                   {platforms.map((platform: any) => (
                     <div key={platform.id} className="border border-[#e63946]/30 p-6 hover:border-[#e63946]/60 transition-colors">
@@ -718,7 +731,13 @@ export default function AdminPanel() {
                 </div>
               )}
 
-              {achievements && achievements.length > 0 ? (
+              {achievementsLoading ? (
+                <div className="space-y-4">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <SkeletonCard key={i} />
+                  ))}
+                </div>
+              ) : achievements && achievements.length > 0 ? (
                 <div className="space-y-4">
                   {achievements.map((achievement: any) => (
                     <div key={achievement.id} className="border border-[#e63946]/30 p-6 hover:border-[#e63946]/60 transition-colors">

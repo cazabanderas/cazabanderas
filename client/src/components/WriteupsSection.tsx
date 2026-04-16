@@ -11,6 +11,7 @@ import { ArrowRight, Clock, Tag, ChevronDown, Search, X } from "lucide-react";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { trpc } from "@/lib/trpc";
+import { SkeletonCard, SkeletonGrid } from "./Skeleton";
 
 const difficultyColors: Record<string, string> = {
   Medium: "#f4a261",
@@ -276,6 +277,17 @@ export default function WriteupsSection() {
           </div>
         </motion.div>
 
+        {/* Loading skeleton */}
+        {isLoading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <SkeletonGrid count={6} />
+          </motion.div>
+        )}
+
         {/* Empty state */}
         {transformedWriteups.length === 0 && !isLoading && (
           <motion.div
@@ -288,8 +300,8 @@ export default function WriteupsSection() {
           </motion.div>
         )}
 
-        {/* Search bar - only show if writeups exist */}
-        {transformedWriteups.length > 0 && (
+        {/* Search bar - only show if writeups exist and not loading */}
+        {transformedWriteups.length > 0 && !isLoading && (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -317,8 +329,8 @@ export default function WriteupsSection() {
           </motion.div>
         )}
 
-        {/* Filters - only show if writeups exist */}
-        {transformedWriteups.length > 0 && (
+        {/* Filters - only show if writeups exist and not loading */}
+        {transformedWriteups.length > 0 && !isLoading && (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -428,7 +440,7 @@ export default function WriteupsSection() {
         )}
 
         {/* Write-ups grid */}
-        {transformedWriteups.length > 0 && (
+        {transformedWriteups.length > 0 && !isLoading && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}

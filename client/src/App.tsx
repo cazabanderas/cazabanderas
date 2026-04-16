@@ -23,7 +23,8 @@ function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
-          <Route path={"/team-portal"} component={TeamPortal} />
+      <Route path={"/team-login"} component={TeamLogin} />
+      <Route path={"/team-portal"} component={TeamPortal} />
       <Route path={"/team-dashboard"} component={TeamDashboard} />
       <Route path={"/team-resources"} component={TeamResourcesPage} />
       <Route path={"/knowledge-base"} component={KnowledgeBasePage} />

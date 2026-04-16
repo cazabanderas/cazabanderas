@@ -76,6 +76,7 @@
 - [x] Create dedicated KnowledgeBase page (write-ups management)
 - [x] Update routing for new dashboard pages
 - [x] Test team dashboard navigation and page transitions
-- [ ] Route team login flow to new Team Dashboard instead of TeamPortal
-- [ ] Refactor Knowledge Base page to remove nested headers from WriteUpsPage
-- [ ] Verify end-to-end navigation from Team Login → Team Dashboard
+- [x] Route team login flow to new Team Dashboard instead of TeamPortal
+- [x] Refactor Knowledge Base page to remove nested headers from WriteUpsPage
+- [x] Verify end-to-end navigation from Team Login → Team Dashboard
+- [x] Integrate public write-ups with homepage WriteUpsSection

@@ -10,19 +10,7 @@ import { useRef, useState, useMemo } from "react";
 import { ArrowRight, Clock, Tag, ChevronDown, Search, X } from "lucide-react";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-
-const writeups: Array<{
-  title: string;
-  category: string;
-  difficulty: string;
-  platform: string;
-  author: string;
-  readTime: number;
-  excerpt: string;
-  tags: string[];
-  date: string;
-  views: number;
-}> = [];
+import { trpc } from "@/lib/trpc";
 
 const difficultyColors: Record<string, string> = {
   Medium: "#f4a261",
@@ -62,14 +50,14 @@ function getReadTimeCategory(minutes: number): "quick" | "deep" | "medium" {
   return "medium";
 }
 
-function WritupCard({ item, index }: { item: typeof writeups[0]; index: number }) {
+function WritupCard({ item, index }: { item: any; index: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   const readTimeCategory = getReadTimeCategory(item.readTime);
 
   const handleClick = () => {
-    toast("Write-up coming soon!", {
-      description: `"${item.title}" will be published shortly.`,
+    toast("Write-up details", {
+      description: `"${item.title}" by ${item.author}`,
     });
   };
 
@@ -110,7 +98,7 @@ function WritupCard({ item, index }: { item: typeof writeups[0]; index: number }
 
         {/* Tags */}
         <div className="flex flex-wrap gap-1.5 mb-4">
-          {item.tags.map((tag) => (
+          {item.tags.map((tag: string) => (
             <span key={tag} className="skill-tag">{tag}</span>
           ))}
         </div>
@@ -180,6 +168,9 @@ export default function WriteupsSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
+  // Fetch public write-ups from database
+  const { data: publicWriteups = [], isLoading } = trpc.writeups.getPublic.useQuery();
+
   const [selectedDifficulty, setSelectedDifficulty] = useState("All");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedReadTime, setSelectedReadTime] = useState("all");
@@ -187,9 +178,25 @@ export default function WriteupsSection() {
   const [showSortMenu, setShowSortMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Transform database write-ups to component format
+  const transformedWriteups = useMemo(() => {
+    return publicWriteups.map((wu: any) => ({
+      title: wu.title,
+      category: wu.category || "Uncategorized",
+      difficulty: wu.difficulty || "Medium",
+      platform: wu.platform || "Unknown",
+      author: wu.teamMember?.displayName || "Anonymous",
+      readTime: Math.ceil((wu.content?.length || 0) / 200), // Estimate: 200 chars per minute
+      excerpt: wu.content?.substring(0, 150).replace(/<[^>]*>/g, '') + "..." || "No description",
+      tags: [wu.platform, wu.difficulty].filter(Boolean),
+      date: new Date(wu.createdAt).toISOString().split('T')[0],
+      views: wu.viewCount || 0,
+    }));
+  }, [publicWriteups]);
+
   // Filter and sort writeups
   const filteredWriteups = useMemo(() => {
-    let filtered = writeups.filter((item) => {
+    let filtered = transformedWriteups.filter((item) => {
       const diffMatch = selectedDifficulty === "All" || item.difficulty === selectedDifficulty;
       const catMatch = selectedCategory === "All" || item.category === selectedCategory;
       
@@ -227,7 +234,7 @@ export default function WriteupsSection() {
     }
 
     return filtered;
-  }, [selectedDifficulty, selectedCategory, selectedReadTime, sortBy, searchQuery]);
+  }, [selectedDifficulty, selectedCategory, selectedReadTime, sortBy, searchQuery, transformedWriteups]);
 
   const resetFilters = () => {
     setSelectedDifficulty("All");
@@ -269,8 +276,20 @@ export default function WriteupsSection() {
           </div>
         </motion.div>
 
+        {/* Empty state */}
+        {transformedWriteups.length === 0 && !isLoading && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.05 }}
+            className="text-center py-16"
+          >
+            <p className="text-white/40 font-body text-sm">No public write-ups available yet. Check back soon!</p>
+          </motion.div>
+        )}
+
         {/* Search bar - only show if writeups exist */}
-        {writeups.length > 0 && (
+        {transformedWriteups.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -289,7 +308,7 @@ export default function WriteupsSection() {
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/25 hover:text-white/50 transition-colors"
                 >
                   <X size={16} />
                 </button>
@@ -298,8 +317,8 @@ export default function WriteupsSection() {
           </motion.div>
         )}
 
-        {/* Filters & Sort - only show if writeups exist */}
-        {writeups.length > 0 && (
+        {/* Filters - only show if writeups exist */}
+        {transformedWriteups.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -308,7 +327,7 @@ export default function WriteupsSection() {
           >
             {/* Difficulty filter */}
             <div>
-              <div className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase mb-2">Difficulty</div>
+              <p className="text-xs text-white/40 font-mono tracking-widest uppercase mb-3">Difficulty</p>
               <div className="flex flex-wrap gap-2">
                 {difficulties.map((diff) => (
                   <FilterButton
@@ -323,7 +342,7 @@ export default function WriteupsSection() {
 
             {/* Category filter */}
             <div>
-              <div className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase mb-2">Category</div>
+              <p className="text-xs text-white/40 font-mono tracking-widest uppercase mb-3">Category</p>
               <div className="flex flex-wrap gap-2">
                 {categories.map((cat) => (
                   <FilterButton
@@ -338,7 +357,7 @@ export default function WriteupsSection() {
 
             {/* Read time filter */}
             <div>
-              <div className="font-mono text-[0.65rem] text-white/40 tracking-widest uppercase mb-2">Read Time</div>
+              <p className="text-xs text-white/40 font-mono tracking-widest uppercase mb-3">Read Time</p>
               <div className="flex flex-wrap gap-2">
                 {readTimeCategories.map((rt) => (
                   <FilterButton
@@ -351,120 +370,96 @@ export default function WriteupsSection() {
               </div>
             </div>
 
-            {/* Sort & Reset */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
             {/* Sort dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => setShowSortMenu(!showSortMenu)}
-                className="flex items-center gap-2 px-3 py-1.5 border border-white/10 text-white/40 font-mono text-[0.65rem] tracking-widest uppercase hover:border-white/20 hover:text-white/60 transition-all duration-200"
-              >
-                Sort: {sortOptions.find((opt) => opt.value === sortBy)?.label}
-                <ChevronDown size={12} className={`transition-transform ${showSortMenu ? "rotate-180" : ""}`} />
-              </button>
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <button
+                  onClick={() => setShowSortMenu(!showSortMenu)}
+                  className="flex items-center gap-2 px-3 py-2 border border-white/10 text-white/60 hover:text-white hover:border-white/20 transition-colors font-mono text-xs tracking-widest uppercase"
+                >
+                  Sort: {sortOptions.find((o) => o.value === sortBy)?.label}
+                  <ChevronDown size={12} />
+                </button>
+                <AnimatePresence>
+                  {showSortMenu && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute top-full mt-2 left-0 bg-[#0d0f14] border border-white/10 z-50 min-w-max"
+                    >
+                      {sortOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          onClick={() => {
+                            setSortBy(option.value);
+                            setShowSortMenu(false);
+                          }}
+                          className={`block w-full text-left px-4 py-2 font-mono text-xs tracking-widest uppercase transition-colors ${
+                            sortBy === option.value
+                              ? "bg-[#e63946]/10 text-[#e63946]"
+                              : "text-white/60 hover:text-white hover:bg-white/5"
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
-              <AnimatePresence>
-                {showSortMenu && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute top-full mt-2 left-0 z-50 bg-[#0d0f14] border border-white/10 shadow-lg"
-                  >
-                    {sortOptions.map((opt) => (
-                      <button
-                        key={opt.value}
-                        onClick={() => {
-                          setSortBy(opt.value);
-                          setShowSortMenu(false);
-                        }}
-                        className={`w-full text-left px-4 py-2 font-mono text-[0.65rem] tracking-widest uppercase transition-colors ${
-                          sortBy === opt.value
-                            ? "bg-[#e63946]/10 text-[#e63946]"
-                            : "text-white/40 hover:bg-white/5 hover:text-white/60"
-                        }`}
-                      >
-                        {opt.label}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {hasActiveFilters && (
+                <button
+                  onClick={resetFilters}
+                  className="text-xs text-[#e63946] hover:text-[#e63946]/60 transition-colors font-mono tracking-widest uppercase"
+                >
+                  Reset Filters
+                </button>
+              )}
             </div>
 
-            {/* Reset button */}
-            {hasActiveFilters && (
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={resetFilters}
-                className="px-3 py-1.5 border border-white/10 text-white/30 font-mono text-[0.65rem] tracking-widest uppercase hover:border-[#e63946]/40 hover:text-[#e63946] transition-all duration-200"
-              >
-                {t('writeups.resetAll')}
-              </motion.button>
-            )}
-
-            {/* Result count */}
-            <div className="ml-auto font-mono text-[0.65rem] text-white/25 tracking-widest">
-              {filteredWriteups.length} {filteredWriteups.length === 1 ? "RESULT" : "RESULTS"}
-            </div>
+            {/* Results count */}
+            <div className="text-xs text-white/40 font-mono">
+              Showing {filteredWriteups.length} of {transformedWriteups.length} write-ups
             </div>
           </motion.div>
         )}
 
-        {/* Cards grid */}
-        <AnimatePresence mode="wait">
-          {filteredWriteups.length > 0 ? (
-            <motion.div
-              key="writeups-grid"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
-            >
-              {filteredWriteups.map((item, i) => (
-                <WritupCard key={item.title} item={item} index={i} />
-              ))}
-            </motion.div>
-          ) : (
-            <motion.div
-              key="no-results"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.3 }}
-              className="flex flex-col items-center justify-center py-16 text-center"
-            >
-              <div className="font-mono text-[0.65rem] text-white/30 tracking-widest uppercase mb-2">{t('writeups.noWriteupsFound')}</div>
-              <p className="font-body text-sm text-white/25 mb-4">{t('writeups.adjustFilters')}</p>
-              <button
-                onClick={resetFilters}
-                className="px-4 py-2 border border-[#e63946]/40 text-[#e63946] font-mono text-[0.65rem] tracking-widest uppercase hover:bg-[#e63946]/5 transition-all duration-200"
-              >
-                {t('writeups.resetAllFilters')}
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* View all */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.7 }}
-          className="mt-10 flex justify-center"
-        >
-          <button
-            onClick={() => toast(t('writeups.archiveComingSoon'))}
-            className="group flex items-center gap-3 px-6 py-3 border border-white/10 text-white/40 font-mono text-xs tracking-widest uppercase hover:border-[#e63946]/40 hover:text-[#e63946] transition-all duration-200"
+        {/* Write-ups grid */}
+        {transformedWriteups.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {t('writeups.viewAll')}
-            <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-          </button>
-        </motion.div>
+            <AnimatePresence mode="popLayout">
+              {filteredWriteups.map((writeup, index) => (
+                <WritupCard key={`${writeup.title}-${writeup.date}`} item={writeup} index={index} />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        )}
+
+        {/* No results state */}
+        {transformedWriteups.length > 0 && filteredWriteups.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="text-center py-16"
+          >
+            <p className="text-white/40 font-body text-sm mb-4">No write-ups match your filters</p>
+            <button
+              onClick={resetFilters}
+              className="text-xs text-[#e63946] hover:text-[#e63946]/60 transition-colors font-mono tracking-widest uppercase"
+            >
+              Reset Filters
+            </button>
+          </motion.div>
+        )}
       </div>
     </section>
   );

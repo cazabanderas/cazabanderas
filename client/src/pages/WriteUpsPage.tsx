@@ -172,35 +172,10 @@ export default function WriteUpsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0d0f14] text-white">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-[#0d0f14]/95 backdrop-blur-md border-b border-white/5">
-        <div className="container flex items-center justify-between h-16">
-          <div>
-            <h1 className="font-display text-white text-xl tracking-widest">WRITE-UPS</h1>
-            <p className="font-mono text-[0.6rem] text-[#e63946]/70 tracking-[0.2em] uppercase">Management Center</p>
-          </div>
-          <button
-            onClick={() => navigate("/team-portal")}
-            className="text-white/60 hover:text-white transition-colors text-sm"
-          >
-            ← Back to Portal
-          </button>
-        </div>
-      </header>
-
+    <div className="bg-[#0d0f14] text-white">
       {/* Main Content */}
-      <main className="pt-24 pb-16">
+      <div className="pb-16">
         <div className="container max-w-6xl">
-          {/* Page Title */}
-          <div className="mb-12">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-[2px] bg-[#e63946]" />
-              <span className="font-mono text-xs text-[#e63946]/70 tracking-widest uppercase">Your Collection</span>
-            </div>
-            <h2 className="font-display text-4xl text-white mb-4 tracking-wider">MANAGE WRITE-UPS</h2>
-            <p className="text-white/60 text-lg">Create, edit, and manage your CTF write-ups. Choose to keep them private for your team or publish them publicly.</p>
-          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             {/* Sidebar - Filters & Create */}
@@ -519,7 +494,7 @@ export default function WriteUpsPage() {
             </div>
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

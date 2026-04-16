@@ -680,9 +680,18 @@ export async function getPublicWriteups() {
     const results = await db
       .select()
       .from(teamWriteups)
+      .leftJoin(teamMembers, eq(teamWriteups.teamMemberId, teamMembers.id))
       .where(eq(teamWriteups.isPublic, 1))
       .orderBy(desc(teamWriteups.createdAt));
-    return results;
+    
+    return results.map(row => ({
+      ...row.teamWriteups,
+      teamMember: row.teamMembers ? {
+        id: row.teamMembers.id,
+        displayName: row.teamMembers.displayName,
+        specialty: row.teamMembers.specialty,
+      } : null,
+    }));
   } catch (error) {
     console.error("[Database] Failed to get public write-ups:", error);
     return [];

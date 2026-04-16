@@ -5,10 +5,13 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
-import TeamPortal from "./pages/TeamPortal";
-import TeamLogin from "./pages/TeamLogin";
-import AdminPanel from "./pages/AdminPanel";
-import WriteUpsPage from "./pages/WriteUpsPage";
+import TeamLogin from "@/pages/TeamLogin";
+import TeamPortal from "@/pages/TeamPortal";
+import TeamDashboard from "@/pages/TeamDashboard";
+import TeamResourcesPage from "@/pages/TeamResourcesPage";
+import KnowledgeBasePage from "@/pages/KnowledgeBasePage";
+import AdminPanel from "@/pages/AdminPanel";
+import WriteUpsPage from "@/pages/WriteUpsPage";
 
 // NOTE: About Theme
 // - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
@@ -20,10 +23,12 @@ function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
-      <Route path={"/team-login"} component={TeamLogin} />
-      <Route path={"/team-portal"} component={TeamPortal} />
-      <Route path={"/write-ups"} component={WriteUpsPage} />
+          <Route path={"/team-portal"} component={TeamPortal} />
+      <Route path={"/team-dashboard"} component={TeamDashboard} />
+      <Route path={"/team-resources"} component={TeamResourcesPage} />
+      <Route path={"/knowledge-base"} component={KnowledgeBasePage} />
       <Route path={"/admin"} component={AdminPanel} />
+      <Route path={"/write-ups"} component={WriteUpsPage} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

@@ -51,10 +51,10 @@
 - [x] Create database schema for platforms and achievements
 - [x] Create tRPC procedures for platforms and achievements CRUD
 - [x] Add admin panel tabs for Platforms and Achievements
-- [ ] Build complete admin UI forms for editing platforms
-- [ ] Build complete admin UI forms for editing achievements (flags captured)
-- [ ] Integrate admin UI forms with backend procedures
-- [ ] Test admin panel platform and achievement editing
+- [x] Build complete admin UI forms for editing platforms
+- [x] Build complete admin UI forms for editing achievements (flags captured)
+- [x] Integrate admin UI forms with backend procedures
+- [x] Test admin panel platform and achievement editing
 - [x] Create database schema for team write-ups with public/private visibility
 - [x] Create tRPC procedures for write-ups CRUD operations
 - [x] Build write-ups management UI for team dashboard
@@ -71,3 +71,11 @@
 - [x] End-to-end test: create, edit, delete write-ups on dedicated page
 - [x] Test public/private toggle and verify homepage integration
 - [x] Test search and filter functionality on write-ups page
+- [x] Redesign TeamPortal as button-based dashboard navigation
+- [x] Create dedicated TeamResources page
+- [x] Create dedicated KnowledgeBase page (write-ups management)
+- [x] Update routing for new dashboard pages
+- [x] Test team dashboard navigation and page transitions
+- [ ] Route team login flow to new Team Dashboard instead of TeamPortal
+- [ ] Refactor Knowledge Base page to remove nested headers from WriteUpsPage
+- [ ] Verify end-to-end navigation from Team Login → Team Dashboard

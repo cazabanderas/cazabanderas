@@ -29,8 +29,8 @@ export default function TeamLogin() {
         localStorage.setItem("teamMember", JSON.stringify(result.member));
         localStorage.setItem("teamMemberLoggedIn", "true");
         
-        // Redirect to team portal
-        setLocation("/team-portal");
+        // Redirect to team dashboard
+        setLocation("/team-dashboard");
       }
     } catch (err: any) {
       setError(err.message || "Login failed. Please try again.");

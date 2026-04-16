@@ -31,7 +31,7 @@ export default function AdminPanel() {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [activeTab, setActiveTab] = useState<"members" | "activity" | "hunters">("members");
+  const [activeTab, setActiveTab] = useState<"members" | "activity" | "hunters" | "platforms" | "achievements">("members");
 
   const { data: members, isLoading, refetch } = trpc.admin.listMembers.useQuery();
   const addMemberMutation = trpc.admin.addMember.useMutation();
@@ -208,6 +208,26 @@ export default function AdminPanel() {
               }`}
             >
               Hunters Profiles
+            </button>
+            <button
+              onClick={() => setActiveTab("platforms")}
+              className={`px-6 py-3 font-mono text-sm tracking-widest uppercase transition-all ${
+                activeTab === "platforms"
+                  ? "text-[#e63946] border-b-2 border-[#e63946]"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              Platforms
+            </button>
+            <button
+              onClick={() => setActiveTab("achievements")}
+              className={`px-6 py-3 font-mono text-sm tracking-widest uppercase transition-all ${
+                activeTab === "achievements"
+                  ? "text-[#e63946] border-b-2 border-[#e63946]"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              Achievements
             </button>
           </div>
 
@@ -389,6 +409,32 @@ export default function AdminPanel() {
                 <p className="text-white/60">Manage team member profiles for the public website</p>
               </div>
               <HuntersProfileManager />
+            </div>
+          )}
+
+          {/* Platforms Tab */}
+          {activeTab === "platforms" && (
+            <div>
+              <div className="mb-8">
+                <h2 className="font-display text-3xl text-white mb-2 tracking-wider">WHERE WE COMPETE</h2>
+                <p className="text-white/60">Manage CTF platforms and rankings</p>
+              </div>
+              <div className="text-center py-12 border border-white/10 p-8">
+                <p className="text-white/60">Platforms management coming soon...</p>
+              </div>
+            </div>
+          )}
+
+          {/* Achievements Tab */}
+          {activeTab === "achievements" && (
+            <div>
+              <div className="mb-8">
+                <h2 className="font-display text-3xl text-white mb-2 tracking-wider">FLAGS CAPTURED</h2>
+                <p className="text-white/60">Manage team statistics and achievements</p>
+              </div>
+              <div className="text-center py-12 border border-white/10 p-8">
+                <p className="text-white/60">Achievements management coming soon...</p>
+              </div>
             </div>
           )}
         </div>

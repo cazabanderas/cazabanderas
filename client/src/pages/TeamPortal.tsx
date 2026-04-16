@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { Loader2, LogOut } from "lucide-react";
 import TeamResources from "@/components/TeamResources";
+import WriteUpsManager from "@/components/WriteUpsManager";
 
 interface TeamMember {
   id: number;
@@ -105,6 +106,11 @@ export default function TeamPortal() {
 
           {/* Team Resources Section */}
           <TeamResources />
+
+          {/* Write-ups Management Section */}
+          <div className="mt-16 border-t border-white/10 pt-16">
+            <WriteUpsManager teamMemberId={teamMember.id} />
+          </div>
 
           {/* Other Sections */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">

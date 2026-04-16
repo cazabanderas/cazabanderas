@@ -171,3 +171,89 @@ export const huntersProfiles = mysqlTable("huntersProfiles", {
 
 export type HuntersProfile = typeof huntersProfiles.$inferSelect;
 export type InsertHuntersProfile = typeof huntersProfiles.$inferInsert;
+
+/**
+ * Platforms table - stores CTF platforms where the team competes
+ * Used in "Where we compete" section on the homepage
+ */
+export const platforms = mysqlTable("platforms", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Platform name (e.g., HackTheBox, TryHackMe) */
+  name: varchar("name", { length: 255 }).notNull(),
+  /** Short abbreviation (e.g., HTB, THM) */
+  abbreviation: varchar("abbreviation", { length: 50 }).notNull(),
+  /** Team's ranking or achievement on this platform */
+  ranking: text("ranking").notNull(),
+  /** Description of the platform and team's involvement */
+  description: text("description"),
+  /** Tags/categories (e.g., ACTIVE MEMBERS, CHALLENGES, etc.) */
+  tags: varchar("tags", { length: 500 }),
+  /** Display order */
+  displayOrder: int("displayOrder").default(0).notNull(),
+  /** Whether this platform is visible on the website */
+  isVisible: int("isVisible").default(1).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Platform = typeof platforms.$inferSelect;
+export type InsertPlatform = typeof platforms.$inferInsert;
+
+/**
+ * Achievements table - stores team statistics and achievements
+ * Used in "Flags captured" and other achievement sections
+ */
+export const achievements = mysqlTable("achievements", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Achievement key/identifier (e.g., flags_captured, ctfs_completed, active_members) */
+  key: varchar("key", { length: 100 }).notNull().unique(),
+  /** Display label (e.g., "Flags Captured") */
+  label: varchar("label", { length: 255 }).notNull(),
+  /** Current value/count */
+  value: varchar("value", { length: 255 }).notNull(),
+  /** Description or context */
+  description: text("description"),
+  /** Icon or emoji representation */
+  icon: varchar("icon", { length: 50 }),
+  /** Display order */
+  displayOrder: int("displayOrder").default(0).notNull(),
+  /** Whether this achievement is visible on the website */
+  isVisible: int("isVisible").default(1).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Achievement = typeof achievements.$inferSelect;
+export type InsertAchievement = typeof achievements.$inferInsert;
+
+
+/**
+ * Team Write-ups table - stores write-ups created by team members
+ * Can be public (displayed on homepage) or private (team-only)
+ */
+export const teamWriteups = mysqlTable("teamWriteups", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Team member who created this write-up */
+  teamMemberId: int("teamMemberId").notNull().references(() => teamMembers.id, { onDelete: "cascade" }),
+  /** Write-up title */
+  title: varchar("title", { length: 255 }).notNull(),
+  /** Write-up content (markdown format) */
+  content: text("content").notNull(),
+  /** Challenge/CTF name */
+  challengeName: varchar("challengeName", { length: 255 }),
+  /** CTF platform (e.g., HackTheBox, TryHackMe, CTFtime) */
+  platform: varchar("platform", { length: 100 }),
+  /** Difficulty level (e.g., Easy, Medium, Hard, Insane) */
+  difficulty: varchar("difficulty", { length: 50 }),
+  /** Category/tags (comma-separated) */
+  category: varchar("category", { length: 255 }),
+  /** Whether this write-up is public (visible on homepage) */
+  isPublic: int("isPublic").default(0).notNull(),
+  /** View count */
+  viewCount: int("viewCount").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type TeamWriteup = typeof teamWriteups.$inferSelect;
+export type InsertTeamWriteup = typeof teamWriteups.$inferInsert;

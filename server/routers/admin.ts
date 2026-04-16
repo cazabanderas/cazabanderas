@@ -10,10 +10,16 @@ import {
   getActivityLog,
   getAllHuntersProfiles,
   upsertHuntersProfile,
-  deleteHuntersProfile
+  deleteHuntersProfile,
+  getAllPlatforms,
+  upsertPlatform,
+  deletePlatform,
+  getAllAchievements,
+  upsertAchievement,
+  deleteAchievement
 } from "../db";
 import { TRPCError } from "@trpc/server";
-import { teamMembers, teamCredentials, huntersProfiles } from "../../drizzle/schema";
+import { teamMembers, teamCredentials, huntersProfiles, platforms, achievements } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
 
 export const adminRouter = router({
@@ -383,6 +389,140 @@ export const adminRouter = router({
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Failed to fetch activity log",
+        });
+      }
+    }),
+
+  /**
+   * Get all platforms for admin
+   */
+  listPlatforms: publicProcedure.query(async () => {
+    try {
+      const platformsList = await getAllPlatforms();
+      return platformsList;
+    } catch (error) {
+      console.error("[Admin] Failed to list platforms:", error);
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to fetch platforms",
+      });
+    }
+  }),
+
+  /**
+   * Create or update a platform
+   */
+  upsertPlatformData: publicProcedure
+    .input(
+      z.object({
+        id: z.number().optional(),
+        name: z.string().min(1, "Platform name is required"),
+        abbreviation: z.string().min(1, "Abbreviation is required"),
+        ranking: z.string().min(1, "Ranking is required"),
+        description: z.string().optional(),
+        tags: z.string().optional(),
+        displayOrder: z.number().default(0),
+        isVisible: z.number().default(1),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        const result = await upsertPlatform(input);
+        return {
+          success: true,
+          message: input.id ? "Platform updated" : "Platform created",
+          platform: result,
+        };
+      } catch (error) {
+        console.error("[Admin] Failed to upsert platform:", error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to save platform",
+        });
+      }
+    }),
+
+  /**
+   * Delete a platform
+   */
+  deletePlatformData: publicProcedure
+    .input(z.object({ platformId: z.number() }))
+    .mutation(async ({ input }) => {
+      try {
+        await deletePlatform(input.platformId);
+        return { success: true, message: "Platform deleted" };
+      } catch (error) {
+        console.error("[Admin] Failed to delete platform:", error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to delete platform",
+        });
+      }
+    }),
+
+  /**
+   * Get all achievements for admin
+   */
+  listAchievements: publicProcedure.query(async () => {
+    try {
+      const achievementsList = await getAllAchievements();
+      return achievementsList;
+    } catch (error) {
+      console.error("[Admin] Failed to list achievements:", error);
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to fetch achievements",
+      });
+    }
+  }),
+
+  /**
+   * Create or update an achievement
+   */
+  upsertAchievementData: publicProcedure
+    .input(
+      z.object({
+        id: z.number().optional(),
+        key: z.string().min(1, "Achievement key is required"),
+        label: z.string().min(1, "Label is required"),
+        value: z.string().min(1, "Value is required"),
+        description: z.string().optional(),
+        icon: z.string().optional(),
+        displayOrder: z.number().default(0),
+        isVisible: z.number().default(1),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        const result = await upsertAchievement(input);
+        return {
+          success: true,
+          message: input.id ? "Achievement updated" : "Achievement created",
+          achievement: result,
+        };
+      } catch (error) {
+        console.error("[Admin] Failed to upsert achievement:", error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to save achievement",
+        });
+      }
+    }),
+
+  /**
+   * Delete an achievement
+   */
+  deleteAchievementData: publicProcedure
+    .input(z.object({ achievementId: z.number() }))
+    .mutation(async ({ input }) => {
+      try {
+        await deleteAchievement(input.achievementId);
+        return { success: true, message: "Achievement deleted" };
+      } catch (error) {
+        console.error("[Admin] Failed to delete achievement:", error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to delete achievement",
         });
       }
     }),

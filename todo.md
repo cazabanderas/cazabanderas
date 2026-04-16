@@ -40,11 +40,34 @@
 - [x] Integrate i18n into JoinSection component (critical user-facing)
 - [x] Integrate i18n into Footer component (nav & contact)
 - [x] Test translations across all pages and routes (Hero, Navbar, Write-ups, Join, Footer verified)
-- [ ] Integrate i18n into AboutSection component (future)
-- [ ] Integrate i18n into CategoriesSection (Arsenal) component (future)
-- [ ] Integrate i18n into TeamSection component (future)
-- [ ] Integrate i18n into PlatformsSection component (future)
-- [ ] Integrate i18n into AchievementsSection component (future)
+- [x] Integrate i18n into AboutSection component
+- [x] Integrate i18n into CategoriesSection (Arsenal) component
+- [x] Integrate i18n into TeamSection component
+- [x] Integrate i18n into PlatformsSection component
+- [x] Integrate i18n into AchievementsSection component
 - [ ] Integrate i18n into TeamLogin page (future)
 - [ ] Integrate i18n into TeamPortal page (future)
 - [ ] Integrate i18n into AdminPanel page (future)
+- [x] Create database schema for platforms and achievements
+- [x] Create tRPC procedures for platforms and achievements CRUD
+- [x] Add admin panel tabs for Platforms and Achievements
+- [ ] Build complete admin UI forms for editing platforms
+- [ ] Build complete admin UI forms for editing achievements (flags captured)
+- [ ] Integrate admin UI forms with backend procedures
+- [ ] Test admin panel platform and achievement editing
+- [x] Create database schema for team write-ups with public/private visibility
+- [x] Create tRPC procedures for write-ups CRUD operations
+- [x] Build write-ups management UI for team dashboard
+- [x] Add write-ups editor with markdown support
+- [ ] Integrate public write-ups with homepage WriteUpsSection
+- [x] Test write-ups visibility (public vs private) - UI ready
+- [ ] Add write-ups to team activity log
+- [x] Create dedicated write-ups management page with better organization
+- [x] Build write-ups list with filtering, sorting, and search
+- [x] Build improved write-up editor with markdown support
+- [x] Add write-ups page navigation and route
+- [x] Test dedicated write-ups page functionality
+- [ ] Add visible navigation link from Team Portal to dedicated /write-ups page
+- [ ] End-to-end test: create, edit, delete write-ups on dedicated page
+- [ ] Test public/private toggle and verify homepage integration
+- [ ] Test search and filter functionality on write-ups page

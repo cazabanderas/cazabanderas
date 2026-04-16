@@ -1,6 +1,6 @@
 import { eq, desc, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, teamMembers, teamCredentials, activityLog, teamResources, InsertTeamResource, huntersProfiles } from "../drizzle/schema";
+import { InsertUser, users, teamMembers, teamCredentials, activityLog, teamResources, InsertTeamResource, huntersProfiles, platforms, achievements, InsertPlatform, InsertAchievement, teamWriteups, InsertTeamWriteup } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import bcrypt from 'bcryptjs';
 
@@ -481,5 +481,379 @@ export async function deleteHuntersProfile(profileId: number) {
   } catch (error) {
     console.error("[Database] Failed to delete hunters profile:", error);
     throw error;
+  }
+}
+
+
+/**
+ * Get all platforms for the website
+ */
+export async function getPlatforms() {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get platforms: database not available");
+    return [];
+  }
+
+  try {
+    const results = await db
+      .select()
+      .from(platforms)
+      .where(eq(platforms.isVisible, 1))
+      .orderBy(platforms.displayOrder);
+    return results;
+  } catch (error) {
+    console.error("[Database] Failed to get platforms:", error);
+    return [];
+  }
+}
+
+/**
+ * Get all platforms for admin (including hidden ones)
+ */
+export async function getAllPlatforms() {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get platforms: database not available");
+    return [];
+  }
+
+  try {
+    const results = await db
+      .select()
+      .from(platforms)
+      .orderBy(platforms.displayOrder);
+    return results;
+  } catch (error) {
+    console.error("[Database] Failed to get platforms:", error);
+    return [];
+  }
+}
+
+/**
+ * Create or update a platform
+ */
+export async function upsertPlatform(platform: any) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot upsert platform: database not available");
+    return null;
+  }
+
+  try {
+    if (platform.id) {
+      await db
+        .update(platforms)
+        .set(platform)
+        .where(eq(platforms.id, platform.id));
+      return platform;
+    } else {
+      const result = await db.insert(platforms).values(platform);
+      return { ...platform, id: result[0] };
+    }
+  } catch (error) {
+    console.error("[Database] Failed to upsert platform:", error);
+    throw error;
+  }
+}
+
+/**
+ * Delete a platform
+ */
+export async function deletePlatform(platformId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot delete platform: database not available");
+    return;
+  }
+
+  try {
+    await db.delete(platforms).where(eq(platforms.id, platformId));
+  } catch (error) {
+    console.error("[Database] Failed to delete platform:", error);
+    throw error;
+  }
+}
+
+/**
+ * Get all achievements
+ */
+export async function getAchievements() {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get achievements: database not available");
+    return [];
+  }
+
+  try {
+    const results = await db
+      .select()
+      .from(achievements)
+      .where(eq(achievements.isVisible, 1))
+      .orderBy(achievements.displayOrder);
+    return results;
+  } catch (error) {
+    console.error("[Database] Failed to get achievements:", error);
+    return [];
+  }
+}
+
+/**
+ * Get all achievements for admin (including hidden ones)
+ */
+export async function getAllAchievements() {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get achievements: database not available");
+    return [];
+  }
+
+  try {
+    const results = await db
+      .select()
+      .from(achievements)
+      .orderBy(achievements.displayOrder);
+    return results;
+  } catch (error) {
+    console.error("[Database] Failed to get achievements:", error);
+    return [];
+  }
+}
+
+/**
+ * Create or update an achievement
+ */
+export async function upsertAchievement(achievement: any) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot upsert achievement: database not available");
+    return null;
+  }
+
+  try {
+    if (achievement.id) {
+      await db
+        .update(achievements)
+        .set(achievement)
+        .where(eq(achievements.id, achievement.id));
+      return achievement;
+    } else {
+      const result = await db.insert(achievements).values(achievement);
+      return { ...achievement, id: result[0] };
+    }
+  } catch (error) {
+    console.error("[Database] Failed to upsert achievement:", error);
+    throw error;
+  }
+}
+
+/**
+ * Delete an achievement
+ */
+export async function deleteAchievement(achievementId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot delete achievement: database not available");
+    return;
+  }
+
+  try {
+    await db.delete(achievements).where(eq(achievements.id, achievementId));
+  } catch (error) {
+    console.error("[Database] Failed to delete achievement:", error);
+    throw error;
+  }
+}
+
+
+/**
+ * Get all public write-ups (for homepage display)
+ */
+export async function getPublicWriteups() {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get write-ups: database not available");
+    return [];
+  }
+
+  try {
+    const results = await db
+      .select()
+      .from(teamWriteups)
+      .where(eq(teamWriteups.isPublic, 1))
+      .orderBy(desc(teamWriteups.createdAt));
+    return results;
+  } catch (error) {
+    console.error("[Database] Failed to get public write-ups:", error);
+    return [];
+  }
+}
+
+/**
+ * Get all write-ups for a team member (public and private)
+ */
+export async function getTeamMemberWriteups(teamMemberId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get write-ups: database not available");
+    return [];
+  }
+
+  try {
+    const results = await db
+      .select()
+      .from(teamWriteups)
+      .where(eq(teamWriteups.teamMemberId, teamMemberId))
+      .orderBy(desc(teamWriteups.createdAt));
+    return results;
+  } catch (error) {
+    console.error("[Database] Failed to get team member write-ups:", error);
+    return [];
+  }
+}
+
+/**
+ * Get all write-ups for team (for team dashboard)
+ */
+export async function getAllTeamWriteups() {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get write-ups: database not available");
+    return [];
+  }
+
+  try {
+    const results = await db
+      .select()
+      .from(teamWriteups)
+      .orderBy(desc(teamWriteups.createdAt));
+    return results;
+  } catch (error) {
+    console.error("[Database] Failed to get all team write-ups:", error);
+    return [];
+  }
+}
+
+/**
+ * Get a single write-up by ID
+ */
+export async function getWriteupById(writeupId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get write-up: database not available");
+    return null;
+  }
+
+  try {
+    const results = await db
+      .select()
+      .from(teamWriteups)
+      .where(eq(teamWriteups.id, writeupId))
+      .limit(1);
+    return results[0] || null;
+  } catch (error) {
+    console.error("[Database] Failed to get write-up:", error);
+    return null;
+  }
+}
+
+/**
+ * Create a new write-up
+ */
+export async function createWriteup(data: InsertTeamWriteup) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot create write-up: database not available");
+    return null;
+  }
+
+  try {
+    const result = await db.insert(teamWriteups).values(data);
+    return { ...data, id: result[0].insertId };
+  } catch (error) {
+    console.error("[Database] Failed to create write-up:", error);
+    throw error;
+  }
+}
+
+/**
+ * Update a write-up
+ */
+export async function updateWriteup(writeupId: number, data: Partial<InsertTeamWriteup>) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot update write-up: database not available");
+    return null;
+  }
+
+  try {
+    await db
+      .update(teamWriteups)
+      .set(data)
+      .where(eq(teamWriteups.id, writeupId));
+    return { id: writeupId, ...data };
+  } catch (error) {
+    console.error("[Database] Failed to update write-up:", error);
+    throw error;
+  }
+}
+
+/**
+ * Delete a write-up
+ */
+export async function deleteWriteup(writeupId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot delete write-up: database not available");
+    return;
+  }
+
+  try {
+    await db.delete(teamWriteups).where(eq(teamWriteups.id, writeupId));
+  } catch (error) {
+    console.error("[Database] Failed to delete write-up:", error);
+    throw error;
+  }
+}
+
+/**
+ * Toggle write-up visibility (public/private)
+ */
+export async function toggleWriteupVisibility(writeupId: number, isPublic: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot toggle visibility: database not available");
+    return null;
+  }
+
+  try {
+    await db
+      .update(teamWriteups)
+      .set({ isPublic })
+      .where(eq(teamWriteups.id, writeupId));
+    return { id: writeupId, isPublic };
+  } catch (error) {
+    console.error("[Database] Failed to toggle write-up visibility:", error);
+    throw error;
+  }
+}
+
+/**
+ * Increment write-up view count
+ */
+export async function incrementWriteupViews(writeupId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot increment views: database not available");
+    return;
+  }
+
+  try {
+    await db
+      .update(teamWriteups)
+      .set({ viewCount: sql`${teamWriteups.viewCount} + 1` })
+      .where(eq(teamWriteups.id, writeupId));
+  } catch (error) {
+    console.error("[Database] Failed to increment write-up views:", error);
   }
 }

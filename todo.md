@@ -109,3 +109,13 @@
 - [x] Verify skeletons display during actual data fetching
 - [ ] Add skeleton screens to TeamResources page (future enhancement)
 - [ ] Add skeleton screens to KnowledgeBase/WriteUpsPage (future enhancement)
+
+## Logo & Branding Update
+- [x] New professional logo designed (wolf with red flag design)
+- [x] Logo uploaded to CDN: https://d2xsxph8kpxj0f.cloudfront.net/310519663561350743/fQrwPhmvRnJkdAC8zKsvoi/ncaza_f9eab0bb.png
+- [x] Update VITE_APP_LOGO in Management UI Settings → General
+- [x] Verify logo displays in website header
+- [x] Verify favicon updates in browser tab
+- [x] Copy favicon.png to client/public directory
+- [x] Update Navbar component to use new logo
+- [x] Update index.html with favicon links

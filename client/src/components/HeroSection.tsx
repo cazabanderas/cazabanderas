@@ -67,7 +67,7 @@ export default function HeroSection() {
           {/* Logo */}
           <motion.div variants={itemVariants} className="mb-8">
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663561350743/fQrwPhmvRnJkdAC8zKsvoi/ChatGPTImageApr10,2026,03_19_03PM(2)_231788b9.png"
+              src="/favicon.png"
               alt="Cazabanderas Logo"
               className="h-16 w-auto"
             />

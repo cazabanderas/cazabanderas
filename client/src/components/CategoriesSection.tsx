@@ -10,90 +10,33 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Globe, Binary, Lock, Search, FileSearch, Shield, Wifi, Eye, Smartphone, Code, Zap, Database, Cpu, Blocks } from "lucide-react";
 
-const categories = [
-  {
-    icon: Eye,
-    name: "OSINT",
-    desc: "Open-source intelligence gathering, social engineering research, and digital footprint analysis.",
-    count: "6",
-    countLabel: "flags",
-  },
-  {
-    icon: Smartphone,
-    name: "Mobile",
-    desc: "iOS and Android exploitation, reverse engineering mobile apps, and mobile security assessments.",
-    count: "3",
-    countLabel: "flags",
-  },
-  {
-    icon: Globe,
-    name: "Web",
-    desc: "SQL injection, XSS, SSRF, IDOR, deserialization, and every vulnerability hiding in web applications.",
-    count: "4",
-    countLabel: "flags",
-  },
-  {
-    icon: Zap,
-    name: "GamePwn",
-    desc: "Game hacking, memory manipulation, cheat engine exploitation, and game engine vulnerabilities.",
-    count: "1",
-    countLabel: "flag",
-  },
-  {
-    icon: Search,
-    name: "Reversing",
-    desc: "Static and dynamic analysis, VM deobfuscation, firmware reversing, and anti-debug bypass.",
-    count: "4",
-    countLabel: "flags",
-  },
-  {
-    icon: Cpu,
-    name: "AI/ML",
-    desc: "Machine learning model attacks, adversarial examples, neural network exploitation.",
-    count: "1",
-    countLabel: "flag",
-  },
-  {
-    icon: Lock,
-    name: "Crypto",
-    desc: "RSA, ECC, AES, lattice attacks, hash collisions, and custom cipher analysis.",
-    count: "1",
-    countLabel: "flag",
-  },
-  {
-    icon: Database,
-    name: "Hardware",
-    desc: "Hardware hacking, side-channel attacks, fault injection, and embedded system exploitation.",
-    count: "2",
-    countLabel: "flags",
-  },
-  {
-    icon: Code,
-    name: "Coding",
-    desc: "Algorithm challenges, programming puzzles, and code analysis for CTF competitions.",
-    count: "2",
-    countLabel: "flags",
-  },
-  {
-    icon: FileSearch,
-    name: "Forensics",
-    desc: "Memory dumps, disk images, network captures, and artifact recovery from compromised systems.",
-    count: "1",
-    countLabel: "flag",
-  },
-  {
-    icon: Blocks,
-    name: "Blockchain",
-    desc: "Smart contract exploitation, blockchain security, and cryptocurrency vulnerability analysis.",
-    count: "1",
-    countLabel: "flag",
-  },
+const categoryIcons = [
+  Eye, Smartphone, Globe, Zap, Search,
+  Cpu, Lock, Database, Code, FileSearch, Blocks,
 ];
 
-function CategoryCard({ cat, index }: { cat: typeof categories[0]; index: number }) {
+const categoryCounts = [
+  { count: "6", countLabel: "flags" },
+  { count: "3", countLabel: "flags" },
+  { count: "4", countLabel: "flags" },
+  { count: "1", countLabel: "flag" },
+  { count: "4", countLabel: "flags" },
+  { count: "1", countLabel: "flag" },
+  { count: "1", countLabel: "flag" },
+  { count: "2", countLabel: "flags" },
+  { count: "2", countLabel: "flags" },
+  { count: "1", countLabel: "flag" },
+  { count: "1", countLabel: "flag" },
+];
+
+interface CategoryItem {
+  name: string;
+  desc: string;
+}
+
+function CategoryCard({ cat, index, icon: Icon }: { cat: CategoryItem; index: number; icon: React.ComponentType<{ size: number }> }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
-  const Icon = cat.icon;
 
   return (
     <motion.div
@@ -108,8 +51,8 @@ function CategoryCard({ cat, index }: { cat: typeof categories[0]; index: number
           <Icon size={18} />
         </div>
         <div className="text-right">
-          <div className="font-display text-2xl text-[#e63946] leading-none">{cat.count}</div>
-          <div className="font-mono text-[0.55rem] text-white/25 tracking-widest uppercase">{cat.countLabel}</div>
+          <div className="font-display text-2xl text-[#e63946] leading-none">{categoryCounts[index].count}</div>
+          <div className="font-mono text-[0.55rem] text-white/25 tracking-widest uppercase">{categoryCounts[index].countLabel}</div>
         </div>
       </div>
       <h4 className="font-display text-lg text-white tracking-wider mb-2 group-hover:text-[#e63946] transition-colors">{cat.name}</h4>
@@ -122,6 +65,7 @@ export default function CategoriesSection() {
   const { t } = useTranslation();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const categories = t('categories.items', { returnObjects: true }) as CategoryItem[];
 
   return (
     <section className="relative py-24 bg-[#111318]">
@@ -149,7 +93,7 @@ export default function CategoriesSection() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {categories.map((cat, i) => (
-            <CategoryCard key={cat.name} cat={cat} index={i} />
+            <CategoryCard key={cat.name} cat={cat} index={i} icon={categoryIcons[i]} />
           ))}
         </div>
       </div>

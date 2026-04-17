@@ -257,3 +257,55 @@ export const teamWriteups = mysqlTable("teamWriteups", {
 
 export type TeamWriteup = typeof teamWriteups.$inferSelect;
 export type InsertTeamWriteup = typeof teamWriteups.$inferInsert;
+
+
+/**
+ * Recruitment Applications table - stores applications from potential team members
+ * Tracks application status, automated scoring, and review notes
+ */
+export const recruitmentApplications = mysqlTable("recruitmentApplications", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Discord username of applicant */
+  discordUsername: varchar("discordUsername", { length: 255 }).notNull(),
+  /** HTB profile URL */
+  htbProfile: text("htbProfile"),
+  /** TryHackMe profile URL */
+  thmProfile: text("thmProfile"),
+  /** HackingClub profile URL */
+  hcProfile: text("hcProfile"),
+  /** GitHub profile URL */
+  githubProfile: text("githubProfile"),
+  /** Personal blog/website URL */
+  blogUrl: text("blogUrl"),
+  /** Why do you want to join? */
+  motivation: text("motivation").notNull(),
+  /** Main CTF specialty */
+  mainSpecialty: varchar("mainSpecialty", { length: 255 }).notNull(),
+  /** Years of experience */
+  yearsOfExperience: varchar("yearsOfExperience", { length: 50 }).notNull(),
+  /** Biggest CTF challenge/failure and what they learned */
+  biggestChallenge: text("biggestChallenge"),
+  /** CTF categories they want to improve in (comma-separated) */
+  categoriesToImprove: varchar("categoriesToImprove", { length: 500 }),
+  /** Hours per week they can commit */
+  weeklyCommitment: varchar("weeklyCommitment", { length: 50 }).notNull(),
+  /** Ideal team dynamic description */
+  idealTeamDynamic: text("idealTeamDynamic"),
+  /** Automated score (0-100) */
+  automatedScore: int("automatedScore").default(0).notNull(),
+  /** Application status: pending, reviewed, accepted, rejected */
+  status: mysqlEnum("status", ["pending", "reviewed", "accepted", "rejected"]).default("pending").notNull(),
+  /** Admin review notes */
+  reviewNotes: text("reviewNotes"),
+  /** Feedback sent to applicant */
+  feedbackMessage: text("feedbackMessage"),
+  /** When the application was reviewed */
+  reviewedAt: timestamp("reviewedAt"),
+  /** When the decision was made */
+  decidedAt: timestamp("decidedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type RecruitmentApplication = typeof recruitmentApplications.$inferSelect;
+export type InsertRecruitmentApplication = typeof recruitmentApplications.$inferInsert;

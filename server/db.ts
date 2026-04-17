@@ -1,6 +1,6 @@
 import { eq, desc, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, teamMembers, teamCredentials, activityLog, teamResources, InsertTeamResource, huntersProfiles, platforms, achievements, InsertPlatform, InsertAchievement, teamWriteups, InsertTeamWriteup } from "../drizzle/schema";
+import { InsertUser, users, teamMembers, teamCredentials, activityLog, teamResources, InsertTeamResource, huntersProfiles, platforms, achievements, InsertPlatform, InsertAchievement, teamWriteups, InsertTeamWriteup, recruitmentApplications } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import bcrypt from 'bcryptjs';
 
@@ -866,3 +866,146 @@ export async function incrementWriteupViews(writeupId: number) {
     console.error("[Database] Failed to increment write-up views:", error);
   }
 }
+
+
+/**
+ * Submit a new recruitment application
+ */
+export async function submitRecruitmentApplication(data: {
+  discordUsername: string;
+  htbProfile?: string;
+  thmProfile?: string;
+  hcProfile?: string;
+  githubProfile?: string;
+  blogUrl?: string;
+  motivation: string;
+  mainSpecialty: string;
+  yearsOfExperience: string;
+  biggestChallenge?: string;
+  categoriesToImprove?: string;
+  weeklyCommitment: string;
+  idealTeamDynamic?: string;
+  automatedScore: number;
+}) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot submit application: database not available");
+    return null;
+  }
+
+  try {
+    const result = await db.insert(recruitmentApplications).values({
+      ...data,
+      status: "pending",
+    });
+    return result;
+  } catch (error) {
+    console.error("[Database] Failed to submit application:", error);
+    throw error;
+  }
+}
+
+/**
+ * Get all recruitment applications with optional filtering
+ */
+export async function getRecruitmentApplications(filters?: {
+  status?: "pending" | "reviewed" | "accepted" | "rejected";
+  limit?: number;
+  offset?: number;
+}) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get applications: database not available");
+    return [];
+  }
+
+  try {
+    let query: any = db.select().from(recruitmentApplications);
+
+    if (filters?.status) {
+      query = query.where(eq(recruitmentApplications.status, filters.status as any));
+    }
+
+    const limit = filters?.limit || 100;
+    const offset = filters?.offset || 0;
+
+    return await query
+      .orderBy(desc(recruitmentApplications.automatedScore), desc(recruitmentApplications.createdAt))
+      .limit(limit)
+      .offset(offset);
+  } catch (error) {
+    console.error("[Database] Failed to get applications:", error);
+    return [];
+  }
+}
+
+/**
+ * Get a single recruitment application by ID
+ */
+export async function getRecruitmentApplicationById(id: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get application: database not available");
+    return null;
+  }
+
+  try {
+    const result = await db
+      .select()
+      .from(recruitmentApplications)
+      .where(eq(recruitmentApplications.id, id))
+      .limit(1);
+
+    return result.length > 0 ? result[0] : null;
+  } catch (error) {
+    console.error("[Database] Failed to get application:", error);
+    return null;
+  }
+}
+
+/**
+ * Update recruitment application status and add review notes
+ */
+export async function updateRecruitmentApplicationStatus(
+  id: number,
+  status: "pending" | "reviewed" | "accepted" | "rejected",
+  reviewNotes?: string,
+  feedbackMessage?: string
+) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot update application: database not available");
+    return null;
+  }
+
+  try {
+    const updateData: any = {
+      status,
+      reviewedAt: new Date(),
+    };
+
+    if (reviewNotes !== undefined) {
+      updateData.reviewNotes = reviewNotes;
+    }
+
+    if (feedbackMessage !== undefined) {
+      updateData.feedbackMessage = feedbackMessage;
+    }
+
+    if (status === "accepted" || status === "rejected") {
+      updateData.decidedAt = new Date();
+    }
+
+    await db
+      .update(recruitmentApplications)
+      .set(updateData)
+      .where(eq(recruitmentApplications.id, id));
+
+    return { id, status, reviewedAt: new Date() };
+  } catch (error) {
+    console.error("[Database] Failed to update application:", error);
+    throw error;
+  }
+}
+
+

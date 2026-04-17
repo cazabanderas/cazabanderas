@@ -142,6 +142,7 @@
 - [x] Add i18n translations for recruitment pages (COMPLETED - English & Spanish)
 - [x] Build recruitment application form with 13 fields (COMPLETED)
 - [x] Create admin dashboard for reviewing applications (COMPLETED)
+- [x] Integrate recruitment form into homepage "Join the Hunt" section (COMPLETED)
 - [ ] Implement application status tracking (pending, reviewed, accepted, rejected) (PENDING)
 - [ ] Add Discord integration for acceptance notifications (PENDING)
 - [ ] Create feedback system for rejected candidates (PENDING)

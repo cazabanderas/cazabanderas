@@ -85,6 +85,12 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-2 flex-shrink-0">
             <LanguageSwitcher />
             <a
+              href="/recruitment"
+              className="px-3 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors whitespace-nowrap"
+            >
+              Recruitment
+            </a>
+            <a
               href="/team-login"
               className="px-3 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors whitespace-nowrap"
             >

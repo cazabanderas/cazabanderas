@@ -12,6 +12,8 @@ import TeamResourcesPage from "@/pages/TeamResourcesPage";
 import KnowledgeBasePage from "@/pages/KnowledgeBasePage";
 import AdminPanel from "@/pages/AdminPanel";
 import WriteUpsPage from "@/pages/WriteUpsPage";
+import RecruitmentForm from "@/pages/RecruitmentForm";
+import RecruitmentAdmin from "@/pages/RecruitmentAdmin";
 
 // NOTE: About Theme
 // - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
@@ -30,6 +32,8 @@ function Router() {
       <Route path={"/knowledge-base"} component={KnowledgeBasePage} />
       <Route path={"/admin"} component={AdminPanel} />
       <Route path={"/write-ups"} component={WriteUpsPage} />
+      <Route path={"/recruitment"} component={RecruitmentForm} />
+      <Route path={"/recruitment-admin"} component={RecruitmentAdmin} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

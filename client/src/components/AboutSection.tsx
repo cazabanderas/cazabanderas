@@ -12,29 +12,6 @@ import { Shield, Users, Target, Globe } from "lucide-react";
 
 const ABOUT_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663561350743/fQrwPhmvRnJkdAC8zKsvoi/cazabanderas-about-MWGHfhXtwcvoBFKYQQoekX.webp";
 
-const values = [
-  {
-    icon: Shield,
-    title: "Ethical Hacking",
-    desc: "We operate strictly within legal and ethical boundaries, using our skills to learn, compete, and contribute to a safer digital world.",
-  },
-  {
-    icon: Users,
-    title: "Pack Mentality",
-    desc: "No hunter is left behind. We share knowledge, mentor newcomers, and tackle every challenge as a unified front.",
-  },
-  {
-    icon: Target,
-    title: "Relentless Pursuit",
-    desc: "Every flag is a lesson. We approach each challenge with determination, creativity, and methodical precision.",
-  },
-  {
-    icon: Globe,
-    title: "Latin Roots",
-    desc: "Born in Latin America, competing worldwide. We carry our culture and identity into every competition we enter.",
-  },
-];
-
 function ValueCard({ icon: Icon, title, desc, delay }: { icon: typeof Shield; title: string; desc: string; delay: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
@@ -64,6 +41,29 @@ export default function AboutSection() {
   const { t } = useTranslation();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  const values = [
+    {
+      icon: Shield,
+      title: t('about.values.ethicalHacking.title'),
+      desc: t('about.values.ethicalHacking.desc'),
+    },
+    {
+      icon: Users,
+      title: t('about.values.packMentality.title'),
+      desc: t('about.values.packMentality.desc'),
+    },
+    {
+      icon: Target,
+      title: t('about.values.relentlessPursuit.title'),
+      desc: t('about.values.relentlessPursuit.desc'),
+    },
+    {
+      icon: Globe,
+      title: t('about.values.latinRoots.title'),
+      desc: t('about.values.latinRoots.desc'),
+    },
+  ];
 
   return (
     <section id="about" className="relative py-24 bg-[#0d0f14]">
@@ -114,10 +114,10 @@ export default function AboutSection() {
                 {t('about.title')}
               </h2>
               <p className="font-body text-base text-white/60 leading-relaxed mb-4">
-                Cazabanderas — <em>Flag Hunters</em> — is an elite competitive CTF team rooted in Latin America and competing on the world stage. We were forged from a shared passion for cybersecurity, ethical hacking, and the thrill of the hunt.
+                {t('about.intro1')}
               </p>
               <p className="font-body text-base text-white/60 leading-relaxed mb-8">
-                Whether you're a seasoned hunter with years of experience or just starting your journey into ethical hacking, our pack thrives on collaboration, knowledge sharing, and the relentless pursuit of flags. Every skill — from web exploitation to reverse engineering, binary exploitation to cryptography — has its place in our arsenal.
+                {t('about.intro2')}
               </p>
             </motion.div>
 

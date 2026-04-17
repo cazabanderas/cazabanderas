@@ -10,15 +10,7 @@ import { Menu, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./LanguageSwitcher";
 
-const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Team", href: "#team" },
-  { label: "Platforms", href: "#platforms" },
-  { label: "Achievements", href: "#achievements" },
-  { label: "Write-ups", href: "#writeups" },
-  { label: "Join Us", href: "#join" },
-  { label: "Team Login", href: "/team-login" },
-];
+// Removed - using translated navLinks below instead
 
 export default function Navbar() {
   const { t } = useTranslation();
@@ -31,7 +23,6 @@ export default function Navbar() {
     { label: t('nav.achievements'), href: '#achievements' },
     { label: t('nav.writeups'), href: '#writeups' },
     { label: t('nav.joinUs'), href: '#join' },
-    { label: t('nav.teamLogin'), href: '/team-login' },
   ];
 
   useEffect(() => {

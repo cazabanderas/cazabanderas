@@ -123,3 +123,6 @@
 - [x] Audit entire codebase for old logo references
 - [x] Verify new logo displays consistently across all pages (homepage, admin, team dashboard, team login)
 - [x] Remove all old logo references
+
+## Navbar Fixes
+- [x] Remove duplicate Team Login button from navbar (kept the one in CTA section closest to Hunt With Us)

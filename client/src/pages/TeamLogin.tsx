@@ -2,12 +2,14 @@ import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { Loader2, Home } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 /**
  * Team Login - Custom authentication for team members
  * Username/password login system with navigation to home
  */
 export default function TeamLogin() {
+  const { t } = useTranslation();
   const [, setLocation] = useLocation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +35,7 @@ export default function TeamLogin() {
         setLocation("/team-dashboard");
       }
     } catch (err: any) {
-      setError(err.message || "Login failed. Please try again.");
+      setError(err.message || t('teamLogin.loginFailed'));
     } finally {
       setIsLoading(false);
     }
@@ -49,7 +51,7 @@ export default function TeamLogin() {
           className="flex items-center gap-2 px-4 py-2 text-white/60 hover:text-white hover:bg-white/5 transition-colors rounded font-mono text-xs"
         >
           <Home size={16} />
-          Home
+          {t('teamLogin.home')}
         </button>
       </div>
 
@@ -59,10 +61,10 @@ export default function TeamLogin() {
           {/* Header */}
           <div className="mb-12 text-center">
             <h1 className="font-display text-4xl text-white mb-2 tracking-wider">
-              TEAM PORTAL
+              {t('teamLogin.title')}
             </h1>
             <p className="text-white/60 font-mono text-xs tracking-widest uppercase">
-              Operative Access
+              {t('teamLogin.subtitle')}
             </p>
           </div>
 
@@ -71,13 +73,13 @@ export default function TeamLogin() {
             {/* Username Input */}
             <div>
               <label className="block font-mono text-xs text-[#e63946] tracking-widest uppercase mb-2">
-                Username
+                {t('teamLogin.username')}
               </label>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter your username"
+                placeholder={t('teamLogin.usernamePlaceholder')}
                 disabled={isLoading}
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors disabled:opacity-50"
               />
@@ -86,13 +88,13 @@ export default function TeamLogin() {
             {/* Password Input */}
             <div>
               <label className="block font-mono text-xs text-[#e63946] tracking-widest uppercase mb-2">
-                Password
+                {t('teamLogin.password')}
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
+                placeholder={t('teamLogin.passwordPlaceholder')}
                 disabled={isLoading}
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors disabled:opacity-50"
               />
@@ -114,10 +116,10 @@ export default function TeamLogin() {
               {isLoading ? (
                 <>
                   <Loader2 size={16} className="animate-spin" />
-                  Authenticating...
+                  {t('teamLogin.authenticating')}
                 </>
               ) : (
-                "Sign In"
+                t('teamLogin.signIn')
               )}
             </button>
           </form>
@@ -125,7 +127,7 @@ export default function TeamLogin() {
           {/* Footer Info */}
           <div className="mt-12 pt-8 border-t border-white/10 text-center">
             <p className="text-white/40 text-xs font-mono">
-              Contact team leadership for credentials
+              {t('teamLogin.contactTeamLeadership')}
             </p>
           </div>
         </div>

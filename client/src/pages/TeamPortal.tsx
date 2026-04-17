@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Loader2, LogOut } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import TeamResources from "@/components/TeamResources";
 import WriteUpsManager from "@/components/WriteUpsManager";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -17,6 +18,7 @@ interface TeamMember {
  * Shows team-only content and resources
  */
 export default function TeamPortal() {
+  const { t } = useTranslation();
   const [, setLocation] = useLocation();
   const [teamMember, setTeamMember] = useState<TeamMember | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -50,7 +52,7 @@ export default function TeamPortal() {
       <div className="min-h-screen flex items-center justify-center bg-[#0d0f14]">
         <div className="text-center">
           <Loader2 className="w-12 h-12 animate-spin text-[#e63946] mx-auto mb-4" />
-          <p className="text-white/60">Loading...</p>
+          <p className="text-white/60">{t('adminPanel.loadingMembers')}</p>
         </div>
       </div>
     );
@@ -66,8 +68,8 @@ export default function TeamPortal() {
       <header className="fixed top-0 left-0 right-0 z-40 bg-[#0d0f14]/95 backdrop-blur-md border-b border-white/5">
         <div className="container flex items-center justify-between h-16">
           <div>
-            <h1 className="font-display text-white text-xl tracking-widest">TEAM PORTAL</h1>
-            <p className="font-mono text-[0.6rem] text-[#e63946]/70 tracking-[0.2em] uppercase">Operative Access</p>
+            <h1 className="font-display text-white text-xl tracking-widest">{t('teamPortal.title')}</h1>
+            <p className="font-mono text-[0.6rem] text-[#e63946]/70 tracking-[0.2em] uppercase">{t('teamPortal.subtitle')}</p>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-white/60 text-sm">{teamMember.displayName}</span>
@@ -76,7 +78,7 @@ export default function TeamPortal() {
                 href="/admin"
                 className="px-3 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors"
               >
-                Admin
+                {t('teamPortal.admin')}
               </a>
             )}
             <button
@@ -84,7 +86,7 @@ export default function TeamPortal() {
               className="flex items-center gap-2 px-4 py-2 border border-[#e63946] text-[#e63946] font-mono text-xs tracking-widest uppercase hover:bg-[#e63946] hover:text-white transition-all duration-200"
             >
               <LogOut size={16} />
-              Sign Out
+              {t('teamPortal.signOut')}
             </button>
           </div>
         </div>
@@ -96,13 +98,13 @@ export default function TeamPortal() {
           <div className="mb-12">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-[2px] bg-[#e63946]" />
-              <span className="font-mono text-xs text-[#e63946]/70 tracking-widest uppercase">Welcome, Hunter</span>
+              <span className="font-mono text-xs text-[#e63946]/70 tracking-widest uppercase">{t('teamPortal.welcomeHunter')}</span>
             </div>
             <h2 className="font-display text-5xl text-white mb-4 tracking-wider">
-              TEAM OPERATIONS CENTER
+              {t('teamPortal.operationsCenter')}
             </h2>
             <p className="text-white/60 text-lg">
-              Access team resources, collaborate on challenges, and track your progress.
+              {t('teamPortal.accessTeamResources')}
             </p>
           </div>
 
@@ -115,19 +117,19 @@ export default function TeamPortal() {
               <div>
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-8 h-[2px] bg-[#e63946]" />
-                  <span className="font-mono text-xs text-[#e63946]/70 tracking-widest uppercase">Knowledge Base</span>
+                  <span className="font-mono text-xs text-[#e63946]/70 tracking-widest uppercase">{t('teamPortal.knowledgeBase')}</span>
                 </div>
-                <h3 className="font-display text-3xl text-white tracking-wider">WRITE-UPS & TUTORIALS</h3>
+                <h3 className="font-display text-3xl text-white tracking-wider">{t('teamPortal.writeUpsAndTutorials')}</h3>
               </div>
               <button
                 onClick={() => setLocation("/write-ups")}
                 className="px-6 py-3 bg-[#e63946] hover:bg-[#e63946]/90 text-white font-mono text-xs tracking-widest uppercase transition-colors"
               >
-                Go to Write-ups →
+                {t('teamPortal.goToWriteups')}
               </button>
             </div>
             <p className="text-white/60 text-lg mb-8">
-              Manage your CTF write-ups and tutorials on a dedicated page with advanced filtering and search.
+              {t('teamPortal.manageWriteupsDescription')}
             </p>
             <WriteUpsManager teamMemberId={teamMember.id} />
           </div>
@@ -137,34 +139,34 @@ export default function TeamPortal() {
 
             {/* Challenge Tracker - Coming Soon */}
             <div className="border border-[#e63946]/30 p-6 hover:border-[#e63946]/60 transition-colors">
-              <h3 className="font-display text-xl text-white mb-3 tracking-wider">CHALLENGE TRACKER</h3>
+              <h3 className="font-display text-xl text-white mb-3 tracking-wider">{t('teamPortal.challengeTracker')}</h3>
               <p className="text-white/60 text-sm mb-4">
-                Track active CTF competitions and team member progress.
+                {t('teamPortal.trackActiveCTFs')}
               </p>
               <button className="text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors">
-                Coming Soon →
+                {t('teamPortal.comingSoon')}
               </button>
             </div>
 
             {/* Team Chat */}
             <div className="border border-[#e63946]/30 p-6 hover:border-[#e63946]/60 transition-colors">
-              <h3 className="font-display text-xl text-white mb-3 tracking-wider">TEAM CHAT</h3>
+              <h3 className="font-display text-xl text-white mb-3 tracking-wider">{t('teamPortal.teamChat')}</h3>
               <p className="text-white/60 text-sm mb-4">
-                Collaborate with team members in real-time.
+                {t('teamPortal.collaborateRealtime')}
               </p>
               <button className="text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors">
-                Coming Soon →
+                {t('teamPortal.comingSoon')}
               </button>
             </div>
 
             {/* Leaderboard */}
             <div className="border border-[#e63946]/30 p-6 hover:border-[#e63946]/60 transition-colors">
-              <h3 className="font-display text-xl text-white mb-3 tracking-wider">LEADERBOARD</h3>
+              <h3 className="font-display text-xl text-white mb-3 tracking-wider">{t('teamPortal.leaderboard')}</h3>
               <p className="text-white/60 text-sm mb-4">
-                View team member rankings and achievements.
+                {t('teamPortal.viewRankings')}
               </p>
               <button className="text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors">
-                Coming Soon →
+                {t('teamPortal.comingSoon')}
               </button>
             </div>
           </div>

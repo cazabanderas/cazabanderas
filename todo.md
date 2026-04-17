@@ -45,9 +45,9 @@
 - [x] Integrate i18n into TeamSection component
 - [x] Integrate i18n into PlatformsSection component
 - [x] Integrate i18n into AchievementsSection component
-- [ ] Integrate i18n into TeamLogin page (future)
-- [ ] Integrate i18n into TeamPortal page (future)
-- [ ] Integrate i18n into AdminPanel page (future)
+- [x] Integrate i18n into TeamLogin page (COMPLETED - fully translated)
+- [x] Integrate i18n into TeamPortal page (COMPLETED - fully translated)
+- [x] Integrate i18n into AdminPanel page (COMPLETED - header, tabs, navigation translated)
 - [x] Create database schema for platforms and achievements
 - [x] Create tRPC procedures for platforms and achievements CRUD
 - [x] Add admin panel tabs for Platforms and Achievements

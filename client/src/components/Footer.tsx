@@ -40,11 +40,11 @@ export default function Footer() {
               </div>
               <div>
                 <div className="font-display text-white text-xl leading-none tracking-widest">CAZABANDERAS</div>
-                <div className="font-mono text-[0.6rem] text-[#e63946]/70 tracking-[0.2em] uppercase">Flag Hunters</div>
+                <div className="font-mono text-[0.6rem] text-[#e63946]/70 tracking-[0.2em] uppercase">{t('footer.flagHunters')}</div>
               </div>
             </div>
             <p className="font-body text-sm text-white/35 leading-relaxed max-w-xs">
-              Elite Latin American CTF team. We hunt together, learn together, and conquer challenges as a united front.
+              {t('footer.description')}
             </p>
             {/* Socials */}
             <div className="flex items-center gap-4 mt-6">
@@ -119,10 +119,10 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="font-mono text-[0.6rem] text-white/20 tracking-widest">
-            © 2024 CAZABANDERAS — ALL FLAGS RESERVED
+            {t('footer.copyright')}
           </div>
           <div className="font-mono text-[0.6rem] text-[#e63946]/40 tracking-widest italic">
-            "We hunt together, learn together, conquer together."
+            "{t('footer.motto')}"
           </div>
         </div>
       </div>

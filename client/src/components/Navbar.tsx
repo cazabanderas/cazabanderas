@@ -82,18 +82,18 @@ export default function Navbar() {
           </nav>
 
           {/* CTA */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2 flex-shrink-0">
             <LanguageSwitcher />
             <a
               href="/team-login"
-              className="px-4 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors"
+              className="px-3 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors whitespace-nowrap"
             >
               {t('nav.teamLogin')}
             </a>
             <a
               href="#join"
               onClick={(e) => { e.preventDefault(); handleNavClick("#join"); }}
-              className="px-4 py-2 border border-[#e63946] text-[#e63946] font-mono text-xs tracking-widest uppercase hover:bg-[#e63946] hover:text-white transition-all duration-200"
+              className="px-3 py-2 border border-[#e63946] text-[#e63946] font-mono text-xs tracking-widest uppercase hover:bg-[#e63946] hover:text-white transition-all duration-200 whitespace-nowrap"
             >
               {t('nav.huntWithUs')}
             </a>

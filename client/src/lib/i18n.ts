@@ -112,6 +112,10 @@ const resources = {
         writeups: 'Write-ups',
         joinUs: 'Join Us',
         contact: 'contact@cazabanderas.team',
+        copyright: '© 2024 CAZABANDERAS — ALL FLAGS RESERVED',
+        motto: 'We hunt together, learn together, conquer together.',
+        description: 'Elite Latin American CTF team. We hunt together, learn together, and conquer challenges as a united front.',
+        flagHunters: 'Flag Hunters',
       },
     },
   },
@@ -224,6 +228,10 @@ const resources = {
         writeups: 'Tutoriales',
         joinUs: 'Únete a Nosotros',
         contact: 'contact@cazabanderas.team',
+        copyright: '© 2024 CAZABANDERAS — TODAS LAS BANDERAS RESERVADAS',
+        motto: 'Cazamos juntos, aprendemos juntos, conquistamos juntos.',
+        description: 'Equipo CTF élite latinoamericano. Cazamos juntos, aprendemos juntos y conquistamos desafíos como un frente unido.',
+        flagHunters: 'Cazadores de Banderas',
       },
     },
   },
@@ -234,7 +242,8 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'en',
+    fallbackLng: 'es',
+    lng: 'es',
     interpolation: {
       escapeValue: false,
     },

@@ -126,3 +126,9 @@
 
 ## Navbar Fixes
 - [x] Remove duplicate Team Login button from navbar (kept the one in CTA section closest to Hunt With Us)
+
+## i18n Translation Fixes
+- [x] Fix navbar layout breaking when switching to Spanish (text wrapping/spacing)
+- [x] Add footer translations (copyright, motto, description, flag hunters)
+- [x] Set Latin American Spanish as default language instead of English
+- [ ] Add remaining homepage translations (About section, Categories, Join section, Write-ups empty state) - future enhancement

@@ -148,3 +148,25 @@
 - [ ] Create feedback system for rejected candidates (PENDING)
 - [ ] Implement review timeline tracking (24-48 hour deadline) (PENDING)
 - [ ] Test end-to-end recruitment workflow (PENDING)
+
+
+## HackTheBox API Integration
+
+- [x] Set up HTB API token as environment variable (COMPLETED)
+- [x] Create tRPC procedures for HTB team activity (COMPLETED)
+  - [x] getTeamActivity: Fetch raw team activity from HTB
+  - [x] getChallengeCounts: Process activities and count by category
+  - [x] getLatestPwns: Get latest 3 pwns with metadata
+- [x] Build RecentPwns component to display latest 3 pwns (COMPLETED)
+- [x] Create RecentActivitySection for homepage (COMPLETED)
+- [x] Update CategoriesSection to fetch live challenge counts from HTB (COMPLETED)
+- [x] Integrate RecentActivitySection into homepage (COMPLETED)
+- [x] Write comprehensive vitest tests for HTB router (COMPLETED - 12 tests passing)
+- [x] Verify all tests pass and integration works (COMPLETED)
+
+## Features Enabled by HTB Integration
+
+- Live challenge count updates in Arsenal section (syncs with team activity)
+- Display of latest 3 team pwns on homepage with user, challenge, category, date, points
+- Automatic category detection from challenge names
+- Real-time team activity tracking

@@ -6,27 +6,14 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Globe, Binary, Lock, Search, FileSearch, Shield, Wifi, Eye, Smartphone, Code, Zap, Database, Cpu, Blocks } from "lucide-react";
+import { trpc } from "@/lib/trpc";
 
 const categoryIcons = [
   Eye, Smartphone, Globe, Zap, Search,
   Cpu, Lock, Database, Code, FileSearch, Blocks,
-];
-
-const categoryCounts = [
-  { count: "6", countLabel: "flags" },
-  { count: "3", countLabel: "flags" },
-  { count: "4", countLabel: "flags" },
-  { count: "1", countLabel: "flag" },
-  { count: "4", countLabel: "flags" },
-  { count: "1", countLabel: "flag" },
-  { count: "1", countLabel: "flag" },
-  { count: "2", countLabel: "flags" },
-  { count: "2", countLabel: "flags" },
-  { count: "1", countLabel: "flag" },
-  { count: "1", countLabel: "flag" },
 ];
 
 interface CategoryItem {
@@ -34,7 +21,7 @@ interface CategoryItem {
   desc: string;
 }
 
-function CategoryCard({ cat, index, icon: Icon }: { cat: CategoryItem; index: number; icon: React.ComponentType<{ size: number }> }) {
+function CategoryCard({ cat, index, icon: Icon, count, countLabel }: { cat: CategoryItem; index: number; icon: React.ComponentType<{ size: number }>; count: string; countLabel: string }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
 
@@ -51,8 +38,8 @@ function CategoryCard({ cat, index, icon: Icon }: { cat: CategoryItem; index: nu
           <Icon size={18} />
         </div>
         <div className="text-right">
-          <div className="font-display text-2xl text-[#e63946] leading-none">{categoryCounts[index].count}</div>
-          <div className="font-mono text-[0.55rem] text-white/25 tracking-widest uppercase">{categoryCounts[index].countLabel}</div>
+          <div className="font-display text-2xl text-[#e63946] leading-none">{count}</div>
+          <div className="font-mono text-[0.55rem] text-white/25 tracking-widest uppercase">{countLabel}</div>
         </div>
       </div>
       <h4 className="font-display text-lg text-white tracking-wider mb-2 group-hover:text-[#e63946] transition-colors">{cat.name}</h4>
@@ -66,6 +53,30 @@ export default function CategoriesSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const categories = t('categories.items', { returnObjects: true }) as CategoryItem[];
+  
+  // Fetch live challenge counts from HTB
+  const { data: challengeCounts = [] } = trpc.htb.getChallengeCounts.useQuery();
+  
+  // Map category names to their counts
+  const countMap = useMemo(() => {
+    const map: Record<string, number> = {};
+    challengeCounts.forEach((item: any) => {
+      map[item.category] = item.count;
+    });
+    return map;
+  }, [challengeCounts]);
+  
+  // Build display counts with live data
+  const categoryCounts = useMemo(() => {
+    const categoryNames = ['OSINT', 'Mobile', 'Web', 'GamePwn', 'Reversing', 'AI/ML', 'Crypto', 'Hardware', 'Coding', 'Forensics', 'Blockchain'];
+    return categoryNames.map((name) => {
+      const count = countMap[name] || 0;
+      return {
+        count: count.toString(),
+        countLabel: count === 1 ? 'flag' : 'flags',
+      };
+    });
+  }, [countMap]);
 
   return (
     <section className="relative py-24 bg-[#111318]">
@@ -93,7 +104,14 @@ export default function CategoriesSection() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {categories.map((cat, i) => (
-            <CategoryCard key={cat.name} cat={cat} index={i} icon={categoryIcons[i]} />
+            <CategoryCard 
+              key={cat.name} 
+              cat={cat} 
+              index={i} 
+              icon={categoryIcons[i]}
+              count={categoryCounts[i]?.count || '0'}
+              countLabel={categoryCounts[i]?.countLabel || 'flags'}
+            />
           ))}
         </div>
       </div>

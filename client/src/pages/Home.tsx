@@ -13,6 +13,7 @@ import CategoriesSection from "@/components/CategoriesSection";
 import TeamSection from "@/components/TeamSection";
 import PlatformsSection from "@/components/PlatformsSection";
 import AchievementsSection from "@/components/AchievementsSection";
+import RecentActivitySection from "@/components/RecentActivitySection";
 import WriteupsSection from "@/components/WriteupsSection";
 import JoinSection from "@/components/JoinSection";
 import Footer from "@/components/Footer";
@@ -32,6 +33,7 @@ export default function Home() {
       <TeamSection />
       <PlatformsSection />
       <AchievementsSection />
+      <RecentActivitySection />
       <WriteupsSection />
       <JoinSection />
       <Footer />

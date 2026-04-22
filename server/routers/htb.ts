@@ -19,7 +19,14 @@ interface HTBActivity {
   id: number;
   name: string;
   points: number;
-  flag_title: string;
+  flag_title?: string;
+  challenge_category?: string;
+  avatar_url?: string;
+}
+
+interface ActivityTag {
+  type: string;
+  category: string;
 }
 
 interface ChallengeCount {
@@ -132,9 +139,19 @@ export const htbRouter = router({
 
       // Get latest 3 activities and map to our format
       const latestPwns: RecentPwn[] = activities.slice(0, 3).map((activity) => {
-        // Find challenge in database to get category
-        // For now, we'll try to match by name
-        const category = "Web"; // Default fallback
+        // Extract category based on activity type
+        let category = "Web"; // Default fallback
+        
+        if (activity.type === "challenge" && activity.challenge_category) {
+          // For challenges, use the challenge_category field
+          category = activity.challenge_category;
+        } else if (activity.type === "fortress") {
+          // For fortresses, use "fortress" as the category
+          category = "fortress";
+        } else if (activity.type) {
+          // For other types, use the type field
+          category = activity.type;
+        }
 
         return {
           username: activity.user.name,
@@ -182,6 +199,11 @@ export const htbRouter = router({
 
       // Process each activity
       for (const activity of activities) {
+        // Only process challenges, skip fortresses and other types
+        if (activity.type !== "challenge") {
+          continue;
+        }
+
         // Check if challenge already exists in database
         const existing = await db
           .select()
@@ -191,25 +213,26 @@ export const htbRouter = router({
 
         // If challenge doesn't exist, add it
         if (existing.length === 0) {
-          // Try to determine category from challenge name
-          let category = "Web"; // default fallback
+          // Use challenge_category from API if available, otherwise fallback to keyword matching
+          let category = activity.challenge_category || "Web";
 
-          // Map common keywords to categories
-          const name = activity.name.toLowerCase();
-          const type = activity.type.toLowerCase();
-
-          if (name.includes("osint") || type.includes("osint")) category = "OSINT";
-          else if (name.includes("mobile") || type.includes("mobile")) category = "Mobile";
-          else if (name.includes("web") || type.includes("web")) category = "Web";
-          else if (name.includes("game") || type.includes("game")) category = "GamePwn";
-          else if (name.includes("reverse") || type.includes("reverse")) category = "Reversing";
-          else if (name.includes("ai") || name.includes("ml") || type.includes("ai")) category = "AI/ML";
-          else if (name.includes("crypto") || type.includes("crypto")) category = "Crypto";
-          else if (name.includes("hardware") || type.includes("hardware")) category = "Hardware";
-          else if (name.includes("coding") || type.includes("coding")) category = "Coding";
-          else if (name.includes("forensics") || type.includes("forensics")) category = "Forensics";
-          else if (name.includes("blockchain") || type.includes("blockchain")) category = "Blockchain";
-          else if (name.includes("misc") || type.includes("misc")) category = "Misc";
+          // If no challenge_category, try to determine from name
+          if (!activity.challenge_category) {
+            const name = activity.name.toLowerCase();
+            
+            if (name.includes("osint")) category = "OSINT";
+            else if (name.includes("mobile")) category = "Mobile";
+            else if (name.includes("web")) category = "Web";
+            else if (name.includes("game")) category = "GamePwn";
+            else if (name.includes("reverse")) category = "Reversing";
+            else if (name.includes("ai") || name.includes("ml")) category = "AI/ML";
+            else if (name.includes("crypto")) category = "Crypto";
+            else if (name.includes("hardware")) category = "Hardware";
+            else if (name.includes("coding")) category = "Coding";
+            else if (name.includes("forensics")) category = "Forensics";
+            else if (name.includes("blockchain")) category = "Blockchain";
+            else if (name.includes("misc")) category = "Misc";
+          }
 
           await db.insert(completedChallenges).values({
             challengeName: activity.name,

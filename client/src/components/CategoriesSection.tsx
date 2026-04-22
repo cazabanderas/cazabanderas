@@ -14,7 +14,7 @@ import { trpc } from "@/lib/trpc";
 
 const categoryIcons = [
   Eye, Smartphone, Globe, Zap, Search,
-  Cpu, Lock, Database, Code, FileSearch, Blocks,
+  Cpu, Lock, Database, Code, FileSearch, Blocks, Binary, Shield,
 ];
 
 interface CategoryItem {
@@ -97,19 +97,20 @@ export default function CategoriesSection() {
   // Group challenges by category
   const challengesByCategory = useMemo(() => {
     const grouped: Record<string, string[]> = {
-      OSINT: [],
-      Mobile: [],
-      Web: [],
-      GamePwn: [],
-      Reversing: [],
-      "AI/ML": [],
-      Crypto: [],
-      Hardware: [],
-      "Secure Coding": [],
-      Forensics: [],
-      Blockchain: [],
-      Misc: [],
-    };
+        OSINT: [],
+        Mobile: [],
+        Web: [],
+        GamePwn: [],
+        Reversing: [],
+        "AI/ML": [],
+        Crypto: [],
+        Hardware: [],
+        "Secure Coding": [],
+        Forensics: [],
+        Blockchain: [],
+        Coding: [],
+        Misc: [],
+      };
 
     allChallenges.forEach((challenge: any) => {
       const category = challenge.category;
@@ -123,7 +124,7 @@ export default function CategoriesSection() {
   
   // Build display counts with live data
   const categoryCounts = useMemo(() => {
-    const categoryNames = ['OSINT', 'Mobile', 'Web', 'GamePwn', 'Reversing', 'AI/ML', 'Crypto', 'Hardware', 'Secure Coding', 'Forensics', 'Blockchain', 'Misc'];
+      const categoryNames = ['OSINT', 'Mobile', 'Web', 'GamePwn', 'Reversing', 'AI/ML', 'Crypto', 'Hardware', 'Secure Coding', 'Forensics', 'Blockchain', 'Coding', 'Misc'];
     return categoryNames.map((name) => {
       const count = challengesByCategory[name]?.length || 0;
       return {

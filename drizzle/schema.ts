@@ -309,3 +309,30 @@ export const recruitmentApplications = mysqlTable("recruitmentApplications", {
 
 export type RecruitmentApplication = typeof recruitmentApplications.$inferSelect;
 export type InsertRecruitmentApplication = typeof recruitmentApplications.$inferInsert;
+
+
+/**
+ * Completed Challenges table - stores all challenges completed by the team
+ * Used for deduplication: prevents counting the same challenge twice when multiple team members complete it
+ * Tracks challenge name, category, and when it was first logged
+ */
+export const completedChallenges = mysqlTable("completedChallenges", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Challenge name (e.g., "Low Logic", "The Puppet Master") */
+  challengeName: varchar("challengeName", { length: 255 }).notNull().unique(),
+  /** Challenge category (OSINT, Web, Reversing, etc.) */
+  category: varchar("category", { length: 100 }).notNull(),
+  /** HTB challenge ID (if available) */
+  htbChallengeId: varchar("htbChallengeId", { length: 100 }),
+  /** Difficulty level (Easy, Medium, Hard, Insane) */
+  difficulty: varchar("difficulty", { length: 50 }),
+  /** Points awarded for this challenge */
+  points: int("points").default(0).notNull(),
+  /** When this challenge was first completed and logged */
+  completedAt: timestamp("completedAt").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type CompletedChallenge = typeof completedChallenges.$inferSelect;
+export type InsertCompletedChallenge = typeof completedChallenges.$inferInsert;

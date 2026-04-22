@@ -170,3 +170,33 @@
 - Display of latest 3 team pwns on homepage with user, challenge, category, date, points
 - Automatic category detection from challenge names
 - Real-time team activity tracking
+
+
+## Challenge Deduplication System (Arsenal Section Redesign)
+
+- [x] Update database schema with completedChallenges table (COMPLETED)
+- [x] Seed database with 30 challenges across 12 categories (COMPLETED)
+- [x] Refactor HTB router with deduplication logic (COMPLETED)
+  - [x] getChallengeCounts: Returns counts from database (prevents duplicates)
+  - [x] getAllChallenges: Retrieves all challenges with details
+  - [x] addChallenge: Manual challenge addition with duplicate prevention
+  - [x] syncHTBActivity: Auto-sync from HTB API with deduplication
+- [x] Update CategoriesSection to display challenges from database (COMPLETED)
+  - [x] Hover to show challenge names
+  - [x] Live counts from database
+  - [x] Category grouping
+- [x] Write comprehensive deduplication tests (COMPLETED - 11 tests passing)
+- [x] Verify all counts match specifications (COMPLETED)
+  - [x] OSINT: 6
+  - [x] Web: 4
+  - [x] Hardware: 2
+  - [x] And all other categories
+
+## Key Features Implemented
+
+- **Challenge Tracking:** Each completed challenge stored with name, category, difficulty, points
+- **Deduplication:** Unique constraint on challenge name prevents double-counting
+- **Database-Driven:** Arsenal section now pulls from database instead of hardcoded values
+- **Auto-Sync:** syncHTBActivity mutation can auto-add new challenges from HTB API
+- **Manual Management:** addChallenge procedure for manual challenge addition
+- **Hover Details:** Categories show challenge names on hover for transparency

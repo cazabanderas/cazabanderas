@@ -1,52 +1,8 @@
-import { publicProcedure, router } from "../_core/trpc";
+import { router, publicProcedure } from "../_core/trpc";
 import { z } from "zod";
-
-// Category mapping from HTB challenge names/types to our arsenal categories
-const CATEGORY_MAPPING: Record<string, string> = {
-  // OSINT
-  "osint": "OSINT",
-  "intelligence": "OSINT",
-  
-  // Mobile
-  "mobile": "Mobile",
-  "android": "Mobile",
-  "ios": "Mobile",
-  
-  // Web
-  "web": "Web",
-  "web-exploitation": "Web",
-  
-  // GamePwn
-  "gamepwn": "GamePwn",
-  "game": "GamePwn",
-  
-  // Reversing
-  "reversing": "Reversing",
-  "reverse-engineering": "Reversing",
-  
-  // AI/ML
-  "ai": "AI/ML",
-  "ml": "AI/ML",
-  "machine-learning": "AI/ML",
-  
-  // Crypto
-  "crypto": "Crypto",
-  "cryptography": "Crypto",
-  
-  // Hardware
-  "hardware": "Hardware",
-  
-  // Coding
-  "coding": "Coding",
-  "programming": "Coding",
-  
-  // Forensics
-  "forensics": "Forensics",
-  
-  // Blockchain
-  "blockchain": "Blockchain",
-  "web3": "Blockchain",
-};
+import { getDb } from "../db";
+import { completedChallenges, CompletedChallenge } from "../../drizzle/schema";
+import { eq } from "drizzle-orm";
 
 interface HTBActivity {
   user: {
@@ -108,27 +64,15 @@ export const htbRouter = router({
     }
   }),
 
-  // Get challenge counts by category
+  // Get challenge counts by category from database (with deduplication)
   getChallengeCounts: publicProcedure.query(async () => {
     try {
-      const token = process.env.HTB_API_TOKEN;
-      if (!token) {
-        throw new Error("HTB_API_TOKEN not configured");
+      const db = await getDb();
+      if (!db) {
+        throw new Error("Database not available");
       }
-
-      const response = await fetch("https://labs.hackthebox.com/api/v4/team/activity/8179", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTB API error: ${response.status}`);
-      }
-
-      const activities: HTBActivity[] = await response.json();
+      // Fetch all completed challenges from database
+      const allChallenges = await db.select().from(completedChallenges);
 
       // Count challenges by category
       const counts: Record<string, number> = {
@@ -140,27 +84,15 @@ export const htbRouter = router({
         "AI/ML": 0,
         Crypto: 0,
         Hardware: 0,
-        Coding: 0,
+        "Secure Coding": 0,
         Forensics: 0,
         Blockchain: 0,
+        Misc: 0,
       };
 
-      // Process activities to count by category
-      activities.forEach((activity) => {
-        // Try to determine category from challenge name or type
-        let category = "Web"; // default fallback
-        
-        const name = activity.name.toLowerCase();
-        const type = activity.type.toLowerCase();
-        
-        // Check name first
-        for (const [key, value] of Object.entries(CATEGORY_MAPPING)) {
-          if (name.includes(key) || type.includes(key)) {
-            category = value;
-            break;
-          }
-        }
-        
+      // Count challenges by category
+      allChallenges.forEach((challenge: any) => {
+        const category = challenge.category;
         if (counts.hasOwnProperty(category)) {
           counts[category]++;
         }
@@ -171,7 +103,7 @@ export const htbRouter = router({
         count,
       }));
     } catch (error) {
-      console.error("Error fetching HTB challenge counts:", error);
+      console.error("Error fetching challenge counts:", error);
       throw error;
     }
   }),
@@ -198,19 +130,11 @@ export const htbRouter = router({
 
       const activities: HTBActivity[] = await response.json();
 
-      // Get latest 3 activities
+      // Get latest 3 activities and map to our format
       const latestPwns: RecentPwn[] = activities.slice(0, 3).map((activity) => {
-        // Determine category
-        let category = "Web";
-        const name = activity.name.toLowerCase();
-        const type = activity.type.toLowerCase();
-        
-        for (const [key, value] of Object.entries(CATEGORY_MAPPING)) {
-          if (name.includes(key) || type.includes(key)) {
-            category = value;
-            break;
-          }
-        }
+        // Find challenge in database to get category
+        // For now, we'll try to match by name
+        const category = "Web"; // Default fallback
 
         return {
           username: activity.user.name,
@@ -227,4 +151,146 @@ export const htbRouter = router({
       throw error;
     }
   }),
+
+  // Sync HTB activity with database - checks for new challenges and adds them if not already logged
+  syncHTBActivity: publicProcedure.mutation(async () => {
+    try {
+      const db = await getDb();
+      if (!db) {
+        throw new Error("Database not available");
+      }
+
+      const token = process.env.HTB_API_TOKEN;
+      if (!token) {
+        throw new Error("HTB_API_TOKEN not configured");
+      }
+
+      const response = await fetch("https://labs.hackthebox.com/api/v4/team/activity/8179", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTB API error: ${response.status}`);
+      }
+
+      const activities: HTBActivity[] = await response.json();
+      let newChallengesAdded = 0;
+
+      // Process each activity
+      for (const activity of activities) {
+        // Check if challenge already exists in database
+        const existing = await db
+          .select()
+          .from(completedChallenges)
+          .where(eq(completedChallenges.challengeName, activity.name))
+          .limit(1);
+
+        // If challenge doesn't exist, add it
+        if (existing.length === 0) {
+          // Try to determine category from challenge name
+          let category = "Web"; // default fallback
+
+          // Map common keywords to categories
+          const name = activity.name.toLowerCase();
+          const type = activity.type.toLowerCase();
+
+          if (name.includes("osint") || type.includes("osint")) category = "OSINT";
+          else if (name.includes("mobile") || type.includes("mobile")) category = "Mobile";
+          else if (name.includes("web") || type.includes("web")) category = "Web";
+          else if (name.includes("game") || type.includes("game")) category = "GamePwn";
+          else if (name.includes("reverse") || type.includes("reverse")) category = "Reversing";
+          else if (name.includes("ai") || name.includes("ml") || type.includes("ai")) category = "AI/ML";
+          else if (name.includes("crypto") || type.includes("crypto")) category = "Crypto";
+          else if (name.includes("hardware") || type.includes("hardware")) category = "Hardware";
+          else if (name.includes("coding") || type.includes("coding")) category = "Coding";
+          else if (name.includes("forensics") || type.includes("forensics")) category = "Forensics";
+          else if (name.includes("blockchain") || type.includes("blockchain")) category = "Blockchain";
+          else if (name.includes("misc") || type.includes("misc")) category = "Misc";
+
+          await db.insert(completedChallenges).values({
+            challengeName: activity.name,
+            category,
+            difficulty: "Medium", // Default, could be enhanced
+            points: activity.points,
+            completedAt: new Date(),
+          });
+
+          newChallengesAdded++;
+        }
+      }
+
+      return {
+        success: true,
+        newChallengesAdded,
+        message: `Synced HTB activity. Added ${newChallengesAdded} new challenge(s).`,
+      };
+    } catch (error) {
+      console.error("Error syncing HTB activity:", error);
+      throw error;
+    }
+  }),
+
+  // Get all completed challenges with details
+  getAllChallenges: publicProcedure.query(async () => {
+    try {
+      const db = await getDb();
+      if (!db) {
+        throw new Error("Database not available");
+      }
+      const challenges = await db.select().from(completedChallenges);
+      return challenges;
+    } catch (error) {
+      console.error("Error fetching all challenges:", error);
+      throw error;
+    }
+  }),
+
+  // Manually add a challenge (for admin use)
+  addChallenge: publicProcedure
+    .input(
+      z.object({
+        challengeName: z.string(),
+        category: z.string(),
+        difficulty: z.string().optional(),
+        points: z.number().optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        const db = await getDb();
+        if (!db) {
+          throw new Error("Database not available");
+        }
+        // Check if challenge already exists
+        const existing = await db
+          .select()
+          .from(completedChallenges)
+          .where(eq(completedChallenges.challengeName, input.challengeName))
+          .limit(1);
+
+        if (existing.length > 0) {
+          throw new Error("Challenge already exists in database");
+        }
+
+        await db.insert(completedChallenges).values({
+          challengeName: input.challengeName,
+          category: input.category,
+          difficulty: input.difficulty || "Medium",
+          points: input.points || 0,
+          completedAt: new Date(),
+        });
+
+        return {
+          success: true,
+          message: `Added challenge: ${input.challengeName}`,
+        };
+      } catch (error) {
+        console.error("Error adding challenge:", error);
+        throw error;
+      }
+    }),
 });

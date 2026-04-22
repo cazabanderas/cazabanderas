@@ -12,48 +12,18 @@ import { ExternalLink } from "lucide-react";
 
 const CTF_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663561350743/fQrwPhmvRnJkdAC8zKsvoi/cazabanderas-ctf-bg-iaN85chb8NkEHHFjbVvx9v.webp";
 
-const platforms = [
-  {
-    name: "HackTheBox",
-    abbr: "HTB",
-    url: "https://www.hackthebox.com",
-    description: "Elite penetration testing labs and competitive CTF events. Our primary hunting ground for advanced challenges.",
-    color: "#9fef00",
-    categories: ["Active Machines", "Challenges", "Pro Labs", "CTF Events"],
-    rank: "Top 200",
-  },
-  {
-    name: "TryHackMe",
-    abbr: "THM",
-    url: "https://tryhackme.com",
-    description: "Guided learning paths and beginner-to-advanced rooms. Where our new hunters sharpen their skills.",
-    color: "#88cc14",
-    categories: ["Learning Paths", "CTF Rooms", "Competitions", "Red Teaming"],
-    rank: "Top 100%",
-  },
-  {
-    name: "HackingClub",
-    abbr: "HC",
-    url: "https://hackingclub.com",
-    description: "Community-driven CTF platform with unique challenges and a growing competitive scene.",
-    color: "#e63946",
-    categories: ["Web", "Pwn", "Crypto", "Forensics"],
-    rank: "Active",
-  },
-  {
-    name: "Live CTFs",
-    abbr: "IRL",
-    url: "https://ctftime.org",
-    description: "We compete in international CTF competitions worldwide — from online qualifiers to on-site finals.",
-    color: "#f4a261",
-    categories: ["CTFtime", "DEF CON", "picoCTF", "Regional Events"],
-    rank: "Global",
-  },
-];
+// Platform colors for styling
+const platformColors: Record<string, string> = {
+  HTB: "#9fef00",
+  THM: "#88cc14",
+  HC: "#e63946",
+  IRL: "#f4a261",
+};
 
-function PlatformCard({ platform, index }: { platform: typeof platforms[0]; index: number }) {
+function PlatformCard({ platform, index }: { platform: any; index: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
+  const color = platformColors[platform.abbr] || "#9fef00";
 
   return (
     <motion.a
@@ -71,13 +41,13 @@ function PlatformCard({ platform, index }: { platform: typeof platforms[0]; inde
           {/* Platform abbr badge */}
           <div
             className="w-12 h-12 flex items-center justify-center border font-mono text-sm font-bold tracking-wider"
-            style={{ borderColor: `${platform.color}40`, color: platform.color, backgroundColor: `${platform.color}10` }}
+            style={{ borderColor: `${color}40`, color: color, backgroundColor: `${color}10` }}
           >
             {platform.abbr}
           </div>
           <div>
             <h3 className="font-display text-2xl text-white tracking-wider leading-none">{platform.name}</h3>
-            <div className="font-mono text-[0.6rem] tracking-widest uppercase mt-1" style={{ color: platform.color }}>
+            <div className="font-mono text-[0.6rem] tracking-widest uppercase mt-1" style={{ color: color }}>
               {platform.rank}
             </div>
           </div>
@@ -88,11 +58,11 @@ function PlatformCard({ platform, index }: { platform: typeof platforms[0]; inde
       <p className="font-body text-sm text-white/50 leading-relaxed mb-4">{platform.description}</p>
 
       <div className="flex flex-wrap gap-1.5">
-        {platform.categories.map((cat) => (
+        {platform.categories.map((cat: string) => (
           <span
             key={cat}
             className="font-mono text-[0.6rem] tracking-widest uppercase px-2 py-1 border"
-            style={{ borderColor: `${platform.color}25`, color: `${platform.color}80` }}
+            style={{ borderColor: `${color}25`, color: `${color}80` }}
           >
             {cat}
           </span>
@@ -106,6 +76,9 @@ export default function PlatformsSection() {
   const { t } = useTranslation();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  // Get platforms from i18n
+  const platforms = t('platforms.items', { returnObjects: true }) as any[];
 
   return (
     <section
@@ -137,7 +110,7 @@ export default function PlatformsSection() {
         </motion.div>
 
         <div className="grid sm:grid-cols-2 gap-5">
-          {platforms.map((platform, i) => (
+          {platforms && platforms.map((platform, i) => (
             <PlatformCard key={platform.name} platform={platform} index={i} />
           ))}
         </div>

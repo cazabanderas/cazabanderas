@@ -79,6 +79,40 @@ const resources = {
       platforms: {
         label: 'Our Hunting Grounds',
         title: 'Where We Compete',
+        items: [
+          {
+            name: 'HackTheBox',
+            abbr: 'HTB',
+            url: 'https://www.hackthebox.com',
+            description: 'Elite penetration testing labs and competitive CTF events. Our primary hunting ground for advanced challenges.',
+            rank: 'Top 200',
+            categories: ['Active Machines', 'Challenges', 'Pro Labs', 'CTF Events'],
+          },
+          {
+            name: 'TryHackMe',
+            abbr: 'THM',
+            url: 'https://tryhackme.com',
+            description: 'Guided learning paths and beginner-to-advanced rooms. Where our new hunters sharpen their skills.',
+            rank: 'Top 100%',
+            categories: ['Learning Paths', 'CTF Rooms', 'Competitions', 'Red Teaming'],
+          },
+          {
+            name: 'HackingClub',
+            abbr: 'HC',
+            url: 'https://hackingclub.com',
+            description: 'Community-driven CTF platform with unique challenges and a growing competitive scene.',
+            rank: 'Active',
+            categories: ['Web', 'Pwn', 'Crypto', 'Forensics'],
+          },
+          {
+            name: 'Live CTFs',
+            abbr: 'IRL',
+            url: 'https://ctftime.org',
+            description: 'We compete in international CTF competitions worldwide — from online qualifiers to on-site finals.',
+            rank: 'Global',
+            categories: ['CTFtime', 'DEF CON', 'picoCTF', 'Regional Events'],
+          },
+        ],
       },
       achievements: {
         label: 'Battle Record',
@@ -393,6 +427,40 @@ const resources = {
       platforms: {
         label: 'Nuestros Terrenos de Caza',
         title: 'Dónde Competimos',
+        items: [
+          {
+            name: 'HackTheBox',
+            abbr: 'HTB',
+            url: 'https://www.hackthebox.com',
+            description: 'Laboratorios de pruebas de penetración de élite y eventos CTF competitivos. Nuestro terreno de caza principal para desafíos avanzados.',
+            rank: 'Top 200',
+            categories: ['Máquinas Activas', 'Desafíos', 'Labs Pro', 'Eventos CTF'],
+          },
+          {
+            name: 'TryHackMe',
+            abbr: 'THM',
+            url: 'https://tryhackme.com',
+            description: 'Rutas de aprendizaje guiadas y salas de principiante a avanzado. Donde nuestros nuevos cazadores afilan sus habilidades.',
+            rank: 'Top 100%',
+            categories: ['Rutas de Aprendizaje', 'Salas CTF', 'Competencias', 'Red Teaming'],
+          },
+          {
+            name: 'HackingClub',
+            abbr: 'HC',
+            url: 'https://hackingclub.com',
+            description: 'Plataforma CTF impulsada por la comunidad con desafíos únicos y una escena competitiva en crecimiento.',
+            rank: 'Activo',
+            categories: ['Web', 'Pwn', 'Cripto', 'Forense'],
+          },
+          {
+            name: 'CTFs en Vivo',
+            abbr: 'IRL',
+            url: 'https://ctftime.org',
+            description: 'Competimos en competencias CTF internacionales en todo el mundo — desde clasificatorios en línea hasta finales presenciales.',
+            rank: 'Global',
+            categories: ['CTFtime', 'DEF CON', 'picoCTF', 'Eventos Regionales'],
+          },
+        ],
       },
       achievements: {
         label: 'Registro de Batalla',

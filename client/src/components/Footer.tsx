@@ -35,9 +35,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 border-2 border-[#e63946] flex items-center justify-center">
-                <span className="text-[#e63946] font-mono text-xs font-bold">CB</span>
-              </div>
+              <img src="/favicon.png" alt="Cazabanderas Logo" className="w-10 h-10" />
               <div>
                 <div className="font-display text-white text-xl leading-none tracking-widest">CAZABANDERAS</div>
                 <div className="font-mono text-[0.6rem] text-[#e63946]/70 tracking-[0.2em] uppercase">{t('footer.flagHunters')}</div>
@@ -65,7 +63,7 @@ export default function Footer() {
 
           {/* Navigation */}
           <div>
-            <div className="font-mono text-[0.65rem] text-[#e63946]/60 tracking-widest uppercase mb-4">Navigation</div>
+            <div className="font-mono text-[0.65rem] text-[#e63946]/60 tracking-widest uppercase mb-4">{t('footer.navigation')}</div>
             <ul className="space-y-2">
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -83,7 +81,7 @@ export default function Footer() {
 
           {/* Platforms */}
           <div>
-            <div className="font-mono text-[0.65rem] text-[#e63946]/60 tracking-widest uppercase mb-4">Platforms</div>
+            <div className="font-mono text-[0.65rem] text-[#e63946]/60 tracking-widest uppercase mb-4">{t('footer.platformsHeader')}</div>
             <ul className="space-y-2">
               {[
                 { name: "HackTheBox", url: "https://hackthebox.com" },

@@ -58,7 +58,7 @@ export default function JoinSection() {
                   size="lg"
                   className="bg-[#e63946] hover:bg-[#d62828] text-white font-display tracking-wider"
                 >
-                  {t('join.apply')}
+                  {t('join.apply') || 'JOIN APPLY'}
                 </Button>
               </Link>
               <a href="https://discord.gg/cazabanderas" target="_blank" rel="noopener noreferrer">
@@ -67,7 +67,7 @@ export default function JoinSection() {
                   variant="outline"
                   className="border-white/20 text-white hover:bg-white/5"
                 >
-                  {t('join.discord')}
+                  {t('join.discord') || 'JOIN DISCORD'}
                 </Button>
               </a>
             </div>

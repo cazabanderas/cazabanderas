@@ -336,3 +336,32 @@ export const completedChallenges = mysqlTable("completedChallenges", {
 
 export type CompletedChallenge = typeof completedChallenges.$inferSelect;
 export type InsertCompletedChallenge = typeof completedChallenges.$inferInsert;
+
+
+/**
+ * HTB Team Members table - stores team members synced from HackTheBox API
+ * Synced from HTB team activity to display on "Nuestro Manada" section
+ * Includes profile picture and name, with ability to edit in admin panel
+ */
+export const htbTeamMembers = mysqlTable("htbTeamMembers", {
+  id: int("id").autoincrement().primaryKey(),
+  /** HTB user ID */
+  htbUserId: int("htbUserId").notNull().unique(),
+  /** HTB username */
+  htbUsername: varchar("htbUsername", { length: 255 }).notNull(),
+  /** Display name (can be edited in admin panel) */
+  displayName: varchar("displayName", { length: 255 }).notNull(),
+  /** Profile picture URL from HTB */
+  profilePictureUrl: text("profilePictureUrl"),
+  /** Whether this member is displayed on the website */
+  isVisible: int("isVisible").default(1).notNull(),
+  /** Custom notes/bio (editable in admin panel) */
+  notes: text("notes"),
+  /** When this member was first synced from HTB */
+  syncedAt: timestamp("syncedAt").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type HTBTeamMember = typeof htbTeamMembers.$inferSelect;
+export type InsertHTBTeamMember = typeof htbTeamMembers.$inferInsert;

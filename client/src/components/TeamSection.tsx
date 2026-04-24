@@ -6,7 +6,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { trpc } from "@/lib/trpc";
 import { Loader2 } from "lucide-react";
@@ -66,12 +66,35 @@ export default function TeamSection() {
   const { t } = useTranslation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const [htbMembers, setHtbMembers] = useState<any[]>([]);
+  const [isLoadingHTB, setIsLoadingHTB] = useState(true);
+
+  // Fetch HTB team members on mount
+  useEffect(() => {
+    const fetchHTBMembers = async () => {
+      try {
+        setIsLoadingHTB(true);
+        const response = await fetch("/api/trpc/htb.getAllTeamMembers");
+        if (response.ok) {
+          const data = await response.json();
+          const members = data.result?.data || [];
+          setHtbMembers(members);
+        }
+      } catch (error) {
+        console.error("Error fetching HTB team members:", error);
+      } finally {
+        setIsLoadingHTB(false);
+      }
+    };
+    fetchHTBMembers();
+  }, []);
 
   // Fetch hunters profiles from database
   const { data: profiles = [], isLoading } = trpc.admin.listHuntersProfiles.useQuery();
   
-  // Use profiles if available, otherwise use fallback
-  const members = profiles.length > 0 ? profiles : FALLBACK_MEMBERS;
+  // Use HTB members if available, otherwise use profiles, otherwise use fallback
+  const members = htbMembers.length > 0 ? htbMembers : (profiles.length > 0 ? profiles : FALLBACK_MEMBERS);
+  const isLoading_state = isLoading || isLoadingHTB;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -132,7 +155,7 @@ export default function TeamSection() {
         </motion.div>
 
         {/* Loading State */}
-        {isLoading && (
+        {isLoading_state && (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="w-8 h-8 animate-spin text-[#e63946]" />
             <p className="ml-3 text-white/60">Loading team...</p>
@@ -140,7 +163,7 @@ export default function TeamSection() {
         )}
 
         {/* Team Grid */}
-        {!isLoading && (
+        {!isLoading_state && (
           <motion.div
             variants={containerVariants}
             initial="hidden"

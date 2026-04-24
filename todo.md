@@ -200,3 +200,12 @@
 - **Auto-Sync:** syncHTBActivity mutation can auto-add new challenges from HTB API
 - **Manual Management:** addChallenge procedure for manual challenge addition
 - **Hover Details:** Categories show challenge names on hover for transparency
+
+
+## Team Member Sync from HTB
+- [ ] Create team_members database table with HTB sync fields
+- [ ] Add HTB API endpoint to fetch team members
+- [ ] Create tRPC procedure to sync team members from HTB
+- [ ] Build admin panel for editing team member cards
+- [ ] Update TeamSection to display synced members with profile pictures
+- [ ] Write tests for team member sync logic

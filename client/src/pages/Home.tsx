@@ -4,7 +4,9 @@
  * Assembles all sections in order with smooth scroll layout
  */
 
+import { useEffect } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { trpc } from "@/lib/trpc";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import SkillsTicker from "@/components/SkillsTicker";
@@ -22,9 +24,15 @@ export default function Home() {
   // The userAuth hooks provides authentication state
   // To implement login/logout functionality, simply call logout() or redirect to getLoginUrl()
   let { user, loading, error, isAuthenticated, logout } = useAuth();
+  const syncTeamMembers = trpc.htb.syncTeamMembers.useMutation();
+
+  // Sync HTB team members on component mount
+  useEffect(() => {
+    syncTeamMembers.mutate();
+  }, []);
 
   return (
-    <div className="min-h-screen bg-[#0d0f14] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#0d0f14] text-white overflow-x-hidden" suppressHydrationWarning>
       <Navbar />
       <HeroSection />
       <SkillsTicker />

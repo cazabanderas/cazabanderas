@@ -66,29 +66,9 @@ export default function TeamSection() {
   const { t } = useTranslation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
-  const [htbMembers, setHtbMembers] = useState<any[]>([]);
-  const [isLoadingHTB, setIsLoadingHTB] = useState(true);
-
-  // Fetch HTB team members on mount
-  useEffect(() => {
-    const fetchHTBMembers = async () => {
-      try {
-        setIsLoadingHTB(true);
-        const response = await fetch("/api/trpc/htb.getAllTeamMembers");
-        if (response.ok) {
-          const data = await response.json();
-          const members = data.result?.data || [];
-          setHtbMembers(members);
-        }
-      } catch (error) {
-        console.error("Error fetching HTB team members:", error);
-      } finally {
-        setIsLoadingHTB(false);
-      }
-    };
-    fetchHTBMembers();
-  }, []);
-
+  // Fetch HTB team members from database
+  const { data: htbMembers = [], isLoading: isLoadingHTB } = trpc.htb.getAllTeamMembers.useQuery();
+  
   // Fetch hunters profiles from database
   const { data: profiles = [], isLoading } = trpc.admin.listHuntersProfiles.useQuery();
   
@@ -186,9 +166,9 @@ export default function TeamSection() {
 
                   {/* Avatar */}
                   <div className="mb-4 flex items-center gap-4">
-                    {member.avatarUrl && (
+                    {(member.avatarUrl || member.profilePictureUrl) && (
                       <img
-                        src={member.avatarUrl}
+                        src={member.avatarUrl || member.profilePictureUrl}
                         alt={member.displayName}
                         className="w-16 h-16 rounded-lg object-cover border border-[#e63946]/30 group-hover:border-[#e63946] transition-colors"
                       />

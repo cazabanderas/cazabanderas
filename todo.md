@@ -203,9 +203,9 @@
 
 
 ## Team Member Sync from HTB
-- [ ] Create team_members database table with HTB sync fields
-- [ ] Add HTB API endpoint to fetch team members
-- [ ] Create tRPC procedure to sync team members from HTB
-- [ ] Build admin panel for editing team member cards
-- [ ] Update TeamSection to display synced members with profile pictures
-- [ ] Write tests for team member sync logic
+- [x] Create team_members database table with HTB sync fields (COMPLETED)
+- [x] Add HTB API endpoint to fetch team members (COMPLETED)
+- [x] Create tRPC procedure to sync team members from HTB (COMPLETED)
+- [ ] Build admin panel for editing team member cards (IN PROGRESS)
+- [x] Update TeamSection to display synced members with profile pictures (COMPLETED)
+- [x] Write tests for team member sync logic (COMPLETED)

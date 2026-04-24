@@ -4,6 +4,7 @@ import { trpc } from "@/lib/trpc";
 import { Loader2, Plus, Trash2, Edit2, Eye, EyeOff, LogOut, Home, LayoutDashboard } from "lucide-react";
 import ActivityLog from "@/components/ActivityLog";
 import HuntersProfileManager from "@/components/HuntersProfileManager";
+import HTBTeamMemberManager from "@/components/HTBTeamMemberManager";
 import { SkeletonTable, SkeletonCard } from "@/components/Skeleton";
 
 interface TeamMember {
@@ -32,7 +33,7 @@ export default function AdminPanel() {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [activeTab, setActiveTab] = useState<"members" | "activity" | "hunters" | "platforms" | "achievements">("members");
+  const [activeTab, setActiveTab] = useState<"members" | "activity" | "hunters" | "htb-members" | "platforms" | "achievements">("members");
 
   const { data: members, isLoading, refetch } = trpc.admin.listMembers.useQuery();
   const addMemberMutation = trpc.admin.addMember.useMutation();
@@ -272,6 +273,16 @@ export default function AdminPanel() {
               Hunters Profiles
             </button>
             <button
+              onClick={() => setActiveTab("htb-members")}
+              className={`px-6 py-3 font-mono text-sm tracking-widest uppercase transition-all ${
+                activeTab === "htb-members"
+                  ? "text-[#e63946] border-b-2 border-[#e63946]"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              HTB Team Members
+            </button>
+            <button
               onClick={() => setActiveTab("platforms")}
               className={`px-6 py-3 font-mono text-sm tracking-widest uppercase transition-all ${
                 activeTab === "platforms"
@@ -475,6 +486,17 @@ export default function AdminPanel() {
             <div>
               <h2 className="font-display text-3xl text-white mb-8 tracking-wider">HUNTERS PROFILES</h2>
               <HuntersProfileManager />
+            </div>
+          )}
+
+          {/* HTB Team Members Tab */}
+          {activeTab === "htb-members" && (
+            <div>
+              <div className="mb-8">
+                <h2 className="font-display text-3xl text-white mb-2 tracking-wider">HACKTHEBOX TEAM</h2>
+                <p className="text-white/60">Manage synced team members from HackTheBox</p>
+              </div>
+              <HTBTeamMemberManager />
             </div>
           )}
 

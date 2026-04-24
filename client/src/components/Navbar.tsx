@@ -49,32 +49,32 @@ export default function Navbar() {
             : "bg-transparent"
         }`}
       >
-        <div className="container flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 px-4 md:px-0">
           {/* Logo */}
           <a
             href="#"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-2 md:gap-3 group flex-shrink-0"
           >
             <img
               src="/favicon.png"
               alt="Cazabanderas Logo"
-              className="h-10 w-auto group-hover:opacity-80 transition-opacity"
+              className="h-8 md:h-10 w-auto group-hover:opacity-80 transition-opacity"
             />
-            <div>
-              <div className="font-display text-white text-xl leading-none tracking-widest">CAZABANDERAS</div>
-              <div className="font-mono text-[0.6rem] text-[#e63946]/70 tracking-[0.2em] uppercase">Flag Hunters</div>
+            <div className="hidden sm:block">
+              <div className="font-display text-white text-sm md:text-xl leading-none tracking-widest">CAZABANDERAS</div>
+              <div className="font-mono text-[0.5rem] md:text-[0.6rem] text-[#e63946]/70 tracking-[0.2em] uppercase">Flag Hunters</div>
             </div>
           </a>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-8 flex-1 justify-center mx-4">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-                className="nav-link"
+                className="nav-link text-xs xl:text-sm"
               >
                 {link.label}
               </a>
@@ -82,32 +82,32 @@ export default function Navbar() {
           </nav>
 
           {/* CTA */}
-          <div className="hidden md:flex items-center gap-2 flex-shrink-0">
+          <div className="hidden lg:flex items-center gap-1 xl:gap-2 flex-shrink-0">
             <LanguageSwitcher />
             <a
               href="/recruitment"
-              className="px-3 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors whitespace-nowrap"
+              className="px-2 xl:px-3 py-1 xl:py-2 text-[#e63946] font-mono text-[0.65rem] xl:text-xs tracking-widest uppercase hover:text-white transition-colors whitespace-nowrap"
             >
               Recruitment
             </a>
             <a
               href="/team-login"
-              className="px-3 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors whitespace-nowrap"
+              className="px-2 xl:px-3 py-1 xl:py-2 text-[#e63946] font-mono text-[0.65rem] xl:text-xs tracking-widest uppercase hover:text-white transition-colors whitespace-nowrap"
             >
               {t('nav.teamLogin')}
             </a>
             <a
               href="#join"
               onClick={(e) => { e.preventDefault(); handleNavClick("#join"); }}
-              className="px-3 py-2 border border-[#e63946] text-[#e63946] font-mono text-xs tracking-widest uppercase hover:bg-[#e63946] hover:text-white transition-all duration-200 whitespace-nowrap"
+              className="px-2 xl:px-3 py-1 xl:py-2 border border-[#e63946] text-[#e63946] font-mono text-[0.65rem] xl:text-xs tracking-widest uppercase hover:bg-[#e63946] hover:text-white transition-all duration-200 whitespace-nowrap"
             >
               {t('nav.huntWithUs')}
             </a>
           </div>
 
-          {/* Mobile toggle */}
+          {/* Tablet/Mobile toggle */}
           <button
-            className="md:hidden text-white/70 hover:text-[#e63946] transition-colors"
+            className="lg:hidden text-white/70 hover:text-[#e63946] transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -124,7 +124,7 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="fixed inset-0 z-30 bg-[#0d0f14]/98 backdrop-blur-md flex flex-col justify-center items-center gap-8 md:hidden"
+            className="fixed inset-0 z-30 bg-[#0d0f14]/98 backdrop-blur-md flex flex-col justify-center items-center gap-8 lg:hidden"
           >
             {navLinks.map((link, i) => (
               <motion.a
@@ -134,21 +134,41 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.06 }}
-                className="font-display text-4xl text-white/80 hover:text-[#e63946] transition-colors tracking-widest"
+                className="font-display text-2xl sm:text-4xl text-white/80 hover:text-[#e63946] transition-colors tracking-widest"
               >
                 {link.label}
               </motion.a>
             ))}
+            <motion.div className="flex gap-2 sm:gap-4 mt-4 w-full px-4 sm:px-0 sm:w-auto flex-col sm:flex-row">
+            <motion.a
+              href="/recruitment"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: navLinks.length * 0.06 }}
+              className="px-4 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors text-center"
+            >
+              Recruitment
+            </motion.a>
+            <motion.a
+              href="/team-login"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: (navLinks.length + 1) * 0.06 }}
+              className="px-4 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors text-center"
+            >
+              {t('nav.teamLogin')}
+            </motion.a>
             <motion.a
               href="#join"
               onClick={(e) => { e.preventDefault(); handleNavClick("#join"); }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: navLinks.length * 0.06 }}
-              className="mt-4 px-8 py-3 border border-[#e63946] text-[#e63946] font-mono text-sm tracking-widest uppercase hover:bg-[#e63946] hover:text-white transition-all"
+              transition={{ delay: (navLinks.length + 2) * 0.06 }}
+              className="px-4 py-2 border border-[#e63946] text-[#e63946] font-mono text-xs tracking-widest uppercase hover:bg-[#e63946] hover:text-white transition-all text-center"
             >
-              Hunt With Us
+              {t('nav.huntWithUs')}
             </motion.a>
+          </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

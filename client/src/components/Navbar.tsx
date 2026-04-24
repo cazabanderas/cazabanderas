@@ -49,7 +49,7 @@ export default function Navbar() {
             : "bg-transparent"
         }`}
       >
-        <div className="flex items-center justify-between h-16 px-4 md:px-0">
+        <div className="container h-16 flex items-center justify-between">
           {/* Logo */}
           <a
             href="#"
@@ -124,7 +124,7 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="fixed inset-0 z-30 bg-[#0d0f14]/98 backdrop-blur-md flex flex-col justify-center items-center gap-8 lg:hidden"
+            className="fixed inset-0 z-30 bg-[#0d0f14]/98 backdrop-blur-md flex flex-col justify-center items-center gap-6 lg:hidden px-4"
           >
             {navLinks.map((link, i) => (
               <motion.a
@@ -139,13 +139,13 @@ export default function Navbar() {
                 {link.label}
               </motion.a>
             ))}
-            <motion.div className="flex gap-2 sm:gap-4 mt-4 w-full px-4 sm:px-0 sm:w-auto flex-col sm:flex-row">
+            <motion.div className="flex gap-2 sm:gap-4 mt-6 w-full sm:w-auto flex-col sm:flex-row justify-center">
             <motion.a
               href="/recruitment"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: navLinks.length * 0.06 }}
-              className="px-4 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors text-center"
+              className="px-6 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors text-center"
             >
               Recruitment
             </motion.a>
@@ -154,7 +154,7 @@ export default function Navbar() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: (navLinks.length + 1) * 0.06 }}
-              className="px-4 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors text-center"
+              className="px-6 py-2 text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors text-center"
             >
               {t('nav.teamLogin')}
             </motion.a>
@@ -164,7 +164,7 @@ export default function Navbar() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: (navLinks.length + 2) * 0.06 }}
-              className="px-4 py-2 border border-[#e63946] text-[#e63946] font-mono text-xs tracking-widest uppercase hover:bg-[#e63946] hover:text-white transition-all text-center"
+              className="px-6 py-2 border border-[#e63946] text-[#e63946] font-mono text-xs tracking-widest uppercase hover:bg-[#e63946] hover:text-white transition-all text-center"
             >
               {t('nav.huntWithUs')}
             </motion.a>

@@ -14,6 +14,7 @@ import AdminPanel from "@/pages/AdminPanel";
 import WriteUpsPage from "@/pages/WriteUpsPage";
 import RecruitmentForm from "@/pages/RecruitmentForm";
 import RecruitmentAdmin from "@/pages/RecruitmentAdmin";
+import Leaderboard from "@/pages/Leaderboard";
 
 // NOTE: About Theme
 // - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
@@ -34,6 +35,7 @@ function Router() {
       <Route path={"/write-ups"} component={WriteUpsPage} />
       <Route path={"/recruitment"} component={RecruitmentForm} />
       <Route path={"/recruitment-admin"} component={RecruitmentAdmin} />
+      <Route path={"/leaderboard"} component={Leaderboard} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

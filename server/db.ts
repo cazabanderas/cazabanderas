@@ -1009,3 +1009,195 @@ export async function updateRecruitmentApplicationStatus(
 }
 
 
+
+/**
+ * Get full leaderboard with all member stats, ordered by rank
+ */
+export async function getLeaderboard() {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get leaderboard: database not available");
+    return [];
+  }
+
+  try {
+    const { leaderboardStats, htbTeamMembers } = await import("../drizzle/schema");
+    const { eq } = await import("drizzle-orm");
+
+    const stats = await db
+      .select({
+        id: leaderboardStats.id,
+        htbTeamMemberId: leaderboardStats.htbTeamMemberId,
+        totalFlags: leaderboardStats.totalFlags,
+        totalChallenges: leaderboardStats.totalChallenges,
+        totalPoints: leaderboardStats.totalPoints,
+        rankPosition: leaderboardStats.rankPosition,
+        tier: leaderboardStats.tier,
+        previousRankPosition: leaderboardStats.previousRankPosition,
+        lastUpdated: leaderboardStats.lastUpdated,
+        memberName: htbTeamMembers.displayName,
+        memberUsername: htbTeamMembers.htbUsername,
+        memberAvatar: htbTeamMembers.profilePictureUrl,
+        memberTitle: htbTeamMembers.title,
+        memberSpecialties: htbTeamMembers.specialties,
+        memberVisible: htbTeamMembers.isVisible,
+      })
+      .from(leaderboardStats)
+      .innerJoin(htbTeamMembers, eq(leaderboardStats.htbTeamMemberId, htbTeamMembers.id))
+      .orderBy(leaderboardStats.rankPosition);
+
+    return stats;
+  } catch (error) {
+    console.error("[Database] Failed to get leaderboard:", error);
+    return [];
+  }
+}
+
+/**
+ * Get leaderboard stats for a specific member
+ */
+export async function getMemberLeaderboardStats(htbTeamMemberId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get member stats: database not available");
+    return null;
+  }
+
+  try {
+    const { leaderboardStats } = await import("../drizzle/schema");
+    const { eq } = await import("drizzle-orm");
+
+    const stats = await db
+      .select()
+      .from(leaderboardStats)
+      .where(eq(leaderboardStats.htbTeamMemberId, htbTeamMemberId))
+      .limit(1);
+
+    return stats[0] || null;
+  } catch (error) {
+    console.error("[Database] Failed to get member stats:", error);
+    return null;
+  }
+}
+
+/**
+ * Update or create leaderboard stats for a member
+ */
+export async function upsertLeaderboardStats(
+  htbTeamMemberId: number,
+  data: {
+    totalFlags: number;
+    totalChallenges: number;
+    totalPoints: number;
+    rankPosition?: number;
+    tier?: string;
+    previousRankPosition?: number;
+  }
+) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot upsert leaderboard stats: database not available");
+    return null;
+  }
+
+  try {
+    const { leaderboardStats } = await import("../drizzle/schema");
+    const { eq } = await import("drizzle-orm");
+
+    // Check if stats exist
+    const existing = await db
+      .select()
+      .from(leaderboardStats)
+      .where(eq(leaderboardStats.htbTeamMemberId, htbTeamMemberId))
+      .limit(1);
+
+    if (existing.length > 0) {
+      // Update existing
+      await db
+        .update(leaderboardStats)
+        .set({
+          totalFlags: data.totalFlags,
+          totalChallenges: data.totalChallenges,
+          totalPoints: data.totalPoints,
+          rankPosition: data.rankPosition,
+          tier: data.tier || "bronze",
+          previousRankPosition: data.previousRankPosition,
+          lastUpdated: new Date(),
+        })
+        .where(eq(leaderboardStats.htbTeamMemberId, htbTeamMemberId));
+    } else {
+      // Create new
+      await db.insert(leaderboardStats).values({
+        htbTeamMemberId,
+        totalFlags: data.totalFlags,
+        totalChallenges: data.totalChallenges,
+        totalPoints: data.totalPoints,
+        rankPosition: data.rankPosition,
+        tier: data.tier || "bronze",
+        previousRankPosition: data.previousRankPosition,
+        lastUpdated: new Date(),
+      });
+    }
+
+    return await getMemberLeaderboardStats(htbTeamMemberId);
+  } catch (error) {
+    console.error("[Database] Failed to upsert leaderboard stats:", error);
+    return null;
+  }
+}
+
+/**
+ * Recalculate all leaderboard rankings based on current data
+ * Should be called whenever member stats change
+ */
+export async function recalculateLeaderboard() {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot recalculate leaderboard: database not available");
+    return [];
+  }
+
+  try {
+    const { leaderboardStats } = await import("../drizzle/schema");
+    const { desc, eq } = await import("drizzle-orm");
+
+    // Get all stats ordered by points
+    const allStats = await db
+      .select()
+      .from(leaderboardStats)
+      .orderBy(desc(leaderboardStats.totalPoints));
+
+    // Update rank positions
+    for (let i = 0; i < allStats.length; i++) {
+      const stat = allStats[i];
+      const newRank = i + 1;
+      const tier = getTierFromPoints(stat.totalPoints);
+
+      const { eq } = await import("drizzle-orm");
+      await db
+        .update(leaderboardStats)
+        .set({
+          rankPosition: newRank,
+          previousRankPosition: stat.rankPosition,
+          tier,
+          lastUpdated: new Date(),
+        })
+        .where(eq(leaderboardStats.id, stat.id));
+    }
+
+    return getLeaderboard();
+  } catch (error) {
+    console.error("[Database] Failed to recalculate leaderboard:", error);
+    return [];
+  }
+}
+
+/**
+ * Determine tier based on total points
+ */
+function getTierFromPoints(points: number): string {
+  if (points >= 5000) return "platinum";
+  if (points >= 3000) return "gold";
+  if (points >= 1000) return "silver";
+  return "bronze";
+}

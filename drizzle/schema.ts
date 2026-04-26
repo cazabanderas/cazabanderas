@@ -381,3 +381,33 @@ export const htbTeamMembers = mysqlTable("htbTeamMembers", {
 
 export type HTBTeamMember = typeof htbTeamMembers.$inferSelect;
 export type InsertHTBTeamMember = typeof htbTeamMembers.$inferInsert;
+
+/**
+ * Leaderboard Stats table - stores computed leaderboard rankings and statistics
+ * Aggregates flags, challenges, and points for each team member
+ * Updated whenever challenges are completed or member profiles are updated
+ */
+export const leaderboardStats = mysqlTable("leaderboardStats", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Reference to HTB team member */
+  htbTeamMemberId: int("htbTeamMemberId").notNull().unique().references(() => htbTeamMembers.id, { onDelete: "cascade" }),
+  /** Total flags captured by this member */
+  totalFlags: int("totalFlags").default(0).notNull(),
+  /** Total unique challenges solved */
+  totalChallenges: int("totalChallenges").default(0).notNull(),
+  /** Total points earned */
+  totalPoints: int("totalPoints").default(0).notNull(),
+  /** Current rank position (1st, 2nd, etc.) */
+  rankPosition: int("rankPosition"),
+  /** Tier based on total points (bronze/silver/gold/platinum) */
+  tier: varchar("tier", { length: 50 }).default("bronze").notNull(),
+  /** Previous rank position for trending */
+  previousRankPosition: int("previousRankPosition"),
+  /** When stats were last updated */
+  lastUpdated: timestamp("lastUpdated").defaultNow().onUpdateNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type LeaderboardStats = typeof leaderboardStats.$inferSelect;
+export type InsertLeaderboardStats = typeof leaderboardStats.$inferInsert;

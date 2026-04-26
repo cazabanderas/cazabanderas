@@ -9,13 +9,18 @@
     "teamAccess": "Team Access"
   },
   "hero": {
-    "subtitle": "LATIN AMERICAN CTF TEAM",
-    "title": "CAZA BANDERAS",
-    "description1": "We hunt together, we learn together and we conquer challenges as a united front.",
-    "description2": "From web exploitation to reverse engineering — each flag has a hunter.",
+    "label": "HERO.LABEL",
+    "tagline": "We hunt together, we learn together and we conquer challenges as a united front.",
+    "subtitle": "From web exploitation to reverse engineering — each flag has a hunter.",
     "platforms": "HACKTHEBOX · TRYHACKME · HACKINGCLUB · CTFS EN VIVO",
-    "joinTeam": "JOIN THE PACK",
-    "ourChallenges": "OUR CHALLENGES"
+    "joinThePack": "JOIN THE PACK",
+    "ourHunts": "OUR CHALLENGES",
+    "stats": {
+      "ctfsCompleted": "CTFs Completed",
+      "flagsCaptured": "Flags Captured",
+      "activeMembers": "Active Members",
+      "platforms": "Platforms"
+    }
   },
   "platforms": {
     "label": "PLATFORMS",

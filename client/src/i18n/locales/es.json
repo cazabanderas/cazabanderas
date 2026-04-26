@@ -9,13 +9,18 @@
     "teamAccess": "Acceso del Equipo"
   },
   "hero": {
-    "subtitle": "EQUIPO CTF LATINOAMERICANO",
-    "title": "CAZA BANDERAS",
-    "description1": "Cazamos juntos, aprendemos juntos y conquistamos desafíos como un frente unido.",
-    "description2": "Desde explotación web hasta ingeniería inversa — cada bandera tiene un cazador.",
+    "label": "CAZADOR",
+    "tagline": "Cazamos juntos, aprendemos juntos y conquistamos desafíos como un frente unido.",
+    "subtitle": "Desde explotación web hasta ingeniería inversa — cada bandera tiene un cazador.",
     "platforms": "HACKTHEBOX · TRYHACKME · HACKINGCLUB · CTFS EN VIVO",
-    "joinTeam": "ÚNETE A LA MANADA",
-    "ourChallenges": "NUESTRAS CACERIAS"
+    "joinThePack": "ÚNETE A LA MANADA",
+    "ourHunts": "NUESTRAS CACERÍAS",
+    "stats": {
+      "ctfsCompleted": "CTFs Completados",
+      "flagsCaptured": "Banderas Capturadas",
+      "activeMembers": "Miembros Activos",
+      "platforms": "Plataformas"
+    }
   },
   "platforms": {
     "label": "PLATAFORMAS",

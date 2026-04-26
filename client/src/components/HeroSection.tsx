@@ -34,6 +34,8 @@ export default function HeroSection() {
           src={HERO_IMG}
           alt="Cazabanderas hero"
           className="w-full h-full object-cover object-center"
+          loading="eager"
+          decoding="async"
         />
         {/* Gradient overlays */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#0d0f14] via-[#0d0f14]/80 to-[#0d0f14]/30" />

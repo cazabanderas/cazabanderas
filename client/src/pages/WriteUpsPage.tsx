@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { useLocation } from "wouter";
 import { Loader2, Plus, Edit2, Trash2, Eye, EyeOff, Search, Filter } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { trpc } from "@/lib/trpc";
@@ -53,27 +54,43 @@ export default function WriteUpsPage() {
   // Mutations
   const createMutation = trpc.writeups.create.useMutation({
     onSuccess: () => {
+      toast.success('Write-up created successfully!');
       resetForm();
       refetch();
+    },
+    onError: () => {
+      toast.error('Failed to create write-up. Please try again.');
     },
   });
 
   const updateMutation = trpc.writeups.update.useMutation({
     onSuccess: () => {
+      toast.success('Write-up updated successfully!');
       resetForm();
       refetch();
+    },
+    onError: () => {
+      toast.error('Failed to update write-up. Please try again.');
     },
   });
 
   const deleteMutation = trpc.writeups.delete.useMutation({
     onSuccess: () => {
+      toast.success('Write-up deleted successfully!');
       refetch();
+    },
+    onError: () => {
+      toast.error('Failed to delete write-up. Please try again.');
     },
   });
 
   const toggleVisibilityMutation = trpc.writeups.toggleVisibility.useMutation({
     onSuccess: () => {
+      toast.success('Visibility updated!');
       refetch();
+    },
+    onError: () => {
+      toast.error('Failed to update visibility. Please try again.');
     },
   });
 
@@ -412,12 +429,29 @@ export default function WriteUpsPage() {
                 // Write-ups List
                 <div className="space-y-4">
                   {isLoading ? (
-                    <div className="flex items-center justify-center h-64">
-                      <Loader2 className="animate-spin" size={32} />
+                    <div className="space-y-4">
+                      {[...Array(3)].map((_, i) => (
+                        <div key={i} className="border border-white/10 p-6 animate-pulse">
+                          <div className="space-y-3">
+                            <div className="h-6 bg-white/10 rounded w-3/4" />
+                            <div className="flex gap-2">
+                              <div className="h-4 bg-white/10 rounded w-20" />
+                              <div className="h-4 bg-white/10 rounded w-20" />
+                              <div className="h-4 bg-white/10 rounded w-20" />
+                            </div>
+                            <div className="h-4 bg-white/10 rounded w-full" />
+                            <div className="h-4 bg-white/10 rounded w-5/6" />
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   ) : filteredWriteups.length === 0 ? (
-                    <div className="border border-white/10 p-12 text-center">
-                      <p className="text-white/60 mb-4">No write-ups found</p>
+                    <div className="border border-dashed border-white/20 p-12 text-center rounded-lg bg-white/5">
+                      <div className="mb-4">
+                        <div className="text-4xl mb-3">📝</div>
+                        <h3 className="text-xl font-display text-white mb-2">No Write-Ups Yet</h3>
+                        <p className="text-white/60 mb-4">Start sharing your CTF solutions and knowledge with the team</p>
+                      </div>
                       <Button
                         onClick={() => setShowForm(true)}
                         className="bg-[#e63946] hover:bg-[#e63946]/90 text-white font-mono text-xs tracking-widest uppercase"

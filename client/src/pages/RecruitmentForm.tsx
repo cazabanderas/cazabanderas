@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { toast } from 'sonner';
 
 const CTF_SPECIALTIES = [
   'OSINT',
@@ -66,6 +67,7 @@ export default function RecruitmentForm() {
 
   const submitMutation = trpc.recruitment.submit.useMutation({
     onSuccess: (data) => {
+      toast.success('Application submitted successfully!');
       setSubmitted(true);
       setSuccessMessage(data.message);
       setFormData({
@@ -86,6 +88,7 @@ export default function RecruitmentForm() {
       setTimeout(() => setSubmitted(false), 5000);
     },
     onError: (error) => {
+      toast.error('Failed to submit application. Please try again.');
       setErrors({ submit: error.message || t('recruitment.errorMessage') });
     },
   });
@@ -365,7 +368,10 @@ export default function RecruitmentForm() {
                   className={`min-h-24 ${errors.motivation ? 'border-red-500' : ''}`}
                 />
                 {errors.motivation && (
-                  <p className="text-sm text-red-500">{errors.motivation}</p>
+                  <div className="flex items-center gap-2 text-sm text-red-500 bg-red-500/10 border border-red-500/30 rounded px-3 py-2">
+                    <AlertCircle size={16} className="flex-shrink-0" />
+                    <span>{errors.motivation}</span>
+                  </div>
                 )}
               </div>
 

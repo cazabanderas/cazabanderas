@@ -127,17 +127,36 @@ export default function Leaderboard() {
 
         {/* Leaderboard Table */}
         {isLoading ? (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">{t("leaderboard.loading", "Loading leaderboard...")}</p>
+          <div className="space-y-3">
+            {[...Array(5)].map((_, i) => (
+              <Card key={i} className="p-4 md:p-6 border-l-4 border-red-500/30 animate-pulse">
+                <div className="flex items-center gap-4 md:gap-6">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-muted" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 bg-muted rounded w-32" />
+                    <div className="h-3 bg-muted rounded w-24" />
+                  </div>
+                  <div className="flex-shrink-0 grid grid-cols-3 gap-4">
+                    <div className="h-6 bg-muted rounded w-12" />
+                    <div className="h-6 bg-muted rounded w-12" />
+                    <div className="h-6 bg-muted rounded w-12" />
+                  </div>
+                </div>
+              </Card>
+            ))}
           </div>
         ) : filteredLeaderboard.length === 0 ? (
-          <Card className="p-12 text-center border-dashed">
-            <p className="text-muted-foreground mb-2">{t("leaderboard.empty", "No members found")}</p>
-            <p className="text-sm text-muted-foreground">
+          <Card className="p-12 text-center border-dashed border-muted-foreground/30 bg-muted/10">
+            <div className="mb-4 text-4xl">🏆</div>
+            <h3 className="text-xl font-bold mb-2">{t("leaderboard.empty", "No members found")}</h3>
+            <p className="text-sm text-muted-foreground mb-6">
               {selectedTier
                 ? t("leaderboard.noMembersInTier", "No members in this tier yet")
                 : t("leaderboard.noMembers", "Start adding team members to the leaderboard")}
             </p>
+            <Button variant="outline" onClick={() => setSelectedTier(null)}>
+              View All Members
+            </Button>
           </Card>
         ) : (
           <div className="space-y-3">
@@ -167,6 +186,8 @@ export default function Leaderboard() {
                             src={member.memberAvatar}
                             alt={member.memberName}
                             className="w-10 h-10 rounded-full object-cover"
+                            loading="lazy"
+                            decoding="async"
                           />
                         )}
                         <div className="min-w-0">

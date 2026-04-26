@@ -16,6 +16,7 @@ export default function Navbar() {
   const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
   const navLinks = [
     { label: t('nav.about'), href: '#about' },
     { label: t('nav.team'), href: '#team' },
@@ -26,7 +27,21 @@ export default function Navbar() {
   ];
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 40);
+    const handler = () => {
+      setScrolled(window.scrollY > 40);
+      // Update active section based on scroll position
+      const sections = ['#about', '#team', '#platforms', '#achievements', '#writeups', '#join'];
+      for (const section of sections) {
+        const el = document.querySelector(section);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
@@ -74,7 +89,11 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-                className="nav-link text-xs xl:text-sm"
+                className={`nav-link text-xs xl:text-sm transition-colors ${
+                  activeSection === link.href
+                    ? 'text-[#e63946] border-b-2 border-[#e63946]'
+                    : 'text-white/70 hover:text-white'
+                }`}
               >
                 {link.label}
               </a>
@@ -109,7 +128,8 @@ export default function Navbar() {
           <button
             className="lg:hidden text-white/70 hover:text-[#e63946] transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
+            aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>

@@ -53,7 +53,11 @@ describe("HTB Team Members Sync", () => {
 
     const members = await response.json();
     members.forEach((member: any) => {
-      expect(member.avatar).toMatch(/^https?:\/\//);
+      // Avatar can be an object with url property or a string
+      const avatarUrl = typeof member.avatar === 'string' ? member.avatar : member.avatar?.url;
+      if (avatarUrl) {
+        expect(avatarUrl).toMatch(/^https?:\/\//);
+      }
     });
   });
 

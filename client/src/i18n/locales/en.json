@@ -77,8 +77,9 @@
     }
   },
   "team": {
-    "title": "NUESTRA MANADA",
-    "subtitle": "LA CAZA",
+    "label": "OUR PACK",
+    "title": "OUR PACK",
+    "subtitle": "THE HUNT",
     "description": "Specialists united in the hunt. Each member brings unique skills and unwavering determination to every challenge."
   },
   "writeups": {

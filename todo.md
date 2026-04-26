@@ -216,3 +216,4 @@
 - [x] Fix deduplication tests to match actual API behavior - COMPLETED
 - [x] Fix AboutSection missing i18n keys (added about.label, title, intro1, intro2, values) - COMPLETED
 - [x] Fix HeroSection missing i18n keys (added hero.label, tagline, joinThePack, ourHunts, stats) - COMPLETED
+- [x] Fix TeamSection missing i18n keys (added team.label) - COMPLETED

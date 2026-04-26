@@ -13,7 +13,7 @@
     "huntWithUs": "Hunt With Us"
   },
   "hero": {
-    "label": "HERO.LABEL",
+    "label": "HUNTER",
     "tagline": "We hunt together, we learn together and we conquer challenges as a united front.",
     "subtitle": "From web exploitation to reverse engineering — each flag has a hunter.",
     "platforms": "HACKTHEBOX · TRYHACKME · HACKINGCLUB · CTFS EN VIVO",
@@ -37,8 +37,8 @@
     ]
   },
   "categories": {
-    "label": "DISCIPLINAS",
-    "title": "NUESTRO ARSENAL",
+    "label": "DISCIPLINES",
+    "title": "OUR ARSENAL",
     "subtitle": "Each category is a weapon. All of us are armed.",
     "items": [
       { "name": "OSINT", "desc": "Open-source intelligence gathering and investigation techniques." },
@@ -87,9 +87,9 @@
     "description": "Specialists united in the hunt. Each member brings unique skills and unwavering determination to every challenge."
   },
   "writeups": {
-    "label": "BASE DE CONOCIMIENTOS",
-    "title": "TUTORIALES Y",
-    "subtitle": "SOLUCIONES",
+    "label": "KNOWLEDGE BASE",
+    "title": "TUTORIALS AND",
+    "subtitle": "SOLUTIONS",
     "description": "We share our knowledge. Every challenge solved is a lesson for the entire pack.",
     "noWriteups": "No public write-ups available yet. Check back soon!"
   },
@@ -102,10 +102,65 @@
     "viewFullRecord": "View Full Record"
   },
   "recruitment": {
-    "title": "ÚNETE A LA MANADA",
-    "subtitle": "RECLUTAMIENTO",
+    "title": "JOIN THE PACK",
+    "subtitle": "RECRUITMENT",
     "description": "Join our hunting pack. We're looking for skilled hunters ready to face any challenge.",
-    "applyNow": "Apply Now"
+    "applyNow": "Apply Now",
+    "discordUsername": "Discord Username",
+    "discordUsernamePlaceholder": "your_discord_name",
+    "htbProfile": "HackTheBox Profile",
+    "htbProfilePlaceholder": "https://www.hackthebox.com/profile/username",
+    "thmProfile": "TryHackMe Profile",
+    "thmProfilePlaceholder": "https://tryhackme.com/p/username",
+    "hcProfile": "HackingClub Profile",
+    "hcProfilePlaceholder": "https://www.hackingclub.com/profile/username",
+    "githubProfile": "GitHub Profile",
+    "githubProfilePlaceholder": "https://github.com/username",
+    "blogUrl": "Blog/Portfolio URL",
+    "blogUrlPlaceholder": "https://yourblog.com",
+    "motivation": "Why do you want to join Cazabanderas?",
+    "motivationPlaceholder": "Tell us about your passion for CTF and cybersecurity...",
+    "mainSpecialty": "Main Specialty",
+    "mainSpecialtyPlaceholder": "Select your primary skill area",
+    "yearsOfExperience": "Years of CTF Experience",
+    "yearsOfExperiencePlaceholder": "How many years have you been doing CTF?",
+    "biggestChallenge": "Your Biggest Challenge",
+    "biggestChallengePlaceholder": "What's the most difficult challenge you've faced?",
+    "categoriesToImprove": "Categories to Improve",
+    "weeklyCommitment": "Weekly Time Commitment",
+    "weeklyCommitmentPlaceholder": "How many hours per week can you dedicate?",
+    "idealTeamDynamic": "Ideal Team Dynamic",
+    "idealTeamDynamicPlaceholder": "Describe your ideal team environment...",
+    "submitApplication": "Submit Application",
+    "submitting": "Submitting...",
+    "requiredField": "This field is required",
+    "invalidUrl": "Please enter a valid URL",
+    "errorMessage": "Failed to submit application. Please try again.",
+    "form": {
+      "specialty": "Specialty",
+      "experience": "Experience",
+      "commitment": "Weekly Commitment",
+      "discord": "Discord"
+    },
+    "admin": {
+      "title": "Recruitment Review Panel",
+      "subtitle": "Review and manage recruitment applications",
+      "reviewPanel": "Review Panel",
+      "noApplications": "No applications to review",
+      "selectApp": "Select an application to review",
+      "loading": "Loading applications...",
+      "pending": "Pending",
+      "reviewed": "Reviewed",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "decision": "Decision",
+      "notes": "Review Notes",
+      "notesPlaceholder": "Add your review notes here...",
+      "feedback": "Feedback for Candidate",
+      "feedbackPlaceholder": "Provide constructive feedback...",
+      "submit": "Submit Review",
+      "submitting": "Submitting..."
+    }
   },
   "join": {
     "label": "JOIN THE HUNT",
@@ -130,5 +185,63 @@
     "platformsHeader": "Platforms",
     "contact": "Contact",
     "motto": "Hunt together, learn together, conquer together."
+  },
+  "teamLogin": {
+    "title": "Team Access",
+    "subtitle": "Sign in to access team resources and dashboard",
+    "username": "Username",
+    "usernamePlaceholder": "Enter your username",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "signIn": "Sign In",
+    "authenticating": "Authenticating...",
+    "loginFailed": "Login failed. Please check your credentials.",
+    "contactTeamLeadership": "Contact team leadership for access",
+    "home": "Home"
+  },
+  "teamPortal": {
+    "title": "Team Dashboard",
+    "subtitle": "Welcome to the hunting ground",
+    "welcomeHunter": "Welcome, Hunter!",
+    "operationsCenter": "Operations Center",
+    "accessTeamResources": "Access team resources and manage operations",
+    "admin": "Admin Panel",
+    "leaderboard": "Leaderboard",
+    "viewRankings": "View Rankings",
+    "challengeTracker": "Challenge Tracker",
+    "trackActiveCTFs": "Track Active CTF Competitions",
+    "teamChat": "Team Chat",
+    "collaborateRealtime": "Collaborate in Real-time",
+    "knowledgeBase": "Knowledge Base",
+    "goToWriteups": "Go to Write-ups",
+    "writeUpsAndTutorials": "Write-ups and Tutorials",
+    "manageWriteupsDescription": "Manage write-ups and tutorials",
+    "comingSoon": "Coming Soon",
+    "signOut": "Sign Out"
+  },
+  "adminPanel": {
+    "loadingMembers": "Loading team members..."
+  },
+  "leaderboard": {
+    "title": "Team Leaderboard",
+    "subtitle": "Member Rankings and Statistics",
+    "rank": "Rank",
+    "member": "Member",
+    "flags": "Flags",
+    "challenges": "Challenges",
+    "points": "Points",
+    "tier": "Tier",
+    "bronze": "Bronze",
+    "silver": "Silver",
+    "gold": "Gold",
+    "platinum": "Platinum",
+    "noData": "No leaderboard data available yet"
+  },
+  "writeups": {
+    "label": "KNOWLEDGE BASE",
+    "title": "TUTORIALS AND",
+    "subtitle": "SOLUTIONS",
+    "description": "We share our knowledge. Every challenge solved is a lesson for the entire pack.",
+    "noWriteups": "No public write-ups available yet. Check back soon!"
   }
 }

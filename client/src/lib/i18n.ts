@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
+// Removed LanguageDetector to force English as default language
 
 const resources = {
   en: {
@@ -733,19 +733,19 @@ const resources = {
   },
 };
 
+// Clear localStorage to force English as default
+if (typeof window !== 'undefined') {
+  localStorage.removeItem('i18nextLng');
+}
+
 i18n
-  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'es',
-    lng: 'es',
+    lng: 'en',
+    fallbackLng: 'en',
     interpolation: {
       escapeValue: false,
-    },
-    detection: {
-      order: ['localStorage', 'navigator'],
-      caches: ['localStorage'],
     },
   });
 

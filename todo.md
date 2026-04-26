@@ -209,3 +209,9 @@
 - [ ] Build admin panel for editing team member cards (IN PROGRESS)
 - [x] Update TeamSection to display synced members with profile pictures (COMPLETED)
 - [x] Write tests for team member sync logic (COMPLETED)
+
+## i18n Bug Fixes (Session 2)
+- [x] Fix TypeScript errors in HTB router (name → challengeName) - COMPLETED
+- [x] Fix PlatformsSection i18n structure (added platforms.items array) - COMPLETED
+- [x] Fix deduplication tests to match actual API behavior - COMPLETED
+- [x] Fix AboutSection missing i18n keys (added about.label, title, intro1, intro2, values) - COMPLETED

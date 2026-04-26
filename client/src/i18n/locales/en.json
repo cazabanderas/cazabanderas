@@ -47,6 +47,30 @@
       { "name": "Misc", "desc": "Miscellaneous challenges and unconventional security problems." }
     ]
   },
+  "about": {
+    "label": "ABOUT US",
+    "title": "WHO WE ARE",
+    "intro1": "Cazabanderas is a Latin American CTF team united by passion for cybersecurity and the thrill of the hunt. We compete across multiple platforms, combining technical expertise with strategic teamwork.",
+    "intro2": "Every challenge solved strengthens our pack. Every flag captured is a victory for the collective. We believe in ethical hacking, continuous learning, and pushing the boundaries of what's possible in cybersecurity.",
+    "values": {
+      "ethicalHacking": {
+        "title": "ETHICAL HACKING",
+        "desc": "We operate within legal and ethical boundaries, using our skills responsibly to improve security."
+      },
+      "packMentality": {
+        "title": "PACK MENTALITY",
+        "desc": "Together we are stronger. We share knowledge, support each other, and hunt as one unified force."
+      },
+      "relentlessPursuit": {
+        "title": "RELENTLESS PURSUIT",
+        "desc": "No challenge is too difficult. We persist, adapt, and overcome every obstacle in our path."
+      },
+      "latinRoots": {
+        "title": "LATIN ROOTS",
+        "desc": "Proud representatives of Latin American cybersecurity. We bring regional talent to the global stage."
+      }
+    }
+  },
   "team": {
     "title": "NUESTRA MANADA",
     "subtitle": "LA CAZA",

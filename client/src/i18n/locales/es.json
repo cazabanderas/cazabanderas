@@ -47,6 +47,30 @@
       { "name": "Misc", "desc": "Desafíos diversos y problemas de seguridad no convencionales." }
     ]
   },
+  "about": {
+    "label": "ACERCA DE NOSOTROS",
+    "title": "QUIÉNES SOMOS",
+    "intro1": "Cazabanderas es un equipo CTF latinoamericano unido por la pasión por la ciberseguridad y la emoción de la caza. Competimos en múltiples plataformas, combinando experiencia técnica con trabajo en equipo estratégico.",
+    "intro2": "Cada desafío resuelto fortalece nuestra manada. Cada bandera capturada es una victoria para el colectivo. Creemos en el hacking ético, el aprendizaje continuo y en empujar los límites de lo posible en ciberseguridad.",
+    "values": {
+      "ethicalHacking": {
+        "title": "HACKING ÉTICO",
+        "desc": "Operamos dentro de límites legales y éticos, utilizando nuestras habilidades de manera responsable para mejorar la seguridad."
+      },
+      "packMentality": {
+        "title": "MENTALIDAD DE MANADA",
+        "desc": "Juntos somos más fuertes. Compartimos conocimiento, nos apoyamos mutuamente y cazamos como una fuerza unificada."
+      },
+      "relentlessPursuit": {
+        "title": "PERSECUCIÓN IMPLACABLE",
+        "desc": "Ningún desafío es demasiado difícil. Persistimos, nos adaptamos y superamos cada obstáculo en nuestro camino."
+      },
+      "latinRoots": {
+        "title": "RAÍCES LATINAS",
+        "desc": "Orgullosos representantes de la ciberseguridad latinoamericana. Llevamos talento regional al escenario global."
+      }
+    }
+  },
   "team": {
     "title": "NUESTRA MANADA",
     "subtitle": "LA CAZA",

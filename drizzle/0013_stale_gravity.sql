@@ -1,0 +1,21 @@
+CREATE TABLE `activeCTFChallenges` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`name` varchar(255) NOT NULL,
+	`platform` varchar(255) NOT NULL,
+	`url` text,
+	`startDate` timestamp NOT NULL,
+	`endDate` timestamp NOT NULL,
+	`status` enum('upcoming','active','completed') NOT NULL DEFAULT 'upcoming',
+	`difficulty` varchar(50) DEFAULT 'medium',
+	`totalPoints` int DEFAULT 0,
+	`teamScore` int DEFAULT 0,
+	`flagsCaptured` int DEFAULT 0,
+	`totalFlags` int DEFAULT 0,
+	`teamRank` int,
+	`totalTeams` int,
+	`notes` text,
+	`isPriority` int NOT NULL DEFAULT 0,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `activeCTFChallenges_id` PRIMARY KEY(`id`)
+);

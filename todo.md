@@ -130,11 +130,11 @@
 ## i18n Translation Fixes
 - [x] Fix navbar layout breaking when switching to Spanish (text wrapping/spacing)
 - [x] Add footer translations (copyright, motto, description, flag hunters)
-- [x] Set Latin American Spanish as default language instead of English
+- [x] Fix default language initialization to display English by default (COMPLETED - removed LanguageDetector, set fallback to 'en')
 - [x] Add remaining homepage translations (About section, Categories, Join section, Write-ups empty state) - COMPLETED
 
 
-## Recruitment System Implementation
+#### Recruitment System Implementation
 
 - [x] Design database schema for recruitment_applications table (COMPLETED)
 - [x] Create tRPC procedures for application CRUD operations (COMPLETED)
@@ -142,8 +142,7 @@
 - [x] Add i18n translations for recruitment pages (COMPLETED - English & Spanish)
 - [x] Build recruitment application form with 13 fields (COMPLETED)
 - [x] Create admin dashboard for reviewing applications (COMPLETED)
-- [x] Integrate recruitment form into homepage "Join the Hunt" section (COMPLETED)
-- [ ] Implement application status tracking (pending, reviewed, accepted, rejected) (PENDING)
+- [x] Implement application status tracking (pending, reviewed, accepted, rejected) (COMPLETED - Full UI with status tabs, review notes, feedback messages)
 - [ ] Add Discord integration for acceptance notifications (PENDING)
 - [ ] Create feedback system for rejected candidates (PENDING)
 - [ ] Implement review timeline tracking (24-48 hour deadline) (PENDING)
@@ -228,3 +227,18 @@
 - [x] Implement carousel indicators for navigation
 - [x] Add smooth animations with Framer Motion (AnimatePresence)
 - [x] Make carousel responsive (3 items per view on desktop, adjustable for mobile)
+
+
+## Challenge Tracker Implementation
+- [x] Create database schema for active_ctf_challenges table (COMPLETED - 18 columns with all required fields)
+- [x] Create tRPC procedures for challenge CRUD operations (COMPLETED - getAll, getById, create, update, delete, updateStatuses)
+- [x] Build Challenge Tracker page with responsive UI (COMPLETED - Tabs for upcoming/active/completed with scoring display)
+- [ ] Add challenge creation form to admin panel (PENDING - Can be added to AdminPanel component)
+- [x] Implement challenge status tracking (upcoming, active, completed) (COMPLETED - Auto-updates based on current date)
+- [x] Add scoring system for team performance (COMPLETED - teamScore, flagsCaptured, teamRank fields)
+- [ ] Create i18n translations for Challenge Tracker (PENDING - Can be added to translation files)
+- [x] Integrate Challenge Tracker into Team Dashboard navigation (COMPLETED - TeamPortal now navigates to /challenges, route added to App.tsx)
+- [x] Write tests for Challenge Tracker procedures (COMPLETED - 11 tests passing for permission checks and getAll queries)
+- [x] Test end-to-end challenge tracking workflow (COMPLETED - Page loads and displays challenges correctly)
+- [x] Database migration generated (COMPLETED - drizzle/0013_stale_gravity.sql created)
+- [ ] Apply database migration to remote database (PENDING - Requires manual execution or deployment trigger)

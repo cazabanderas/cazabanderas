@@ -411,3 +411,47 @@ export const leaderboardStats = mysqlTable("leaderboardStats", {
 
 export type LeaderboardStats = typeof leaderboardStats.$inferSelect;
 export type InsertLeaderboardStats = typeof leaderboardStats.$inferInsert;
+
+
+/**
+ * Active CTF Challenges table - tracks ongoing CTF competitions
+ * Used for Challenge Tracker to monitor team participation in active events
+ */
+export const activeCTFChallenges = mysqlTable("activeCTFChallenges", {
+  id: int("id").autoincrement().primaryKey(),
+  /** CTF competition name */
+  name: varchar("name", { length: 255 }).notNull(),
+  /** CTF platform (HackTheBox, TryHackMe, CTFtime, etc.) */
+  platform: varchar("platform", { length: 255 }).notNull(),
+  /** Challenge/event URL */
+  url: text("url"),
+  /** Start date of the CTF */
+  startDate: timestamp("startDate").notNull(),
+  /** End date of the CTF */
+  endDate: timestamp("endDate").notNull(),
+  /** Status: upcoming, active, completed */
+  status: mysqlEnum("status", ["upcoming", "active", "completed"]).default("upcoming").notNull(),
+  /** Difficulty level */
+  difficulty: varchar("difficulty", { length: 50 }).default("medium"),
+  /** Total points available */
+  totalPoints: int("totalPoints").default(0),
+  /** Team's current score */
+  teamScore: int("teamScore").default(0),
+  /** Number of flags captured by team */
+  flagsCaptured: int("flagsCaptured").default(0),
+  /** Total flags in the CTF */
+  totalFlags: int("totalFlags").default(0),
+  /** Team rank/position */
+  teamRank: int("teamRank"),
+  /** Total participating teams */
+  totalTeams: int("totalTeams"),
+  /** Notes about the CTF */
+  notes: text("notes"),
+  /** Whether this is a priority CTF */
+  isPriority: int("isPriority").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ActiveCTFChallenge = typeof activeCTFChallenges.$inferSelect;
+export type InsertActiveCTFChallenge = typeof activeCTFChallenges.$inferInsert;

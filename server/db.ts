@@ -1,6 +1,7 @@
 import { eq, desc, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, teamMembers, teamCredentials, activityLog, teamResources, InsertTeamResource, huntersProfiles, platforms, achievements, InsertPlatform, InsertAchievement, teamWriteups, InsertTeamWriteup, recruitmentApplications } from "../drizzle/schema";
+import { InsertUser, users, teamMembers, teamCredentials, activityLog, teamResources, InsertTeamResource, huntersProfiles, platforms, achievements, InsertPlatform, InsertAchievement, teamWriteups, InsertTeamWriteup, recruitmentApplications, activeCTFChallenges } from "../drizzle/schema";
+
 import { ENV } from './_core/env';
 import bcrypt from 'bcryptjs';
 
@@ -1200,4 +1201,214 @@ function getTierFromPoints(points: number): string {
   if (points >= 3000) return "gold";
   if (points >= 1000) return "silver";
   return "bronze";
+}
+
+
+/**
+ * Create a new active CTF challenge
+ */
+export async function createActiveCTFChallenge(data: {
+  name: string;
+  platform: string;
+  url?: string;
+  startDate: Date;
+  endDate: Date;
+  difficulty?: string;
+  totalPoints?: number;
+  totalFlags?: number;
+  notes?: string;
+  isPriority?: boolean;
+}) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    const result = await db.insert(activeCTFChallenges).values({
+      name: data.name,
+      platform: data.platform,
+      url: data.url,
+      startDate: data.startDate,
+      endDate: data.endDate,
+      status: new Date() < data.startDate ? "upcoming" : "active",
+      difficulty: data.difficulty || "medium",
+      totalPoints: data.totalPoints || 0,
+      totalFlags: data.totalFlags || 0,
+      notes: data.notes,
+      isPriority: data.isPriority ? 1 : 0,
+    });
+    return result;
+  } catch (error) {
+    console.error("[DB] Failed to create active CTF challenge:", error);
+    throw error;
+  }
+}
+
+/**
+ * Get all active CTF challenges with optional filtering
+ */
+export async function getActiveCTFChallenges(filters?: {
+  status?: "upcoming" | "active" | "completed";
+  platform?: string;
+  isPriority?: boolean;
+}) {
+  const db = await getDb();
+  if (!db) {
+    return [];
+  }
+
+  try {
+    const results = await db.select().from(activeCTFChallenges);
+    
+    // Apply filters in memory
+    return results.filter(challenge => {
+      if (filters?.status && challenge.status !== filters.status) return false;
+      if (filters?.platform && challenge.platform !== filters.platform) return false;
+      if (filters?.isPriority && challenge.isPriority !== 1) return false;
+      return true;
+    });
+  } catch (error) {
+    console.error("[DB] Failed to get active CTF challenges:", error);
+    return [];
+  }
+}
+
+/**
+ * Get a single active CTF challenge by ID
+ */
+export async function getActiveCTFChallengeById(id: number) {
+  const db = await getDb();
+  if (!db) {
+    return null;
+  }
+
+  try {
+    const result = await db
+      .select()
+      .from(activeCTFChallenges)
+      .where(eq(activeCTFChallenges.id, id))
+      .limit(1);
+
+    return result[0] || null;
+  } catch (error) {
+    console.error("[DB] Failed to get active CTF challenge:", error);
+    return null;
+  }
+}
+
+/**
+ * Update an active CTF challenge
+ */
+export async function updateActiveCTFChallenge(
+  id: number,
+  data: {
+    name?: string;
+    platform?: string;
+    url?: string;
+    startDate?: Date;
+    endDate?: Date;
+    status?: "upcoming" | "active" | "completed";
+    difficulty?: string;
+    totalPoints?: number;
+    teamScore?: number;
+    flagsCaptured?: number;
+    totalFlags?: number;
+    teamRank?: number;
+    totalTeams?: number;
+    notes?: string;
+    isPriority?: boolean;
+  }
+) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    const updateData: Record<string, unknown> = {};
+
+    if (data.name !== undefined) updateData.name = data.name;
+    if (data.platform !== undefined) updateData.platform = data.platform;
+    if (data.url !== undefined) updateData.url = data.url;
+    if (data.startDate !== undefined) updateData.startDate = data.startDate;
+    if (data.endDate !== undefined) updateData.endDate = data.endDate;
+    if (data.status !== undefined) updateData.status = data.status;
+    if (data.difficulty !== undefined) updateData.difficulty = data.difficulty;
+    if (data.totalPoints !== undefined) updateData.totalPoints = data.totalPoints;
+    if (data.teamScore !== undefined) updateData.teamScore = data.teamScore;
+    if (data.flagsCaptured !== undefined) updateData.flagsCaptured = data.flagsCaptured;
+    if (data.totalFlags !== undefined) updateData.totalFlags = data.totalFlags;
+    if (data.teamRank !== undefined) updateData.teamRank = data.teamRank;
+    if (data.totalTeams !== undefined) updateData.totalTeams = data.totalTeams;
+    if (data.notes !== undefined) updateData.notes = data.notes;
+    if (data.isPriority !== undefined) updateData.isPriority = data.isPriority ? 1 : 0;
+
+    const result = await db
+      .update(activeCTFChallenges)
+      .set(updateData)
+      .where(eq(activeCTFChallenges.id, id));
+
+    return result;
+  } catch (error) {
+    console.error("[DB] Failed to update active CTF challenge:", error);
+    throw error;
+  }
+}
+
+/**
+ * Delete an active CTF challenge
+ */
+export async function deleteActiveCTFChallenge(id: number) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    const result = await db
+      .delete(activeCTFChallenges)
+      .where(eq(activeCTFChallenges.id, id));
+
+    return result;
+  } catch (error) {
+    console.error("[DB] Failed to delete active CTF challenge:", error);
+    throw error;
+  }
+}
+
+/**
+ * Update challenge status based on current date
+ */
+export async function updateChallengeStatuses() {
+  const db = await getDb();
+  if (!db) {
+    return;
+  }
+
+  try {
+    const now = new Date();
+    const challenges = await db.select().from(activeCTFChallenges);
+
+    for (const challenge of challenges) {
+      let newStatus: "upcoming" | "active" | "completed" = challenge.status;
+
+      if (now < challenge.startDate) {
+        newStatus = "upcoming";
+      } else if (now >= challenge.startDate && now < challenge.endDate) {
+        newStatus = "active";
+      } else {
+        newStatus = "completed";
+      }
+
+      if (newStatus !== challenge.status) {
+        await db
+          .update(activeCTFChallenges)
+          .set({ status: newStatus })
+          .where(eq(activeCTFChallenges.id, challenge.id));
+      }
+    }
+  } catch (error) {
+    console.error("[DB] Failed to update challenge statuses:", error);
+  }
 }

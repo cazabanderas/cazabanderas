@@ -137,14 +137,14 @@ export default function TeamPortal() {
           {/* Other Sections */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
 
-            {/* Challenge Tracker - Coming Soon */}
-            <div className="border border-[#e63946]/30 p-6 hover:border-[#e63946]/60 transition-colors">
+            {/* Challenge Tracker */}
+            <div className="border border-[#e63946]/30 p-6 hover:border-[#e63946]/60 transition-colors cursor-pointer" onClick={() => setLocation('/challenges')}>
               <h3 className="font-display text-xl text-white mb-3 tracking-wider">{t('teamPortal.challengeTracker')}</h3>
               <p className="text-white/60 text-sm mb-4">
                 {t('teamPortal.trackActiveCTFs')}
               </p>
               <button className="text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors">
-                {t('teamPortal.comingSoon')}
+                {t('teamPortal.viewTracker')}
               </button>
             </div>
 

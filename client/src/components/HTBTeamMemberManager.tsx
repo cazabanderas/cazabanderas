@@ -10,6 +10,14 @@ export default function HTBTeamMemberManager() {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editForm, setEditForm] = useState({
     displayName: "",
+    title: "",
+    bio: "",
+    specialties: "",
+    htbUrl: "",
+    thmUrl: "",
+    githubUrl: "",
+    linkedinUrl: "",
+    blogUrl: "",
     notes: "",
     isVisible: true,
   });
@@ -18,6 +26,14 @@ export default function HTBTeamMemberManager() {
     setEditingId(member.id);
     setEditForm({
       displayName: member.displayName || "",
+      title: member.title || "",
+      bio: member.bio || "",
+      specialties: member.specialties || "",
+      htbUrl: member.htbUrl || "",
+      thmUrl: member.thmUrl || "",
+      githubUrl: member.githubUrl || "",
+      linkedinUrl: member.linkedinUrl || "",
+      blogUrl: member.blogUrl || "",
       notes: member.notes || "",
       isVisible: member.isVisible !== 0,
     });
@@ -30,6 +46,14 @@ export default function HTBTeamMemberManager() {
       await updateMemberMutation.mutateAsync({
         id: editingId,
         displayName: editForm.displayName,
+        title: editForm.title,
+        bio: editForm.bio,
+        specialties: editForm.specialties,
+        htbUrl: editForm.htbUrl,
+        thmUrl: editForm.thmUrl,
+        githubUrl: editForm.githubUrl,
+        linkedinUrl: editForm.linkedinUrl,
+        blogUrl: editForm.blogUrl,
         notes: editForm.notes,
         isVisible: editForm.isVisible ? 1 : 0,
       });
@@ -45,7 +69,19 @@ export default function HTBTeamMemberManager() {
 
   const handleCancel = () => {
     setEditingId(null);
-    setEditForm({ displayName: "", notes: "", isVisible: true });
+    setEditForm({
+      displayName: "",
+      title: "",
+      bio: "",
+      specialties: "",
+      htbUrl: "",
+      thmUrl: "",
+      githubUrl: "",
+      linkedinUrl: "",
+      blogUrl: "",
+      notes: "",
+      isVisible: true,
+    });
   };
 
   if (isLoading) {
@@ -67,16 +103,100 @@ export default function HTBTeamMemberManager() {
             {editingId === member.id ? (
               // Edit Mode
               <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block font-mono text-xs text-[#e63946] tracking-widest uppercase mb-2">
+                      Display Name
+                    </label>
+                    <input
+                      type="text"
+                      value={editForm.displayName}
+                      onChange={(e) => setEditForm({ ...editForm, displayName: e.target.value })}
+                      className="w-full px-4 py-2 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-mono text-xs text-[#e63946] tracking-widest uppercase mb-2">
+                      Title/Role
+                    </label>
+                    <input
+                      type="text"
+                      value={editForm.title}
+                      onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                      placeholder="e.g., Web Exploitation Specialist"
+                      className="w-full px-4 py-2 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors"
+                    />
+                  </div>
+                </div>
+
                 <div>
                   <label className="block font-mono text-xs text-[#e63946] tracking-widest uppercase mb-2">
-                    Display Name
+                    Bio/Description
+                  </label>
+                  <textarea
+                    value={editForm.bio}
+                    onChange={(e) => setEditForm({ ...editForm, bio: e.target.value })}
+                    placeholder="Tell us about this team member..."
+                    rows={3}
+                    className="w-full px-4 py-2 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-mono text-xs text-[#e63946] tracking-widest uppercase mb-2">
+                    Specialties (comma-separated)
                   </label>
                   <input
                     type="text"
-                    value={editForm.displayName}
-                    onChange={(e) => setEditForm({ ...editForm, displayName: e.target.value })}
+                    value={editForm.specialties}
+                    onChange={(e) => setEditForm({ ...editForm, specialties: e.target.value })}
+                    placeholder="e.g., Web, Reverse Engineering, Cryptography"
                     className="w-full px-4 py-2 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors"
                   />
+                </div>
+
+                <div>
+                  <label className="block font-mono text-xs text-[#e63946] tracking-widest uppercase mb-2">
+                    Profile URLs
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <input
+                      type="url"
+                      value={editForm.htbUrl}
+                      onChange={(e) => setEditForm({ ...editForm, htbUrl: e.target.value })}
+                      placeholder="HackTheBox URL"
+                      className="w-full px-4 py-2 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors text-sm"
+                    />
+                    <input
+                      type="url"
+                      value={editForm.thmUrl}
+                      onChange={(e) => setEditForm({ ...editForm, thmUrl: e.target.value })}
+                      placeholder="TryHackMe URL"
+                      className="w-full px-4 py-2 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors text-sm"
+                    />
+                    <input
+                      type="url"
+                      value={editForm.githubUrl}
+                      onChange={(e) => setEditForm({ ...editForm, githubUrl: e.target.value })}
+                      placeholder="GitHub URL"
+                      className="w-full px-4 py-2 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors text-sm"
+                    />
+                    <input
+                      type="url"
+                      value={editForm.linkedinUrl}
+                      onChange={(e) => setEditForm({ ...editForm, linkedinUrl: e.target.value })}
+                      placeholder="LinkedIn URL"
+                      className="w-full px-4 py-2 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors text-sm"
+                    />
+                    <input
+                      type="url"
+                      value={editForm.blogUrl}
+                      onChange={(e) => setEditForm({ ...editForm, blogUrl: e.target.value })}
+                      placeholder="Blog URL"
+                      className="w-full px-4 py-2 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors text-sm col-span-2"
+                    />
+                  </div>
                 </div>
 
                 <div>
@@ -86,8 +206,8 @@ export default function HTBTeamMemberManager() {
                   <textarea
                     value={editForm.notes}
                     onChange={(e) => setEditForm({ ...editForm, notes: e.target.value })}
-                    placeholder="Add any additional notes about this member..."
-                    rows={3}
+                    placeholder="Add any additional notes..."
+                    rows={2}
                     className="w-full px-4 py-2 bg-white/5 border border-white/10 text-white placeholder-white/30 focus:border-[#e63946] focus:outline-none transition-colors"
                   />
                 </div>
@@ -138,14 +258,86 @@ export default function HTBTeamMemberManager() {
                       <h3 className="font-display text-lg text-white tracking-wider">
                         {member.displayName}
                       </h3>
+                      {member.title && (
+                        <p className="text-[#e63946] font-mono text-xs tracking-wide">
+                          {member.title}
+                        </p>
+                      )}
                       <p className="text-white/60 font-mono text-xs">
                         HTB: {member.htbUsername}
                       </p>
                     </div>
                   </div>
 
-                  {member.notes && (
+                  {member.bio && (
                     <p className="text-white/70 text-sm mb-3 p-3 bg-white/5 border border-white/10 rounded">
+                      {member.bio}
+                    </p>
+                  )}
+
+                  {member.specialties && (
+                    <p className="text-white/60 text-sm mb-2">
+                      <span className="font-mono text-[#e63946]">Specialties:</span> {member.specialties}
+                    </p>
+                  )}
+
+                  {(member.htbUrl || member.thmUrl || member.githubUrl || member.linkedinUrl || member.blogUrl) && (
+                    <div className="flex flex-wrap gap-3 mb-3">
+                      {member.htbUrl && (
+                        <a
+                          href={member.htbUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#e63946] hover:text-white text-xs font-mono transition-colors"
+                        >
+                          HTB
+                        </a>
+                      )}
+                      {member.thmUrl && (
+                        <a
+                          href={member.thmUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#e63946] hover:text-white text-xs font-mono transition-colors"
+                        >
+                          THM
+                        </a>
+                      )}
+                      {member.githubUrl && (
+                        <a
+                          href={member.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#e63946] hover:text-white text-xs font-mono transition-colors"
+                        >
+                          GitHub
+                        </a>
+                      )}
+                      {member.linkedinUrl && (
+                        <a
+                          href={member.linkedinUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#e63946] hover:text-white text-xs font-mono transition-colors"
+                        >
+                          LinkedIn
+                        </a>
+                      )}
+                      {member.blogUrl && (
+                        <a
+                          href={member.blogUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#e63946] hover:text-white text-xs font-mono transition-colors"
+                        >
+                          Blog
+                        </a>
+                      )}
+                    </div>
+                  )}
+
+                  {member.notes && (
+                    <p className="text-white/60 text-xs mb-3 p-2 bg-white/5 border border-white/10 rounded italic">
                       {member.notes}
                     </p>
                   )}

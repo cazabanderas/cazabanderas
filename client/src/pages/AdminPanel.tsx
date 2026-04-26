@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Loader2, Plus, Trash2, Edit2, Eye, EyeOff, LogOut, Home, LayoutDashboard } from "lucide-react";
 import ActivityLog from "@/components/ActivityLog";
-import HuntersProfileManager from "@/components/HuntersProfileManager";
+
 import HTBTeamMemberManager from "@/components/HTBTeamMemberManager";
 import { SkeletonTable, SkeletonCard } from "@/components/Skeleton";
 
@@ -33,7 +33,7 @@ export default function AdminPanel() {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [activeTab, setActiveTab] = useState<"members" | "activity" | "hunters" | "htb-members" | "platforms" | "achievements">("members");
+  const [activeTab, setActiveTab] = useState<"members" | "activity" | "htb-members" | "platforms" | "achievements">("members");
 
   const { data: members, isLoading, refetch } = trpc.admin.listMembers.useQuery();
   const addMemberMutation = trpc.admin.addMember.useMutation();
@@ -263,16 +263,6 @@ export default function AdminPanel() {
               Activity Log
             </button>
             <button
-              onClick={() => setActiveTab("hunters")}
-              className={`px-6 py-3 font-mono text-sm tracking-widest uppercase transition-all ${
-                activeTab === "hunters"
-                  ? "text-[#e63946] border-b-2 border-[#e63946]"
-                  : "text-white/60 hover:text-white"
-              }`}
-            >
-              Hunters Profiles
-            </button>
-            <button
               onClick={() => setActiveTab("htb-members")}
               className={`px-6 py-3 font-mono text-sm tracking-widest uppercase transition-all ${
                 activeTab === "htb-members"
@@ -478,14 +468,6 @@ export default function AdminPanel() {
             <div>
               <h2 className="font-display text-3xl text-white mb-8 tracking-wider">ACTIVITY LOG</h2>
               <ActivityLog />
-            </div>
-          )}
-
-          {/* Hunters Profiles Tab */}
-          {activeTab === "hunters" && (
-            <div>
-              <h2 className="font-display text-3xl text-white mb-8 tracking-wider">HUNTERS PROFILES</h2>
-              <HuntersProfileManager />
             </div>
           )}
 

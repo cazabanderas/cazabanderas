@@ -357,6 +357,22 @@ export const htbTeamMembers = mysqlTable("htbTeamMembers", {
   isVisible: int("isVisible").default(1).notNull(),
   /** Custom notes/bio (editable in admin panel) */
   notes: text("notes"),
+  /** Job title or role (editable in admin panel) */
+  title: varchar("title", { length: 255 }),
+  /** Bio/description (editable in admin panel) */
+  bio: text("bio"),
+  /** Specialties/skills (editable in admin panel, comma-separated) */
+  specialties: text("specialties"),
+  /** HackTheBox profile URL (editable in admin panel) */
+  htbUrl: text("htbUrl"),
+  /** TryHackMe profile URL (editable in admin panel) */
+  thmUrl: text("thmUrl"),
+  /** GitHub profile URL (editable in admin panel) */
+  githubUrl: text("githubUrl"),
+  /** LinkedIn profile URL (editable in admin panel) */
+  linkedinUrl: text("linkedinUrl"),
+  /** Personal blog URL (editable in admin panel) */
+  blogUrl: text("blogUrl"),
   /** When this member was first synced from HTB */
   syncedAt: timestamp("syncedAt").defaultNow().notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),

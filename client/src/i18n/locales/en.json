@@ -107,6 +107,14 @@
     "description": "Join our hunting pack. We're looking for skilled hunters ready to face any challenge.",
     "applyNow": "Apply Now"
   },
+  "join": {
+    "label": "JOIN THE HUNT",
+    "title": "BECOME A FLAG HUNTER",
+    "description": "Ready to join the pack? We're always looking for skilled hunters who are passionate about cybersecurity and CTF competitions.",
+    "apply": "APPLY NOW",
+    "discord": "JOIN DISCORD",
+    "packMotto": "Hunt together. Learn together. Conquer together."
+  },
   "footer": {
     "copyright": "© 2026 Cazabanderas. All rights reserved.",
     "followUs": "Follow Us",

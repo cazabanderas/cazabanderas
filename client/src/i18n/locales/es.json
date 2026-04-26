@@ -107,6 +107,14 @@
     "description": "Únete a nuestro equipo de cazadores. Buscamos cazadores hábiles listos para enfrentar cualquier desafío.",
     "applyNow": "Solicitar Ahora"
   },
+  "join": {
+    "label": "ÚNETE A LA CAZA",
+    "title": "CONVÍRTETE EN CAZADOR DE BANDERAS",
+    "description": "¿Listo para unirte a la manada? Siempre estamos buscando cazadores hábiles apasionados por la ciberseguridad y las competiciones CTF.",
+    "apply": "SOLICITAR AHORA",
+    "discord": "ÚNETE A DISCORD",
+    "packMotto": "Cazamos juntos. Aprendemos juntos. Conquistamos juntos."
+  },
   "footer": {
     "copyright": "© 2026 Cazabanderas. Todos los derechos reservados.",
     "followUs": "Síguenos",

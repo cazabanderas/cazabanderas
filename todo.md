@@ -220,3 +220,4 @@
 - [x] Fix Navbar missing i18n keys (added nav.team, nav.writeups, nav.teamLogin, nav.huntWithUs) - COMPLETED
 - [x] Fix Achievements section missing i18n keys (added achievements.label, viewFullRecord) - COMPLETED
 - [x] Fix Footer missing i18n keys (added all footer.* keys for navigation, description, contact, motto) - COMPLETED
+- [x] Fix Join section missing i18n keys (added join.label, title, description, apply, discord, packMotto) - COMPLETED

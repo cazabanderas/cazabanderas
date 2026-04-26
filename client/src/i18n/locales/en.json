@@ -1,12 +1,16 @@
 {
   "nav": {
     "about": "About",
+    "team": "Team",
     "platforms": "Platforms",
     "achievements": "Achievements",
+    "writeups": "Write-ups",
     "tutorials": "Tutorials",
     "joinUs": "Join Us",
     "recruitment": "Recruitment",
-    "teamAccess": "Team Access"
+    "teamAccess": "Team Access",
+    "teamLogin": "Team Login",
+    "huntWithUs": "Hunt With Us"
   },
   "hero": {
     "label": "HERO.LABEL",
@@ -90,10 +94,12 @@
     "noWriteups": "No public write-ups available yet. Check back soon!"
   },
   "achievements": {
-    "title": "LOGROS Y RECONOCIMIENTOS",
-    "subtitle": "NUESTROS ÉXITOS",
+    "label": "ACHIEVEMENTS",
+    "title": "OUR VICTORIES",
+    "subtitle": "RECOGNITION",
     "description": "Our victories in the CTF arena",
-    "recentActivity": "Recent Team Activity"
+    "recentActivity": "Recent Team Activity",
+    "viewFullRecord": "View Full Record"
   },
   "recruitment": {
     "title": "ÚNETE A LA MANADA",
@@ -103,6 +109,18 @@
   },
   "footer": {
     "copyright": "© 2026 Cazabanderas. All rights reserved.",
-    "followUs": "Follow Us"
+    "followUs": "Follow Us",
+    "about": "About",
+    "team": "Team",
+    "platforms": "Platforms",
+    "achievements": "Achievements",
+    "writeups": "Write-ups",
+    "joinUs": "Join Us",
+    "flagHunters": "FLAG HUNTERS",
+    "description": "A Latin American CTF team united by passion for cybersecurity and the thrill of the hunt.",
+    "navigation": "Navigation",
+    "platformsHeader": "Platforms",
+    "contact": "Contact",
+    "motto": "Hunt together, learn together, conquer together."
   }
 }

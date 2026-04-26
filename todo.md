@@ -217,3 +217,6 @@
 - [x] Fix AboutSection missing i18n keys (added about.label, title, intro1, intro2, values) - COMPLETED
 - [x] Fix HeroSection missing i18n keys (added hero.label, tagline, joinThePack, ourHunts, stats) - COMPLETED
 - [x] Fix TeamSection missing i18n keys (added team.label) - COMPLETED
+- [x] Fix Navbar missing i18n keys (added nav.team, nav.writeups, nav.teamLogin, nav.huntWithUs) - COMPLETED
+- [x] Fix Achievements section missing i18n keys (added achievements.label, viewFullRecord) - COMPLETED
+- [x] Fix Footer missing i18n keys (added all footer.* keys for navigation, description, contact, motto) - COMPLETED

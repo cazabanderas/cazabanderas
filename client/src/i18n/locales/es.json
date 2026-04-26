@@ -1,12 +1,16 @@
 {
   "nav": {
     "about": "Acerca de",
+    "team": "Equipo",
     "platforms": "Plataformas",
     "achievements": "Logros",
+    "writeups": "Write-ups",
     "tutorials": "Tutoriales",
     "joinUs": "Únete",
     "recruitment": "Reclutamiento",
-    "teamAccess": "Acceso del Equipo"
+    "teamAccess": "Acceso del Equipo",
+    "teamLogin": "Acceso del Equipo",
+    "huntWithUs": "Caza con Nosotros"
   },
   "hero": {
     "label": "CAZADOR",
@@ -90,10 +94,12 @@
     "noWriteups": "No hay write-ups públicos disponibles aún. ¡Vuelve pronto!"
   },
   "achievements": {
-    "title": "LOGROS Y RECONOCIMIENTOS",
-    "subtitle": "NUESTROS ÉXITOS",
+    "label": "LOGROS",
+    "title": "NUESTRAS VICTORIAS",
+    "subtitle": "RECONOCIMIENTO",
     "description": "Nuestras victorias en la arena CTF",
-    "recentActivity": "Actividad Reciente del Equipo"
+    "recentActivity": "Actividad Reciente del Equipo",
+    "viewFullRecord": "Ver Registro Completo"
   },
   "recruitment": {
     "title": "ÚNETE A LA MANADA",
@@ -103,6 +109,18 @@
   },
   "footer": {
     "copyright": "© 2026 Cazabanderas. Todos los derechos reservados.",
-    "followUs": "Síguenos"
+    "followUs": "Síguenos",
+    "about": "Acerca de",
+    "team": "Equipo",
+    "platforms": "Plataformas",
+    "achievements": "Logros",
+    "writeups": "Write-ups",
+    "joinUs": "Únete",
+    "flagHunters": "CAZADORES DE BANDERAS",
+    "description": "Un equipo CTF latinoamericano unido por la pasión por la ciberseguridad y la emoción de la caza.",
+    "navigation": "Navegación",
+    "platformsHeader": "Plataformas",
+    "contact": "Contacto",
+    "motto": "Cazamos juntos, aprendemos juntos, conquistamos juntos."
   }
 }

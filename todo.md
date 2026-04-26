@@ -25,7 +25,7 @@
 - [x] Remove all dummy write-ups
 - [ ] Challenge Tracker for active CTF competitions
 - [ ] Team Chat for real-time collaboration
-- [ ] Leaderboard with member rankings and achievements
+- [x] Leaderboard with member rankings and achievements (COMPLETED - MVP with tier system, 5 procedures, responsive UI, full i18n, 5 tests passing)
 - [ ] CTFtime API integration for upcoming events
 - [ ] Email notifications for security alerts
 - [ ] Activity log export as CSV

@@ -165,8 +165,8 @@ export default function TeamPortal() {
               <p className="text-white/60 text-sm mb-4">
                 {t('teamPortal.viewRankings')}
               </p>
-              <button className="text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors">
-                {t('teamPortal.comingSoon')}
+              <button onClick={() => setLocation('/leaderboard')} className="text-[#e63946] font-mono text-xs tracking-widest uppercase hover:text-white transition-colors">
+                {t('teamPortal.viewRankings')} →
               </button>
             </div>
           </div>

@@ -1,0 +1,78 @@
+{
+  "nav": {
+    "about": "About",
+    "platforms": "Platforms",
+    "achievements": "Achievements",
+    "tutorials": "Tutorials",
+    "joinUs": "Join Us",
+    "recruitment": "Recruitment",
+    "teamAccess": "Team Access"
+  },
+  "hero": {
+    "subtitle": "LATIN AMERICAN CTF TEAM",
+    "title": "CAZA BANDERAS",
+    "description1": "We hunt together, we learn together and we conquer challenges as a united front.",
+    "description2": "From web exploitation to reverse engineering — each flag has a hunter.",
+    "platforms": "HACKTHEBOX · TRYHACKME · HACKINGCLUB · CTFS EN VIVO",
+    "joinTeam": "JOIN THE PACK",
+    "ourChallenges": "OUR CHALLENGES"
+  },
+  "platforms": {
+    "label": "PLATFORMS",
+    "title": "OUR ARENAS",
+    "items": [
+      { "name": "HackTheBox", "abbr": "HTB", "rank": "RANK #1", "description": "The premier cybersecurity training platform. We compete in live machines, challenges, and tournaments.", "url": "https://www.hackthebox.com", "categories": ["Web", "Pwn", "Crypto", "Reversing"] },
+      { "name": "TryHackMe", "abbr": "THM", "rank": "RANK #2", "description": "Interactive learning platform with guided rooms and challenges. Perfect for skill development.", "url": "https://www.tryhackme.com", "categories": ["Learning", "Challenges", "Rooms"] },
+      { "name": "HackingClub", "abbr": "HC", "rank": "RANK #3", "description": "Latin American CTF platform for regional competitions and challenges.", "url": "https://www.hackingclub.com", "categories": ["Regional", "Competitions"] },
+      { "name": "Live CTFs", "abbr": "IRL", "rank": "RANK #4", "description": "In-the-wild competitions and real-world CTF events where we test our skills.", "url": "#", "categories": ["Competitions", "Real-World"] }
+    ]
+  },
+  "categories": {
+    "label": "DISCIPLINAS",
+    "title": "NUESTRO ARSENAL",
+    "subtitle": "Each category is a weapon. All of us are armed.",
+    "items": [
+      { "name": "OSINT", "desc": "Open-source intelligence gathering and investigation techniques." },
+      { "name": "Mobile", "desc": "iOS and Android exploitation and security assessments." },
+      { "name": "Web", "desc": "Web application security, SQL injection, XSS, SSRF, IDOR." },
+      { "name": "GamePwn", "desc": "Game hacking, memory manipulation, motor tricks and game vulnerabilities." },
+      { "name": "Reversing", "desc": "Static and dynamic reverse engineering of VM, firmware and anti-debug." },
+      { "name": "AI/ML", "desc": "Machine learning attacks, adversarial examples, neural network exploitation." },
+      { "name": "Crypto", "desc": "RSA, ECC, AES, hash collisions and personalized cipher analysis." },
+      { "name": "Hardware", "desc": "Hardware hacking, side-channel attacks, exploitation of integrated systems." },
+      { "name": "Secure Coding", "desc": "Algorithm challenges, programming puzzles and CTF coding competitions." },
+      { "name": "Forensics", "desc": "Memory forensics, disk images, artifact recovery and system analysis." },
+      { "name": "Blockchain", "desc": "Smart contract exploitation, blockchain security and cryptocurrency analysis." },
+      { "name": "Coding", "desc": "Algorithm challenges, programming puzzles and CTF coding competitions." },
+      { "name": "Misc", "desc": "Miscellaneous challenges and unconventional security problems." }
+    ]
+  },
+  "team": {
+    "title": "NUESTRA MANADA",
+    "subtitle": "LA CAZA",
+    "description": "Specialists united in the hunt. Each member brings unique skills and unwavering determination to every challenge."
+  },
+  "writeups": {
+    "label": "BASE DE CONOCIMIENTOS",
+    "title": "TUTORIALES Y",
+    "subtitle": "SOLUCIONES",
+    "description": "We share our knowledge. Every challenge solved is a lesson for the entire pack.",
+    "noWriteups": "No public write-ups available yet. Check back soon!"
+  },
+  "achievements": {
+    "title": "LOGROS Y RECONOCIMIENTOS",
+    "subtitle": "NUESTROS ÉXITOS",
+    "description": "Our victories in the CTF arena",
+    "recentActivity": "Recent Team Activity"
+  },
+  "recruitment": {
+    "title": "ÚNETE A LA MANADA",
+    "subtitle": "RECLUTAMIENTO",
+    "description": "Join our hunting pack. We're looking for skilled hunters ready to face any challenge.",
+    "applyNow": "Apply Now"
+  },
+  "footer": {
+    "copyright": "© 2026 Cazabanderas. All rights reserved.",
+    "followUs": "Follow Us"
+  }
+}

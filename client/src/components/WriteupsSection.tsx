@@ -296,7 +296,7 @@ export default function WriteupsSection() {
             transition={{ duration: 0.6, delay: 0.05 }}
             className="text-center py-16"
           >
-            <p className="text-white/40 font-body text-sm">No public write-ups available yet. Check back soon!</p>
+            <p className="text-white/40 font-body text-sm">{t('writeups.noWriteups')}</p>
           </motion.div>
         )}
 

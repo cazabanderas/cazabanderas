@@ -130,7 +130,7 @@ export const htbRouter = router({
   addChallenge: publicProcedure
     .input(
       z.object({
-        name: z.string(),
+        challengeName: z.string(),
         category: z.string(),
         difficulty: z.string().optional(),
         points: z.number().optional(),
@@ -147,7 +147,7 @@ export const htbRouter = router({
         const existing = await db
           .select()
           .from(completedChallenges)
-          .where(eq(completedChallenges.name, input.name));
+          .where(eq(completedChallenges.challengeName, input.challengeName));
 
         if (existing.length > 0) {
           return {
@@ -157,7 +157,7 @@ export const htbRouter = router({
         }
 
         await db.insert(completedChallenges).values({
-          name: input.name,
+          challengeName: input.challengeName,
           category: input.category,
           difficulty: input.difficulty || "Unknown",
           points: input.points || 0,
@@ -210,11 +210,11 @@ export const htbRouter = router({
           const existing = await db
             .select()
             .from(completedChallenges)
-            .where(eq(completedChallenges.name, activity.name));
+            .where(eq(completedChallenges.challengeName, activity.name));
 
           if (existing.length === 0) {
             await db.insert(completedChallenges).values({
-              name: activity.name,
+              challengeName: activity.name,
               category: activity.challenge_category || "Unknown",
               difficulty: "Unknown",
               points: activity.points || 0,

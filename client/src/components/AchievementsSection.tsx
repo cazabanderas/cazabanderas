@@ -75,12 +75,7 @@ const achievements: Array<{
   },
 ];
 
-const stats = [
-  { value: "0", label: "CTFs Completed" },
-  { value: "0+", label: "Flags Captured" },
-  { value: "5", label: "Active Members" },
-  { value: "4", label: "Platforms" },
-];
+// Stats are now loaded from i18n translations
 
 function AchievementCard({ item, isActive }: { item: typeof achievements[0]; isActive: boolean }) {
   const Icon = item.icon;
@@ -142,9 +137,26 @@ export default function AchievementsSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [currentIndex, setCurrentIndex] = useState(0);
+  const stats = t('achievements.stats', { returnObjects: true }) as Array<{ value: string; label: string }> || [];
+  
+  // Load achievements from i18n, fallback to hardcoded data if not available
+  const achievementItems = t('achievements.items', { returnObjects: true }) as Array<any> || achievements.map(a => ({
+    event: a.event,
+    placement: a.placement,
+    category: a.category,
+    date: a.date,
+    description: a.description
+  }));
+  
+  // Merge with icon and highlight data
+  const displayAchievements = achievementItems.map((item: any, idx: number) => ({
+    ...item,
+    icon: achievements[idx]?.icon || Trophy,
+    highlight: achievements[idx]?.highlight !== false
+  }));
 
   const itemsPerView = 3;
-  const maxIndex = Math.max(0, achievements.length - itemsPerView);
+  const maxIndex = Math.max(0, displayAchievements.length - itemsPerView);
 
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
@@ -154,7 +166,7 @@ export default function AchievementsSection() {
     setCurrentIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
   };
 
-  const visibleItems = achievements.slice(currentIndex, currentIndex + itemsPerView);
+  const visibleItems = displayAchievements.slice(currentIndex, currentIndex + itemsPerView);
 
   return (
     <section id="achievements" className="relative py-24 bg-[#0d0f14]">
@@ -184,7 +196,7 @@ export default function AchievementsSection() {
 
             {/* Stats row */}
             <div className="flex flex-wrap gap-8">
-              {stats.map((stat) => (
+              {stats.map((stat: any) => (
                 <div key={stat.label} className="border-left-accent">
                   <div className="stat-number text-3xl">{stat.value}</div>
                   <div className="font-mono text-[0.6rem] text-white/35 tracking-widest uppercase mt-1">

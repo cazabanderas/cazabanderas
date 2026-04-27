@@ -99,7 +99,57 @@
     "subtitle": "RECOGNITION",
     "description": "Our victories in the CTF arena",
     "recentActivity": "Recent Team Activity",
-    "viewFullRecord": "View Full Record"
+    "viewFullRecord": "View Full Record",
+    "stats": [
+      { "value": "0", "label": "CTFs Completed" },
+      { "value": "0+", "label": "Flags Captured" },
+      { "value": "5", "label": "Active Members" },
+      { "value": "4", "label": "Platforms" }
+    ],
+    "items": [
+      {
+        "event": "HackTheBox CTF 2025",
+        "placement": "1st Place",
+        "category": "Web Exploitation",
+        "date": "2025-03-15",
+        "description": "Dominated the web exploitation category with 15 flags captured in record time."
+      },
+      {
+        "event": "TryHackMe Championship",
+        "placement": "2nd Place",
+        "category": "Overall",
+        "date": "2025-02-28",
+        "description": "Strong performance across multiple categories with consistent flag captures."
+      },
+      {
+        "event": "Crypto Challenge 2025",
+        "placement": "1st Place",
+        "category": "Cryptography",
+        "date": "2025-02-10",
+        "description": "Cracked complex RSA and elliptic curve challenges with innovative approaches."
+      },
+      {
+        "event": "Regional CTF Tournament",
+        "placement": "3rd Place",
+        "category": "Overall",
+        "date": "2025-01-20",
+        "description": "Competed against 50+ teams from Latin America with strong performance."
+      },
+      {
+        "event": "Reverse Engineering Sprint",
+        "placement": "1st Place",
+        "category": "Reversing",
+        "date": "2024-12-15",
+        "description": "Successfully reverse engineered 8 binaries with anti-debug protections."
+      },
+      {
+        "event": "HackingClub Monthly",
+        "placement": "1st Place",
+        "category": "Overall",
+        "date": "2024-11-30",
+        "description": "Consistent monthly winner with diverse skill demonstrations."
+      }
+    ]
   },
   "recruitment": {
     "title": "JOIN THE PACK",

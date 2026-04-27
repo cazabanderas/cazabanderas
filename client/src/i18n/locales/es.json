@@ -30,10 +30,53 @@
     "label": "PLATAFORMAS",
     "title": "NUESTRAS ARENAS",
     "items": [
-      { "name": "HackTheBox", "abbr": "HTB", "rank": "RANGO #1", "description": "La plataforma de ciberseguridad más importante. Competimos en máquinas en vivo, desafíos y torneos.", "url": "https://www.hackthebox.com", "categories": ["Web", "Pwn", "Crypto", "Reversing"] },
-      { "name": "TryHackMe", "abbr": "THM", "rank": "RANGO #2", "description": "Plataforma de aprendizaje interactivo con salas y desafíos guiados. Perfecto para desarrollo de habilidades.", "url": "https://www.tryhackme.com", "categories": ["Aprendizaje", "Desafíos", "Salas"] },
-      { "name": "HackingClub", "abbr": "HC", "rank": "RANGO #3", "description": "Plataforma CTF latinoamericana para competiciones y desafíos regionales.", "url": "https://www.hackingclub.com", "categories": ["Regional", "Competiciones"] },
-      { "name": "CTFs en Vivo", "abbr": "IRL", "rank": "RANGO #4", "description": "Competiciones en el mundo real y eventos CTF donde probamos nuestras habilidades.", "url": "#", "categories": ["Competiciones", "Mundo Real"] }
+      {
+        "name": "HackTheBox",
+        "abbr": "HTB",
+        "rank": "RANGO #1",
+        "description": "La plataforma de ciberseguridad más importante. Competimos en máquinas en vivo, desafíos y torneos.",
+        "url": "https://www.hackthebox.com",
+        "categories": [
+          "Web",
+          "Pwn",
+          "Crypto",
+          "Reversing"
+        ]
+      },
+      {
+        "name": "TryHackMe",
+        "abbr": "THM",
+        "rank": "RANGO #2",
+        "description": "Plataforma de aprendizaje interactivo con salas y desafíos guiados. Perfecto para desarrollo de habilidades.",
+        "url": "https://www.tryhackme.com",
+        "categories": [
+          "Aprendizaje",
+          "Desafíos",
+          "Salas"
+        ]
+      },
+      {
+        "name": "HackingClub",
+        "abbr": "HC",
+        "rank": "RANGO #3",
+        "description": "Plataforma CTF latinoamericana para competiciones y desafíos regionales.",
+        "url": "https://www.hackingclub.com",
+        "categories": [
+          "Regional",
+          "Competiciones"
+        ]
+      },
+      {
+        "name": "CTFs en Vivo",
+        "abbr": "IRL",
+        "rank": "RANGO #4",
+        "description": "Competiciones en el mundo real y eventos CTF donde probamos nuestras habilidades.",
+        "url": "#",
+        "categories": [
+          "Competiciones",
+          "Mundo Real"
+        ]
+      }
     ]
   },
   "categories": {
@@ -41,19 +84,58 @@
     "title": "NUESTRO ARSENAL",
     "subtitle": "Cada categoría es un arma. Todos estamos armados.",
     "items": [
-      { "name": "OSINT", "desc": "Recopilación de inteligencia de fuentes abiertas e investigación de técnicas." },
-      { "name": "Mobile", "desc": "Explotación de iOS y Android y evaluaciones de seguridad móvil." },
-      { "name": "Web", "desc": "Seguridad de aplicaciones web, inyección SQL, XSS, SSRF, IDOR." },
-      { "name": "GamePwn", "desc": "Hacking de juegos, manipulación de memoria, trucos de motor y vulnerabilidades." },
-      { "name": "Reversing", "desc": "Ingeniería inversa estática y dinámica de VM, firmware y anti-debug." },
-      { "name": "AI/ML", "desc": "Ataques de aprendizaje automático, ejemplos adversariales, explotación de redes neuronales." },
-      { "name": "Crypto", "desc": "RSA, ECC, AES, colisiones de hash y análisis de cifrado personalizado." },
-      { "name": "Hardware", "desc": "Hacking de hardware, ataques de canal lateral, explotación de sistemas integrados." },
-      { "name": "Secure Coding", "desc": "Desafíos de algoritmos, rompecabezas de programación y competiciones de codificación CTF." },
-      { "name": "Forensics", "desc": "Análisis forense de memoria, imágenes de disco, recuperación de artefactos y análisis de sistemas." },
-      { "name": "Blockchain", "desc": "Explotación de contratos inteligentes, seguridad blockchain y análisis de criptomonedas." },
-      { "name": "Coding", "desc": "Desafíos de algoritmos, rompecabezas de programación y competiciones de codificación CTF." },
-      { "name": "Misc", "desc": "Desafíos diversos y problemas de seguridad no convencionales." }
+      {
+        "name": "OSINT",
+        "desc": "Recopilación de inteligencia de fuentes abiertas e investigación de técnicas."
+      },
+      {
+        "name": "Mobile",
+        "desc": "Explotación de iOS y Android y evaluaciones de seguridad móvil."
+      },
+      {
+        "name": "Web",
+        "desc": "Seguridad de aplicaciones web, inyección SQL, XSS, SSRF, IDOR."
+      },
+      {
+        "name": "GamePwn",
+        "desc": "Hacking de juegos, manipulación de memoria, trucos de motor y vulnerabilidades."
+      },
+      {
+        "name": "Reversing",
+        "desc": "Ingeniería inversa estática y dinámica de VM, firmware y anti-debug."
+      },
+      {
+        "name": "AI/ML",
+        "desc": "Ataques de aprendizaje automático, ejemplos adversariales, explotación de redes neuronales."
+      },
+      {
+        "name": "Crypto",
+        "desc": "RSA, ECC, AES, colisiones de hash y análisis de cifrado personalizado."
+      },
+      {
+        "name": "Hardware",
+        "desc": "Hacking de hardware, ataques de canal lateral, explotación de sistemas integrados."
+      },
+      {
+        "name": "Secure Coding",
+        "desc": "Desafíos de algoritmos, rompecabezas de programación y competiciones de codificación CTF."
+      },
+      {
+        "name": "Forensics",
+        "desc": "Análisis forense de memoria, imágenes de disco, recuperación de artefactos y análisis de sistemas."
+      },
+      {
+        "name": "Blockchain",
+        "desc": "Explotación de contratos inteligentes, seguridad blockchain y análisis de criptomonedas."
+      },
+      {
+        "name": "Coding",
+        "desc": "Desafíos de algoritmos, rompecabezas de programación y competiciones de codificación CTF."
+      },
+      {
+        "name": "Misc",
+        "desc": "Desafíos diversos y problemas de seguridad no convencionales."
+      }
     ]
   },
   "about": {
@@ -99,7 +181,69 @@
     "subtitle": "RECONOCIMIENTO",
     "description": "Nuestras victorias en la arena CTF",
     "recentActivity": "Actividad Reciente del Equipo",
-    "viewFullRecord": "Ver Registro Completo"
+    "viewFullRecord": "Ver Registro Completo",
+    "stats": [
+      {
+        "value": "0",
+        "label": "CTFs Completados"
+      },
+      {
+        "value": "0+",
+        "label": "Banderas Capturadas"
+      },
+      {
+        "value": "5",
+        "label": "Miembros Activos"
+      },
+      {
+        "value": "4",
+        "label": "Plataformas"
+      }
+    ],
+    "items": [
+      {
+        "event": "HackTheBox CTF 2025",
+        "placement": "1er Lugar",
+        "category": "Explotación Web",
+        "date": "2025-03-15",
+        "description": "Dominamos la categoría de explotación web con 15 banderas capturadas en tiempo récord."
+      },
+      {
+        "event": "Campeonato TryHackMe",
+        "placement": "2do Lugar",
+        "category": "General",
+        "date": "2025-02-28",
+        "description": "Desempeño sólido en múltiples categorías con capturas de banderas consistentes."
+      },
+      {
+        "event": "Desafío Criptografía 2025",
+        "placement": "1er Lugar",
+        "category": "Criptografía",
+        "date": "2025-02-10",
+        "description": "Resolvimos desafíos complejos de RSA y curvas elípticas con enfoques innovadores."
+      },
+      {
+        "event": "Torneo CTF Regional",
+        "placement": "3er Lugar",
+        "category": "General",
+        "date": "2025-01-20",
+        "description": "Competimos contra más de 50 equipos de América Latina con desempeño sólido."
+      },
+      {
+        "event": "Sprint Ingeniería Inversa",
+        "placement": "1er Lugar",
+        "category": "Reversing",
+        "date": "2024-12-15",
+        "description": "Ingeniería inversa exitosa de 8 binarios con protecciones anti-debug."
+      },
+      {
+        "event": "HackingClub Mensual",
+        "placement": "1er Lugar",
+        "category": "General",
+        "date": "2024-11-30",
+        "description": "Ganador mensual consistente con demostraciones diversas de habilidades."
+      }
+    ]
   },
   "recruitment": {
     "title": "ÚNETE A LA MANADA",
@@ -236,12 +380,5 @@
     "gold": "Oro",
     "platinum": "Platino",
     "noData": "No hay datos de tabla de clasificación disponibles aún"
-  },
-  "writeups": {
-    "label": "BASE DE CONOCIMIENTOS",
-    "title": "TUTORIALES Y",
-    "subtitle": "SOLUCIONES",
-    "description": "Compartimos nuestro conocimiento. Cada desafío resuelto es una lección para toda la manada.",
-    "noWriteups": "No hay write-ups públicos disponibles aún. ¡Vuelve pronto!"
   }
 }

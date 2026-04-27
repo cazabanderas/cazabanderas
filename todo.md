@@ -133,6 +133,7 @@
 - [x] Fix default language initialization to display English by default (COMPLETED - removed LanguageDetector, set fallback to 'en')
 - [x] Add remaining homepage translations (About section, Categories, Join section, Write-ups empty state) - COMPLETED
 - [x] Fix Spanish translations for navbar items (Write-ups → Artículos, Recruitment → Reclutamiento) - COMPLETED
+- [x] Add Spanish translations for achievements carousel (event names, placements, categories, descriptions) - COMPLETED
 
 
 #### Recruitment System Implementation

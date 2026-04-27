@@ -107,7 +107,7 @@ export default function Navbar() {
               href="/recruitment"
               className="px-2 xl:px-3 py-1 xl:py-2 text-[#e63946] font-mono text-[0.65rem] xl:text-xs tracking-widest uppercase hover:text-white transition-colors whitespace-nowrap"
             >
-              Recruitment
+              {t('nav.recruitment')}
             </a>
             <a
               href="/team-login"

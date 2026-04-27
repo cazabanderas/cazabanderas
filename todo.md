@@ -132,6 +132,7 @@
 - [x] Add footer translations (copyright, motto, description, flag hunters)
 - [x] Fix default language initialization to display English by default (COMPLETED - removed LanguageDetector, set fallback to 'en')
 - [x] Add remaining homepage translations (About section, Categories, Join section, Write-ups empty state) - COMPLETED
+- [x] Fix Spanish translations for navbar items (Write-ups → Artículos, Recruitment → Reclutamiento) - COMPLETED
 
 
 #### Recruitment System Implementation

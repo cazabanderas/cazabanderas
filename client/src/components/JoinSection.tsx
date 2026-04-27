@@ -1,7 +1,7 @@
 /*
  * CAZABANDERAS Join Section
  * Design: Call-to-action section with recruitment info
- * Asymmetric layout with left text, right CTA button
+ * Card-based visual layout with 4 value cards
  */
 
 import { motion } from "framer-motion";
@@ -17,6 +17,33 @@ export default function JoinSection() {
   const { t } = useTranslation();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  const cards = [
+    {
+      icon: "🐺",
+      titleKey: "join.hunt",
+      descKey: "join.huntDesc",
+      delay: 0.2,
+    },
+    {
+      icon: "📚",
+      titleKey: "join.learn",
+      descKey: "join.learnDesc",
+      delay: 0.3,
+    },
+    {
+      icon: "🎯",
+      titleKey: "join.conquer",
+      descKey: "join.conquerDesc",
+      delay: 0.4,
+    },
+    {
+      icon: "⚡",
+      titleKey: "join.pack",
+      descKey: "join.packDesc",
+      delay: 0.5,
+    },
+  ];
 
   return (
     <section
@@ -73,26 +100,33 @@ export default function JoinSection() {
             </div>
           </motion.div>
 
-          {/* Right: Visual element */}
+          {/* Right: Card-based visual element */}
           <motion.div
             initial={{ opacity: 0, x: 24 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="hidden lg:flex items-center justify-center"
           >
-            <div className="relative w-full aspect-square max-w-sm">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#e63946]/20 to-transparent rounded-lg border border-[#e63946]/20" />
-              <div className="absolute inset-4 bg-gradient-to-tr from-[#e63946]/10 to-transparent rounded-lg" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl font-display text-[#e63946]/30 tracking-wider mb-4">
-                    🐺
+            <div className="grid grid-cols-2 gap-4 w-full max-w-sm">
+              {cards.map((card, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: card.delay }}
+                  className="relative p-6 rounded-lg border border-[#e63946]/30 bg-gradient-to-br from-[#e63946]/10 to-transparent hover:border-[#e63946]/60 transition-all duration-300 group cursor-pointer"
+                >
+                  <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">
+                    {card.icon}
                   </div>
-                  <p className="text-white/20 font-mono text-sm tracking-widest">
-                    {t('join.packMotto')}
+                  <h3 className="font-display text-sm text-white tracking-wider mb-2">
+                    {t(card.titleKey) || card.titleKey}
+                  </h3>
+                  <p className="font-body text-xs text-white/50 leading-relaxed">
+                    {t(card.descKey) || card.descKey}
                   </p>
-                </div>
-              </div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>

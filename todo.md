@@ -23,7 +23,7 @@
 - [x] Update platforms section with accurate rankings (HTB: Top 200, THM: Top 100%)
 - [x] Clear dummy achievements and set flags captured to 0+
 - [x] Remove all dummy write-ups
-- [ ] Challenge Tracker for active CTF competitions
+- [ ] Challenge Tracker for active CTF competitions (PENDING - Schema created, procedures created, UI created, but database migration not applied to remote DB)
 - [ ] Team Chat for real-time collaboration
 - [x] Leaderboard with member rankings and achievements (COMPLETED - MVP with tier system, 5 procedures, responsive UI, full i18n, 5 tests passing)
 - [ ] CTFtime API integration for upcoming events
@@ -244,3 +244,7 @@
 - [x] Test end-to-end challenge tracking workflow (COMPLETED - Page loads and displays challenges correctly)
 - [x] Database migration generated (COMPLETED - drizzle/0013_stale_gravity.sql created)
 - [ ] Apply database migration to remote database (PENDING - Requires manual execution or deployment trigger)
+
+
+## Design Improvements (Session 4)
+- [x] Redesign Join section tagline box from single burgundy box to 4-card layout (COMPLETED - Card-based design with CAZA/APRENDE/CONQUISTA/MANADA cards, fully translated)

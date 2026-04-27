@@ -218,7 +218,15 @@
     "description": "Ready to join the pack? We're always looking for skilled hunters who are passionate about cybersecurity and CTF competitions.",
     "apply": "APPLY NOW",
     "discord": "JOIN DISCORD",
-    "packMotto": "Hunt together. Learn together. Conquer together."
+    "packMotto": "Hunt together. Learn together. Conquer together.",
+    "hunt": "HUNT",
+    "huntDesc": "Together as one pack",
+    "learn": "LEARN",
+    "learnDesc": "Share knowledge freely",
+    "conquer": "CONQUER",
+    "conquerDesc": "Solve challenges together",
+    "pack": "PACK",
+    "packDesc": "United front always"
   },
   "footer": {
     "copyright": "© 2026 Cazabanderas. All rights reserved.",

@@ -312,7 +312,15 @@
     "description": "¿Listo para unirte a la manada? Siempre estamos buscando cazadores hábiles apasionados por la ciberseguridad y las competiciones CTF.",
     "apply": "SOLICITAR AHORA",
     "discord": "ÚNETE A DISCORD",
-    "packMotto": "Cazamos juntos. Aprendemos juntos. Conquistamos juntos."
+    "packMotto": "Cazamos juntos. Aprendemos juntos. Conquistamos juntos.",
+    "hunt": "CAZA",
+    "huntDesc": "Juntos como una manada",
+    "learn": "APRENDE",
+    "learnDesc": "Comparte conocimiento libremente",
+    "conquer": "CONQUISTA",
+    "conquerDesc": "Resuelve desafíos juntos",
+    "pack": "MANADA",
+    "packDesc": "Frente unido siempre"
   },
   "footer": {
     "copyright": "© 2026 Cazabanderas. Todos los derechos reservados.",

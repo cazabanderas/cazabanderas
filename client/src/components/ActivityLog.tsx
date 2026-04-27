@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { format } from "date-fns";
-import { AlertCircle, CheckCircle2, LogOut, Lock, User, Trash2 } from "lucide-react";
+import { AlertCircle, CheckCircle2, LogOut, Lock, User, Trash2, Download } from "lucide-react";
 
 interface ActivityLogEntry {
   id: number;
@@ -60,21 +60,78 @@ export default function ActivityLog() {
     { value: "member_deleted", label: "Members Deleted" },
   ];
 
+  const handleExportCSV = () => {
+    if (logs.length === 0) return;
+
+    // Create CSV header
+    const headers = ["ID", "Action", "Details", "Status", "Timestamp", "IP Address", "User Agent"];
+    const rows = logs.map((log) => [
+      log.id,
+      actionLabels[log.action] || log.action,
+      log.details || "",
+      log.success === 1 ? "Success" : "Failed",
+      format(new Date(log.timestamp), "MMM dd, yyyy HH:mm:ss"),
+      log.ipAddress || "",
+      log.userAgent || "",
+    ]);
+
+    // Create CSV content
+    const csvContent = [
+      headers.join(","),
+      ...rows.map((row) =>
+        row
+          .map((cell) => {
+            // Escape quotes and wrap in quotes if contains comma
+            const str = String(cell);
+            return str.includes(",") || str.includes('"')
+              ? `"${str.replace(/"/g, '""')}"`
+              : str;
+          })
+          .join(",")
+      ),
+    ].join("\n");
+
+    // Create blob and download
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute(
+      "download",
+      `activity-log-${format(new Date(), "yyyy-MM-dd-HHmmss")}.csv`
+    );
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-bold text-white">ACTIVITY LOG</h3>
-        <select
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          className="px-3 py-2 bg-[#1a1d24] border border-[#e63946] text-white rounded text-sm"
-        >
-          {actionOptions.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleExportCSV}
+            disabled={logs.length === 0}
+            className="flex items-center gap-2 px-3 py-2 bg-[#e63946] text-white rounded text-sm hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
+            title="Export activity log as CSV"
+          >
+            <Download className="w-4 h-4" />
+            Export CSV
+          </button>
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="px-3 py-2 bg-[#1a1d24] border border-[#e63946] text-white rounded text-sm flex-1 max-w-xs"
+          >
+            {actionOptions.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div className="overflow-x-auto">

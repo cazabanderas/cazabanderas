@@ -28,7 +28,7 @@
 - [x] Leaderboard with member rankings and achievements (COMPLETED - MVP with tier system, 5 procedures, responsive UI, full i18n, 5 tests passing)
 - [ ] CTFtime API integration for upcoming events
 - [ ] Email notifications for security alerts
-- [ ] Activity log export as CSV
+- [x] Activity log export as CSV (COMPLETED - Export button in ActivityLog component, CSV generation with proper escaping, timestamped filename)
 - [ ] Team member invitation system with shareable links
 - [x] Set up i18n infrastructure with i18next library
 - [x] Create English translation files
@@ -59,7 +59,7 @@
 - [x] Create tRPC procedures for write-ups CRUD operations
 - [x] Build write-ups management UI for team dashboard
 - [x] Add write-ups editor with markdown support
-- [ ] Integrate public write-ups with homepage WriteUpsSection
+- [x] Integrate public write-ups with homepage WriteUpsSection (COMPLETED - WriteupsSection fetches public writeups via trpc.writeups.getPublic, displays with filters/sorting)
 - [x] Test write-ups visibility (public vs private) - UI ready
 - [ ] Add write-ups to team activity log
 - [x] Create dedicated write-ups management page with better organization

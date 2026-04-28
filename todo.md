@@ -61,7 +61,7 @@
 - [x] Add write-ups editor with markdown support
 - [x] Integrate public write-ups with homepage WriteUpsSection (COMPLETED - WriteupsSection fetches public writeups via trpc.writeups.getPublic, displays with filters/sorting)
 - [x] Test write-ups visibility (public vs private) - UI ready
-- [ ] Add write-ups to team activity log
+- [x] Add write-ups to team activity log (COMPLETED - Write-up creation/deletion triggers activity log entries via tRPC procedures)
 - [x] Create dedicated write-ups management page with better organization
 - [x] Build write-ups list with filtering, sorting, and search
 - [x] Build improved write-up editor with markdown support
@@ -134,6 +134,7 @@
 - [x] Add remaining homepage translations (About section, Categories, Join section, Write-ups empty state) - COMPLETED
 - [x] Fix Spanish translations for navbar items (Write-ups → Artículos, Recruitment → Reclutamiento) - COMPLETED
 - [x] Add Spanish translations for achievements carousel (event names, placements, categories, descriptions) - COMPLETED
+- [x] Fix English translation for platforms ("CTFS EN VIVO" → "LIVE CTFS") - COMPLETED
 
 
 #### Recruitment System Implementation

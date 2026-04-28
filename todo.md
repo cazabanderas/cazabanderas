@@ -250,3 +250,6 @@
 
 ## Design Improvements (Session 4)
 - [x] Redesign Join section tagline box from single burgundy box to 4-card layout (COMPLETED - Card-based design with CAZA/APRENDE/CONQUISTA/MANADA cards, fully translated)
+
+## Cleanup & Maintenance (Session 5)
+- [x] Remove all 25 test challenges from Web category (COMPLETED - Deleted via direct database query)

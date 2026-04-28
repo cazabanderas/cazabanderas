@@ -175,6 +175,11 @@
     "description": "Compartimos nuestro conocimiento. Cada desafío resuelto es una lección para toda la manada.",
     "noWriteups": "No hay write-ups públicos disponibles aún. ¡Vuelve pronto!"
   },
+  "recentActivity": {
+    "label": "ACTIVIDAD EN VIVO",
+    "title": "ÚLTIMAS CONQUISTAS",
+    "description": "Los desafíos más recientes completados por nuestro equipo en HackTheBox."
+  },
   "achievements": {
     "label": "LOGROS",
     "title": "NUESTRAS VICTORIAS",

@@ -28,14 +28,14 @@ export default function RecentActivitySection() {
         >
           <div className="flex items-center gap-3 mb-4">
             <div className="w-6 h-[2px] bg-[#e63946]" />
-            <span className="section-label">ACTIVIDAD EN VIVO</span>
+            <span className="section-label">{t('recentActivity.label')}</span>
           </div>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
             <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-none text-white tracking-wider">
-              ÚLTIMAS CONQUISTAS
+              {t('recentActivity.title')}
             </h2>
             <p className="font-body text-sm text-white/40 max-w-xs leading-relaxed">
-              Los desafíos más recientes completados por nuestro equipo en HackTheBox.
+              {t('recentActivity.description')}
             </p>
           </div>
         </motion.div>

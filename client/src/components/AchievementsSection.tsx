@@ -208,64 +208,14 @@ export default function AchievementsSection() {
           </div>
         </motion.div>
 
-        {/* Carousel */}
+        {/* Carousel - Empty for now */}
         <div className="relative">
-          {/* Achievement cards carousel */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 min-h-[280px]">
-            <AnimatePresence mode="wait">
-              {visibleItems.map((item, idx) => (
-                <AchievementCard
-                  key={`${item.event}-${currentIndex}`}
-                  item={item}
-                  isActive={idx === 0}
-                />
-              ))}
-            </AnimatePresence>
-          </div>
-
-          {/* Navigation buttons */}
-          {achievements.length > itemsPerView && (
-            <div className="flex items-center justify-center gap-4 mt-8">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handlePrev}
-                className="p-3 border border-white/10 hover:border-[#e63946]/50 text-white/60 hover:text-[#e63946] transition-colors"
-                aria-label="Previous awards"
-              >
-                <ChevronLeft size={20} />
-              </motion.button>
-
-              {/* Carousel indicators */}
-              <div className="flex items-center gap-2">
-                {Array.from({ length: Math.ceil(achievements.length / itemsPerView) }).map(
-                  (_, idx) => (
-                    <motion.button
-                      key={idx}
-                      onClick={() => setCurrentIndex(idx)}
-                      className={`h-2 transition-all ${
-                        idx === Math.floor(currentIndex / itemsPerView)
-                          ? "w-6 bg-[#e63946]"
-                          : "w-2 bg-white/20 hover:bg-white/40"
-                      }`}
-                      whileHover={{ scale: 1.2 }}
-                      aria-label={`Go to slide ${idx + 1}`}
-                    />
-                  )
-                )}
-              </div>
-
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleNext}
-                className="p-3 border border-white/10 hover:border-[#e63946]/50 text-white/60 hover:text-[#e63946] transition-colors"
-                aria-label="Next awards"
-              >
-                <ChevronRight size={20} />
-              </motion.button>
+          {/* Empty state - achievements carousel will be populated with real data */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 min-h-[280px] flex items-center justify-center">
+            <div className="col-span-full text-center py-12">
+              <p className="text-white/30 font-mono text-sm tracking-widest uppercase">Coming soon...</p>
             </div>
-          )}
+          </div>
         </div>
 
         {/* CTFtime link */}

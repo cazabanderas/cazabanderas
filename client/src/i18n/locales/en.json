@@ -93,6 +93,11 @@
     "description": "We share our knowledge. Every challenge solved is a lesson for the entire pack.",
     "noWriteups": "No public write-ups available yet. Check back soon!"
   },
+  "recentActivity": {
+    "label": "LIVE ACTIVITY",
+    "title": "LATEST CONQUESTS",
+    "description": "The most recent challenges completed by our team on HackTheBox."
+  },
   "achievements": {
     "label": "ACHIEVEMENTS",
     "title": "OUR VICTORIES",

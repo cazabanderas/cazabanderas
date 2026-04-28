@@ -11,6 +11,7 @@ import { recruitmentRouter } from "./routers/recruitment";
 import { htbRouter } from "./routers/htb";
 import { leaderboardRouter } from "./routers/leaderboard";
 import { challengesRouter } from "./routers/challenges";
+import { invitationsRouter } from "./routers/invitations";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -23,6 +24,7 @@ export const appRouter = router({
   htb: htbRouter,
   leaderboard: leaderboardRouter,
   challenges: challengesRouter,
+  invitations: invitationsRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {

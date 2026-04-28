@@ -455,3 +455,53 @@ export const activeCTFChallenges = mysqlTable("activeCTFChallenges", {
 
 export type ActiveCTFChallenge = typeof activeCTFChallenges.$inferSelect;
 export type InsertActiveCTFChallenge = typeof activeCTFChallenges.$inferInsert;
+
+
+/**
+ * Team Invitations table - tracks shareable invitation links for recruiting new members
+ * Allows team admins to generate unique links that can be shared with potential recruits
+ */
+export const teamInvitations = mysqlTable("teamInvitations", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Unique invitation token (UUID) */
+  token: varchar("token", { length: 255 }).notNull().unique(),
+  /** User ID who created this invitation */
+  createdBy: int("createdBy").notNull(),
+  /** Maximum number of uses for this invitation (0 = unlimited) */
+  maxUses: int("maxUses").default(0).notNull(),
+  /** Current number of times this invitation has been used */
+  usedCount: int("usedCount").default(0).notNull(),
+  /** Expiration date for the invitation */
+  expiresAt: timestamp("expiresAt"),
+  /** Whether this invitation is still active */
+  isActive: int("isActive").default(1).notNull(),
+  /** Custom message to include with the invitation */
+  message: text("message"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type TeamInvitation = typeof teamInvitations.$inferSelect;
+export type InsertTeamInvitation = typeof teamInvitations.$inferInsert;
+
+/**
+ * Invitation Uses table - tracks when and who used each invitation
+ * Provides audit trail for team recruitment
+ */
+export const invitationUses = mysqlTable("invitationUses", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Reference to the invitation */
+  invitationId: int("invitationId").notNull(),
+  /** OpenId of the user who used this invitation */
+  usedByOpenId: varchar("usedByOpenId", { length: 64 }),
+  /** Email of the person who used the invitation */
+  usedByEmail: varchar("usedByEmail", { length: 320 }),
+  /** Whether the invitation was successfully converted to a team member */
+  wasConverted: int("wasConverted").default(0).notNull(),
+  /** User ID if successfully converted */
+  convertedToUserId: int("convertedToUserId"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type InvitationUse = typeof invitationUses.$inferSelect;
+export type InsertInvitationUse = typeof invitationUses.$inferInsert;

@@ -29,7 +29,7 @@
 - [ ] CTFtime API integration for upcoming events
 - [ ] Email notifications for security alerts
 - [x] Activity log export as CSV (COMPLETED - Export button in ActivityLog component, CSV generation with proper escaping, timestamped filename)
-- [ ] Team member invitation system with shareable links
+- [ ] Team member invitation system with shareable links (IN PROGRESS - Database schema created, tRPC router with 5 procedures created, integrated into main router, pending: UI components, frontend page, email notifications)
 - [x] Set up i18n infrastructure with i18next library
 - [x] Create English translation files
 - [x] Create Latin American Spanish translation files

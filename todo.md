@@ -272,3 +272,25 @@
   - [x] Green checkmark indicators on hover
   - [x] Animated accent lines on hover
   - [x] Responsive design (hidden on mobile, full on desktop)
+
+## Join Section Color Scheme Fix (Session 6)
+- [x] Fix z-index layering in Join section timeline (COMPLETED - Circles and icons now appear above connecting lines)
+- [x] Replace vertical timeline with bilingual mission statement text (COMPLETED - Spanish/English with 4 mission points)
+- [x] Fix color scheme to match site's primary colors (COMPLETED - Replaced yellow with crimson red #e63946)
+
+## Achievements Section i18n Fix (Session 6)
+- [x] Fix "Coming soon" text to translate to Spanish (COMPLETED - Added comingSoon translation key to both es.json and en.json)
+
+## Team Section Fixes (Session 6)
+- [x] Remove duplicate "NUESTRA MANADA" title (COMPLETED - Changed title to "LA CAZA")
+- [x] Remove subtitle "LA CAZA" from Team section (COMPLETED - Removed subtitle paragraph)
+- [x] Add auto-refresh polling to Team section (COMPLETED - 15-minute refetch interval for HTB team members and hunter profiles)
+
+## Write-ups Section Auto-Refresh (Session 6)
+- [x] Add auto-refresh polling to "ÚLTIMAS CONQUISTAS" section (COMPLETED - 15-minute refetch interval for public write-ups)
+
+## Recruitment System Testing (Session 6)
+- [x] Test recruitment form submission (COMPLETED - Form accepts all fields and validates correctly)
+- [x] Verify backend processing (COMPLETED - Applications stored with automated scoring)
+- [x] Test admin review panel (COMPLETED - Admin can see applications with status tabs and scores)
+- [x] End-to-end workflow verification (COMPLETED - User applies → Admin reviews → Status management works)

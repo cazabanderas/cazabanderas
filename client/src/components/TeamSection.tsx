@@ -129,9 +129,6 @@ export default function TeamSection() {
           <h2 className="font-display text-5xl md:text-6xl font-bold text-white mb-4 tracking-wider">
             {t('team.title')}
           </h2>
-          <p className="text-white/60 max-w-2xl mx-auto text-lg">
-            {t('team.subtitle')}
-          </p>
         </motion.div>
 
         {/* Loading State */}

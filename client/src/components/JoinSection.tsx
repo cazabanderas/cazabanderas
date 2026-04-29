@@ -1,6 +1,6 @@
 /*
  * CAZABANDERAS Join Section
- * Design: Enhanced vertical timeline with dramatic animations, tactical elements
+ * Design: Mission statement + Call to action with bilingual text content
  * Military brutalism + Latin futurism with enhanced visual hierarchy
  */
 
@@ -10,53 +10,42 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
 
 const CTF_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663561350743/fQrwPhmvRnJkdAC8zKsvoi/cazabanderas-ctf-bg-iaN85chb8NkEHHFjbVvx9v.webp";
 
 export default function JoinSection() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
-  const timelineSteps = [
-    {
-      icon: "🐺",
-      titleKey: "join.hunt",
-      descKey: "join.huntDesc",
-      delay: 0.2,
-      number: "01",
-      color: "#e63946",
-      bgColor: "from-[#e63946]/30 to-[#e63946]/5",
+  const isSpanish = i18n.language.startsWith('es');
+
+  const missionContent = {
+    es: {
+      title: "ÚNETE A LA MANADA",
+      subtitle: "Somos más que un equipo",
+      mission: [
+        "Cazamos banderas en las plataformas más desafiantes del mundo.",
+        "Cada reto es una oportunidad para crecer, aprender y dominar nuevas técnicas.",
+        "Desde exploración web hasta ingeniería inversa, no hay límites en nuestro arsenal.",
+        "Somos una comunidad unida por la pasión, el conocimiento y la determinación."
+      ],
+      cta: "Si tienes hambre de desafíos y quieres ser parte de algo épico, es hora de unirte a la caza."
     },
-    {
-      icon: "📚",
-      titleKey: "join.learn",
-      descKey: "join.learnDesc",
-      delay: 0.35,
-      number: "02",
-      color: "#ff6b6b",
-      bgColor: "from-[#ff6b6b]/30 to-[#ff6b6b]/5",
-    },
-    {
-      icon: "🎯",
-      titleKey: "join.conquer",
-      descKey: "join.conquerDesc",
-      delay: 0.5,
-      number: "03",
-      color: "#ff8c42",
-      bgColor: "from-[#ff8c42]/30 to-[#ff8c42]/5",
-    },
-    {
-      icon: "⚡",
-      titleKey: "join.pack",
-      descKey: "join.packDesc",
-      delay: 0.65,
-      number: "04",
-      color: "#ffd60a",
-      bgColor: "from-[#ffd60a]/30 to-[#ffd60a]/5",
-    },
-  ];
+    en: {
+      title: "JOIN THE PACK",
+      subtitle: "We are more than a team",
+      mission: [
+        "We hunt flags across the world's most challenging platforms.",
+        "Every challenge is an opportunity to grow, learn, and master new techniques.",
+        "From web exploitation to reverse engineering, there are no limits to our arsenal.",
+        "We are a community united by passion, knowledge, and determination."
+      ],
+      cta: "If you hunger for challenges and want to be part of something epic, it's time to join the hunt."
+    }
+  };
+
+  const content = isSpanish ? missionContent.es : missionContent.en;
 
   return (
     <section
@@ -98,56 +87,45 @@ export default function JoinSection() {
 
       <div className="container relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
-          {/* Left: Text content */}
+          {/* Left: CTA Section */}
           <motion.div
             ref={ref}
             initial={{ opacity: 0, x: -32 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7 }}
+            className="space-y-8"
           >
-            <div className="flex items-center gap-3 mb-6">
-              <motion.div
-                className="w-8 h-[2px] bg-[#e63946]"
-                initial={{ scaleX: 0 }}
-                animate={inView ? { scaleX: 1 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                style={{ originX: 0 }}
-              />
-              <span className="section-label text-[#e63946] tracking-widest text-sm font-bold">
-                {t('join.label')}
-              </span>
-            </div>
-
-            <motion.h2
-              className="font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-tight text-white tracking-wider mb-8 font-black"
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.1 }}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.1 }}
             >
-              {t('join.title')}
-            </motion.h2>
-
-            <motion.p
-              className="font-body text-lg text-white/70 leading-relaxed mb-10 max-w-md"
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.2 }}
-            >
-              {t('join.description')}
-            </motion.p>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-1 h-8 bg-[#e63946]" />
+                <span className="text-sm font-mono font-bold text-[#e63946] tracking-widest">
+                  {t('join.label') || 'JOIN THE HUNT'}
+                </span>
+              </div>
+              <h2 className="text-5xl lg:text-6xl font-black font-heading text-white mb-6 leading-tight">
+                {t('join.title') || 'BECOME A FLAG\nHUNTER'}
+              </h2>
+              <p className="text-lg text-white/70 leading-relaxed max-w-md">
+                {t('join.description') || 'Ready to join the pack? We\'re always looking for skilled hunters who are passionate about cybersecurity and CTF competitions.'}
+              </p>
+            </motion.div>
 
             <motion.div
-              className="flex flex-col sm:flex-row gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex flex-col sm:flex-row gap-4 pt-4"
             >
               <Link href="/recruitment">
                 <Button
                   size="lg"
-                  className="bg-[#e63946] hover:bg-[#d62828] text-white font-display tracking-wider font-bold shadow-lg hover:shadow-[0_0_30px_rgba(230,57,70,0.5)] transition-all duration-300"
+                  className="bg-[#e63946] hover:bg-[#d62828] text-white font-bold px-8 py-6 text-base transition-all duration-300 hover:shadow-[0_0_20px_rgba(230,57,70,0.4)]"
                 >
-                  {t('join.apply') || 'JOIN APPLY'}
+                  {t('join.applyNow') || 'APPLY NOW'}
                 </Button>
               </Link>
               <a href="https://discord.gg/cazabanderas" target="_blank" rel="noopener noreferrer">
@@ -162,147 +140,59 @@ export default function JoinSection() {
             </motion.div>
           </motion.div>
 
-          {/* Right: Enhanced Vertical Timeline */}
+          {/* Right: Mission Statement & Call to Action */}
           <motion.div
             initial={{ opacity: 0, x: 32 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="hidden lg:flex items-center justify-center"
+            className="space-y-6"
           >
-            <div className="relative w-full max-w-md">
-              {/* Animated vertical connecting line with gradient */}
-              <motion.div
-                className="absolute left-12 top-0 bottom-0 w-1 bg-gradient-to-b from-[#e63946] via-[#ff6b6b] via-[#ff8c42] to-[#ffd60a] z-0"
-                initial={{ scaleY: 0 }}
-                animate={inView ? { scaleY: 1 } : {}}
-                transition={{ duration: 1.2, delay: 0.3 }}
-                style={{ originY: 0 }}
-              />
+            {/* Subtitle */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="space-y-2"
+            >
+              <p className="text-sm font-mono font-bold text-[#ffd60a] tracking-widest uppercase">
+                {content.subtitle}
+              </p>
+              <div className="w-12 h-1 bg-gradient-to-r from-[#e63946] to-[#ffd60a]" />
+            </motion.div>
 
-              {/* Animated dashed overlay line for tactical effect */}
-              <motion.div
-                className="absolute left-12 top-0 bottom-0 w-1 border-l-2 border-dashed border-[#e63946]/30 z-0"
-                initial={{ opacity: 0 }}
-                animate={inView ? { opacity: 1 } : {}}
-                transition={{ duration: 0.8, delay: 0.8 }}
-              />
-
-              {/* Timeline steps */}
-              <div className="space-y-12 relative z-10">
-                {timelineSteps.map((step, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.6, delay: step.delay }}
-                    className="relative pl-32 group"
-                  >
-                    {/* Timeline node container */}
-                    <div className="absolute left-0 top-0 w-24 h-24 flex items-center justify-center z-20">
-                      {/* Outer glow ring */}
-                      <motion.div
-                        className="absolute inset-0 rounded-full border-2"
-                        style={{ borderColor: step.color }}
-                        initial={{ scale: 1, opacity: 0.3 }}
-                        whileHover={{ scale: 1.3, opacity: 0.8 }}
-                        transition={{ duration: 0.3 }}
-                      />
-
-                      {/* Middle ring */}
-                      <motion.div
-                        className="absolute inset-2 rounded-full border border-[#e63946]/40"
-                        initial={{ scale: 1 }}
-                        whileHover={{ scale: 1.15 }}
-                        transition={{ duration: 0.3 }}
-                      />
-
-                      {/* Inner circle with gradient background */}
-                      <motion.div
-                        className={`relative w-16 h-16 rounded-full bg-gradient-to-br ${step.bgColor} border-2 flex items-center justify-center group-hover:shadow-[0_0_30px_rgba(230,57,70,0.6)] transition-all duration-300`}
-                        style={{ borderColor: step.color }}
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={inView ? { scale: 1, opacity: 1 } : {}}
-                        transition={{ duration: 0.5, delay: step.delay + 0.1 }}
-                        whileHover={{ scale: 1.2 }}
-                      >
-                        {/* Icon */}
-                        <motion.span
-                          className="text-3xl group-hover:scale-125 transition-transform duration-300"
-                          initial={{ rotate: -180 }}
-                          animate={inView ? { rotate: 0 } : {}}
-                          transition={{ duration: 0.6, delay: step.delay + 0.2 }}
-                        >
-                          {step.icon}
-                        </motion.span>
-                      </motion.div>
-
-                      {/* Step number badge */}
-                      <motion.div
-                        className="absolute -top-2 -right-2 w-7 h-7 rounded-full text-white text-xs font-black flex items-center justify-center border-2 border-[#0d0f14] shadow-lg z-30"
-                        style={{ backgroundColor: step.color }}
-                        initial={{ scale: 0 }}
-                        animate={inView ? { scale: 1 } : {}}
-                        transition={{ duration: 0.4, delay: step.delay + 0.3, type: "spring" }}
-                      >
-                        {step.number}
-                      </motion.div>
-
-                      {/* Checkmark indicator */}
-                      <motion.div
-                        className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#00ff00] border border-[#0d0f14] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30"
-                        initial={{ scale: 0 }}
-                        whileHover={{ scale: 1.1 }}
-                      >
-                        <Check size={12} className="text-[#0d0f14]" strokeWidth={3} />
-                      </motion.div>
-                    </div>
-
-                    {/* Content box with enhanced styling */}
-                    <motion.div
-                      className="pt-2 pb-6 group-hover:pl-4 transition-all duration-300 relative z-10"
-                      initial={{ opacity: 0 }}
-                      animate={inView ? { opacity: 1 } : {}}
-                      transition={{ duration: 0.5, delay: step.delay + 0.2 }}
-                    >
-                      {/* Title with accent line */}
-                      <div className="flex items-center gap-3 mb-2">
-                        <motion.div
-                          className="h-[2px] w-0 group-hover:w-3 transition-all duration-300"
-                          style={{ backgroundColor: step.color }}
-                        />
-                        <h3 className="font-display text-xl text-white tracking-wider font-bold group-hover:text-white transition-colors duration-300 uppercase">
-                          {t(step.titleKey) || step.titleKey}
-                        </h3>
-                      </div>
-
-                      {/* Description */}
-                      <p className="font-body text-sm text-white/60 leading-relaxed group-hover:text-white/80 transition-colors duration-300 ml-5">
-                        {t(step.descKey) || step.descKey}
-                      </p>
-
-                      {/* Animated bottom accent line */}
-                      <motion.div
-                        className="mt-4 h-[1px] w-0 origin-left transition-all duration-300 group-hover:w-20 relative z-10"
-                        style={{ background: `linear-gradient(to right, ${step.color}, transparent)` }}
-                        initial={{ scaleX: 0 }}
-                        whileHover={{ scaleX: 1 }}
-                      />
-                    </motion.div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Bottom accent element */}
-              <motion.div
-                className="mt-12 flex items-center gap-3"
-                initial={{ opacity: 0, y: 10 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 1 }}
-              >
-                <div className="h-[2px] flex-1 bg-gradient-to-r from-[#e63946] to-transparent" />
-                <span className="text-[#e63946] text-xs font-bold tracking-widest">READY TO HUNT</span>
-              </motion.div>
+            {/* Mission Points */}
+            <div className="space-y-4">
+              {content.mission.map((point, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={inView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                  className="flex gap-4 group"
+                >
+                  {/* Accent bullet */}
+                  <div className="flex-shrink-0 pt-1">
+                    <div className="w-2 h-2 rounded-full bg-[#e63946] group-hover:bg-[#ffd60a] transition-colors duration-300" />
+                  </div>
+                  {/* Text */}
+                  <p className="text-base text-white/80 leading-relaxed group-hover:text-white transition-colors duration-300">
+                    {point}
+                  </p>
+                </motion.div>
+              ))}
             </div>
+
+            {/* Call to Action Text */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="pt-6 border-t border-white/10"
+            >
+              <p className="text-lg text-[#ffd60a] font-semibold leading-relaxed italic">
+                "{content.cta}"
+              </p>
+            </motion.div>
           </motion.div>
         </div>
       </div>

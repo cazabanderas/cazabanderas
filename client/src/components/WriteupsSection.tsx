@@ -169,8 +169,10 @@ export default function WriteupsSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
-  // Fetch public write-ups from database
-  const { data: publicWriteups = [], isLoading } = trpc.writeups.getPublic.useQuery();
+  // Fetch public write-ups from database with auto-refresh every 15 minutes
+  const { data: publicWriteups = [], isLoading } = trpc.writeups.getPublic.useQuery(undefined, {
+    refetchInterval: 15 * 60 * 1000, // 15 minutes in milliseconds
+  });
 
   const [selectedDifficulty, setSelectedDifficulty] = useState("All");
   const [selectedCategory, setSelectedCategory] = useState("All");

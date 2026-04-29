@@ -213,7 +213,7 @@ export default function AchievementsSection() {
           {/* Empty state - achievements carousel will be populated with real data */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 min-h-[280px] flex items-center justify-center">
             <div className="col-span-full text-center py-12">
-              <p className="text-white/30 font-mono text-sm tracking-widest uppercase">Coming soon...</p>
+              <p className="text-white/30 font-mono text-sm tracking-widest uppercase">{t("achievements.comingSoon")}</p>
             </div>
           </div>
         </div>

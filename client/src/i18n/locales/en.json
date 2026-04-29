@@ -105,6 +105,7 @@
     "description": "Our victories in the CTF arena",
     "recentActivity": "Recent Team Activity",
     "viewFullRecord": "View Full Record",
+    "comingSoon": "Coming soon...",
     "stats": [
       { "value": "0", "label": "CTFs Completed" },
       { "value": "0+", "label": "Flags Captured" },

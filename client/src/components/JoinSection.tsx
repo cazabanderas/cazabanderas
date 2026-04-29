@@ -172,7 +172,7 @@ export default function JoinSection() {
             <div className="relative w-full max-w-md">
               {/* Animated vertical connecting line with gradient */}
               <motion.div
-                className="absolute left-12 top-0 bottom-0 w-1 bg-gradient-to-b from-[#e63946] via-[#ff6b6b] via-[#ff8c42] to-[#ffd60a]"
+                className="absolute left-12 top-0 bottom-0 w-1 bg-gradient-to-b from-[#e63946] via-[#ff6b6b] via-[#ff8c42] to-[#ffd60a] z-0"
                 initial={{ scaleY: 0 }}
                 animate={inView ? { scaleY: 1 } : {}}
                 transition={{ duration: 1.2, delay: 0.3 }}
@@ -181,14 +181,14 @@ export default function JoinSection() {
 
               {/* Animated dashed overlay line for tactical effect */}
               <motion.div
-                className="absolute left-12 top-0 bottom-0 w-1 border-l-2 border-dashed border-[#e63946]/30"
+                className="absolute left-12 top-0 bottom-0 w-1 border-l-2 border-dashed border-[#e63946]/30 z-0"
                 initial={{ opacity: 0 }}
                 animate={inView ? { opacity: 1 } : {}}
                 transition={{ duration: 0.8, delay: 0.8 }}
               />
 
               {/* Timeline steps */}
-              <div className="space-y-12">
+              <div className="space-y-12 relative z-10">
                 {timelineSteps.map((step, index) => (
                   <motion.div
                     key={index}
@@ -198,7 +198,7 @@ export default function JoinSection() {
                     className="relative pl-32 group"
                   >
                     {/* Timeline node container */}
-                    <div className="absolute left-0 top-0 w-24 h-24 flex items-center justify-center">
+                    <div className="absolute left-0 top-0 w-24 h-24 flex items-center justify-center z-20">
                       {/* Outer glow ring */}
                       <motion.div
                         className="absolute inset-0 rounded-full border-2"
@@ -238,7 +238,7 @@ export default function JoinSection() {
 
                       {/* Step number badge */}
                       <motion.div
-                        className="absolute -top-2 -right-2 w-7 h-7 rounded-full text-white text-xs font-black flex items-center justify-center border-2 border-[#0d0f14] shadow-lg"
+                        className="absolute -top-2 -right-2 w-7 h-7 rounded-full text-white text-xs font-black flex items-center justify-center border-2 border-[#0d0f14] shadow-lg z-30"
                         style={{ backgroundColor: step.color }}
                         initial={{ scale: 0 }}
                         animate={inView ? { scale: 1 } : {}}
@@ -249,7 +249,7 @@ export default function JoinSection() {
 
                       {/* Checkmark indicator */}
                       <motion.div
-                        className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#00ff00] border border-[#0d0f14] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#00ff00] border border-[#0d0f14] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30"
                         initial={{ scale: 0 }}
                         whileHover={{ scale: 1.1 }}
                       >
@@ -259,7 +259,7 @@ export default function JoinSection() {
 
                     {/* Content box with enhanced styling */}
                     <motion.div
-                      className="pt-2 pb-6 group-hover:pl-4 transition-all duration-300"
+                      className="pt-2 pb-6 group-hover:pl-4 transition-all duration-300 relative z-10"
                       initial={{ opacity: 0 }}
                       animate={inView ? { opacity: 1 } : {}}
                       transition={{ duration: 0.5, delay: step.delay + 0.2 }}
@@ -282,7 +282,7 @@ export default function JoinSection() {
 
                       {/* Animated bottom accent line */}
                       <motion.div
-                        className="mt-4 h-[1px] w-0 origin-left transition-all duration-300 group-hover:w-20"
+                        className="mt-4 h-[1px] w-0 origin-left transition-all duration-300 group-hover:w-20 relative z-10"
                         style={{ background: `linear-gradient(to right, ${step.color}, transparent)` }}
                         initial={{ scaleX: 0 }}
                         whileHover={{ scaleX: 1 }}

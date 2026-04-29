@@ -154,10 +154,10 @@ export default function JoinSection() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="space-y-2"
             >
-              <p className="text-sm font-mono font-bold text-[#ffd60a] tracking-widest uppercase">
+              <p className="text-sm font-mono font-bold text-[#e63946] tracking-widest uppercase">
                 {content.subtitle}
               </p>
-              <div className="w-12 h-1 bg-gradient-to-r from-[#e63946] to-[#ffd60a]" />
+              <div className="w-12 h-1 bg-gradient-to-r from-[#e63946] to-[#d62828]" />
             </motion.div>
 
             {/* Mission Points */}
@@ -189,7 +189,7 @@ export default function JoinSection() {
               transition={{ duration: 0.6, delay: 0.7 }}
               className="pt-6 border-t border-white/10"
             >
-              <p className="text-lg text-[#ffd60a] font-semibold leading-relaxed italic">
+              <p className="text-lg text-[#e63946] font-semibold leading-relaxed italic">
                 "{content.cta}"
               </p>
             </motion.div>

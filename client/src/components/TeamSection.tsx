@@ -66,11 +66,15 @@ export default function TeamSection() {
   const { t } = useTranslation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
-  // Fetch HTB team members from database
-  const { data: htbMembers = [], isLoading: isLoadingHTB } = trpc.htb.getAllTeamMembers.useQuery();
+  // Fetch HTB team members from database with auto-refresh every 15 minutes
+  const { data: htbMembers = [], isLoading: isLoadingHTB } = trpc.htb.getAllTeamMembers.useQuery(undefined, {
+    refetchInterval: 15 * 60 * 1000, // 15 minutes in milliseconds
+  });
   
-  // Fetch hunters profiles from database
-  const { data: profiles = [], isLoading } = trpc.admin.listHuntersProfiles.useQuery();
+  // Fetch hunters profiles from database with auto-refresh every 15 minutes
+  const { data: profiles = [], isLoading } = trpc.admin.listHuntersProfiles.useQuery(undefined, {
+    refetchInterval: 15 * 60 * 1000, // 15 minutes in milliseconds
+  });
   
   // Use HTB members if available, otherwise use profiles, otherwise use fallback
   const members = htbMembers.length > 0 ? htbMembers : (profiles.length > 0 ? profiles : FALLBACK_MEMBERS);

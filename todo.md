@@ -253,3 +253,4 @@
 
 ## Cleanup & Maintenance (Session 5)
 - [x] Remove all 25 test challenges from Web category (COMPLETED - Deleted via direct database query)
+- [x] Redesign Join section with vertical timeline (COMPLETED - CAZA → APRENDE → CONQUISTA → MANADA with tactical nodes and connecting line)
